@@ -18,7 +18,9 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: [
+    { src: '~/plugins/telegram-auth.js', mode: 'client' }
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -35,14 +37,53 @@ export default {
     'bootstrap-vue/nuxt',
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
+    '@nuxtjs/auth-next'
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
     // Workaround to avoid enforcing hard-coded localhost:3000: https://github.com/nuxt-community/axios-module/issues/308
-    baseURL: '/',
+    baseURL: process.env.BACKEND_URL,
+  },
+
+  auth: {
+    localStorage: false,
+    token: {
+      property: 'token',
+      global: true,
+      required: true,
+      type: 'Bearer'
+    },
+    user: {
+      property: 'user',
+      autoFetch: true
+    },
+    cookie: {
+      options: {
+        expires: 3600
+      }
+    },
+    strategies: {
+      local: {
+        endpoints: {
+          login: { url: '/auth/login', method: 'post' },
+          logout: false,
+          user: { url: '/user/', method: 'get' }
+        }
+      }
+    },
+    redirect: {
+      logout: '/',
+      callback: '/login',
+      home: '/'
+    },
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {},
+
+  publicRuntimeConfig: {
+    botName: process.env.TELEGRAM_BOT_NAME
+  }
+
 }
