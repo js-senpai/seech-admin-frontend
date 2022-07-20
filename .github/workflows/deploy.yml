@@ -16,7 +16,7 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
             cd /home/frontend/project/
-            git config user.name "seechua"
+            git config --global url."git@gitlab.com:".insteadOf "https://gitlab.com/"
             git pull origin main
             npm i
             npm run build
