@@ -16,7 +16,7 @@ jobs:
           password: ${{ secrets.SSH_PASSWORD }}
           script: |
             cd /home/frontend/project/
-            git pull
+            git pull origin main
             npm i
             npm run build
             pm2 restart frontend
