@@ -1,5 +1,5 @@
 <template>
-  <b-navbar toggleable="lg" type="light" variant="light">
+  <b-navbar toggleable="lg" class="bg-white border-bottom border-light shadow">
     <b-navbar-brand href="/">Seech admin</b-navbar-brand>
 
     <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>

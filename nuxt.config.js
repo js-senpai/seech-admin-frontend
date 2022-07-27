@@ -88,7 +88,8 @@ export default {
   build: {},
 
   publicRuntimeConfig: {
-    botName: process.env.TELEGRAM_BOT_NAME
+    botName: process.env.TELEGRAM_BOT_NAME,
+    backendUrl: process.env.BACKEND_URL
   }
 
 }
