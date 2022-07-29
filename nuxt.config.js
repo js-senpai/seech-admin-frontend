@@ -1,3 +1,4 @@
+import ua from './locales/ua.json'
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -24,7 +25,8 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    { src: '~/plugins/telegram-auth.js', mode: 'client' }
+    { src: '~/plugins/telegram-auth.js', mode: 'client' },
+    { src: '~/plugins/datepicker.js' }
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -34,6 +36,7 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/typescript
     '@nuxt/typescript-build',
+    '@nuxtjs/moment',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -42,7 +45,40 @@ export default {
     'bootstrap-vue/nuxt',
     // https://go.nuxtjs.dev/axios
     '@nuxtjs/axios',
-    '@nuxtjs/auth-next'
+    '@nuxtjs/auth-next',
+    'nuxt-vue-select',
+    [
+      "@nuxtjs/i18n",
+      {
+        locales: [
+          {
+            code: "ua",
+            iso: "ua-UA"
+          }
+        ],
+        defaultLocale: "ua",
+        detectBrowserLanguage: {
+          useCookie: true,
+          cookieKey: "i18n_redirected"
+        },
+        seo: false,
+        vueI18n: {
+          fallbackLocale: "ua",
+          messages: {
+            ua
+          }
+        },
+        vueI18nLoader: true,
+        strategy: "no_prefix",
+        vuex: {
+          moduleName: "i18n",
+          syncLocale: true,
+          syncMessages: true,
+          syncRouteParams: true
+        }
+      }
+    ],
+
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
@@ -85,7 +121,25 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    extractCSS: true,
+    html:{
+      minify:{
+        collapseBooleanAttributes: true,
+        decodeEntities: true,
+        minifyCSS: true,
+        minifyJS: true,
+        processConditionalComments: true,
+        removeEmptyAttributes: true,
+        removeRedundantAttributes: true,
+        trimCustomFragments: true,
+        useShortDoctype: true,
+        minifyURLs: true,
+        removeComments: true,
+        removeEmptyElements: true
+      }
+    },
+  },
 
   publicRuntimeConfig: {
     botName: process.env.TELEGRAM_BOT_NAME,
