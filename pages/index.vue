@@ -1,31 +1,33 @@
 <template>
   <div class="main-page">
     <b-sidebar id="sidebar" :title="$t('filters.filters')" shadow>
-      <div class="p-3">
-        <BFormGroup  :label="$t('filters.date')" class="mb-2">
-          <DatePicker v-model="date" range class="w-100" value-type="DD-MM-YYYY" />
-        </BFormGroup>
-        <BFormGroup  :label="$t('filters.region')" class="mb-2">
-          <v-select v-model="regions" :options="regionsOptions" multiple  />
-        </BFormGroup>
-        <BFormGroup  :label="$t('filters.state')" class="mb-2">
-          <v-select v-model="states" :options="statesOptions" multiple :disabled="!regions.length"  />
-        </BFormGroup>
-        <BFormGroup  :label="$t('filters.otg')" class="mb-2">
-          <v-select v-model="otg" :options="otgOptions" multiple :disabled="!states.length"  />
-        </BFormGroup>
-        <BFormGroup  :label="$t('filters.type')" class="mb-2">
-          <v-select v-model="types" :options="typesOptions" multiple  />
-        </BFormGroup>
-        <BFormGroup  :label="$t('filters.subtype')" class="mb-2">
-          <v-select v-model="subtypes" :options="subtypesOptions" multiple :disabled="!types.length"  />
-        </BFormGroup>
-        <BFormGroup  :label="$t('filters.active')" class="mb-3">
-          <v-select v-model="active" :options="activeOptions"  />
-        </BFormGroup>
-        <BButton variant="success" class="w-100 mb-3">{{$t('filters.accept')}}</BButton>
-        <BButton variant="danger" class="w-100" @click="resetFilters()">{{$t('filters.clear')}}</BButton>
-      </div>
+      <template #default="{ hide }">
+        <div class="p-3">
+          <BFormGroup  :label="$t('filters.date')" class="mb-2">
+            <DatePicker v-model="date" range class="w-100" value-type="DD-MM-YYYY" />
+          </BFormGroup>
+          <BFormGroup  :label="$t('filters.region')" class="mb-2">
+            <v-select v-model="regions" :options="regionsOptions" multiple  />
+          </BFormGroup>
+          <BFormGroup  :label="$t('filters.state')" class="mb-2">
+            <v-select v-model="states" :options="statesOptions" multiple :disabled="!regions.length"  />
+          </BFormGroup>
+          <BFormGroup  :label="$t('filters.otg')" class="mb-2">
+            <v-select v-model="otg" :options="otgOptions" multiple :disabled="!states.length"  />
+          </BFormGroup>
+          <BFormGroup  :label="$t('filters.type')" class="mb-2">
+            <v-select v-model="types" :options="typesOptions" multiple  />
+          </BFormGroup>
+          <BFormGroup  :label="$t('filters.subtype')" class="mb-2">
+            <v-select v-model="subtypes" :options="subtypesOptions" multiple :disabled="!types.length"  />
+          </BFormGroup>
+          <BFormGroup  :label="$t('filters.active')" class="mb-3">
+            <v-select v-model="active" :options="activeOptions"  />
+          </BFormGroup>
+          <BButton variant="success" class="w-100 mb-3" @click="applyFilters(hide)">{{$t('filters.accept')}}</BButton>
+          <BButton variant="danger" class="w-100" @click="resetFilters(hide)">{{$t('filters.clear')}}</BButton>
+        </div>
+      </template>
     </b-sidebar>
     <BContainer fluid>
       <BRow>
@@ -130,11 +132,12 @@ export default {
          console.error(e);
        }
      },
-     async resetFilters() {
+     async resetFilters(hide) {
        await this.$router.push({ path: '/', query: {} });
        await this.getData({query: {},serverFetch: false});
+       hide();
      },
-     async applyFilters() {
+     async applyFilters(hide) {
        const query = {
          ...(this.types.length && {
            types: this.types.join(',')
@@ -161,6 +164,7 @@ export default {
        };
        await this.$router.push({ path: '/', query});
        await this.getData({query,serverFetch: false});
+       hide();
      }
   }
 }
