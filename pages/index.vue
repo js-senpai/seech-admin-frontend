@@ -62,7 +62,7 @@ export default {
   middleware: 'isAuthenticated',
   data: () => ({
     items: [],
-    date: [this.$moment().set('date', 1).format('DD-MM-YYYY'),this.$moment().format('DD-MM-YYYY')],
+    date: [],
     types: [],
     subtypes: [],
     regions: [],
