@@ -46,12 +46,14 @@
          </BCol>
        </BRow>
     </BContainer>
-    <b-table
-      id="statistic-table"
-      :items="items"
-      :fields="fields"
-      small
-    />
+    <div class="overflow-auto w-100">
+      <b-table
+        id="statistic-table"
+        :items="items"
+        :fields="fields"
+        small
+      />
+    </div>
   </div>
 </template>
 
