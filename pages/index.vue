@@ -1,59 +1,52 @@
 <template>
-  <div class="main-page shadow bg-white p-2 rounded mt-3">
-    <h2 class="mb-4">KPI</h2>
-    <BContainer fluid class="mb-4">
-       <BRow>
-         <BCol cols="12" md="2">
-           <BFormGroup  :label="$t('filters.date')">
-             <DatePicker v-model="date" range class="w-100" value-type="DD-MM-YYYY" />
-           </BFormGroup>
-         </BCol>
-         <BCol cols="12" md="2">
-           <BFormGroup  :label="$t('filters.region')">
-             <v-select v-model="regions" :options="regionsOptions" multiple  />
-           </BFormGroup>
-         </BCol>
-         <BCol cols="12" md="2">
-           <BFormGroup  :label="$t('filters.state')">
-             <v-select v-model="states" :options="statesOptions" multiple :disabled="!regions.length"  />
-           </BFormGroup>
-         </BCol>
-         <BCol cols="12" md="2">
-           <BFormGroup  :label="$t('filters.otg')">
-             <v-select v-model="otg" :options="otgOptions" multiple :disabled="!states.length"  />
-           </BFormGroup>
-         </BCol>
-         <BCol cols="12" md="2">
-           <BFormGroup  :label="$t('filters.type')">
-             <v-select v-model="types" :options="typesOptions" multiple  />
-           </BFormGroup>
-         </BCol>
-         <BCol cols="12" md="2">
-           <BFormGroup  :label="$t('filters.subtype')">
-             <v-select v-model="subtypes" :options="subtypesOptions" multiple :disabled="!types.length"  />
-           </BFormGroup>
-         </BCol>
-         <BCol cols="12" md="2">
-           <BFormGroup  :label="$t('filters.active')">
-             <v-select v-model="active" :options="activeOptions"  />
-           </BFormGroup>
-         </BCol>
-         <BCol cols="12" md="2" class="d-flex align-items-end mb-3" @click="applyFilters()">
-           <BButton variant="success" class="w-100">{{$t('filters.accept')}}</BButton>
-         </BCol>
-         <BCol cols="12" md="2" class="d-flex align-items-end mb-3">
-           <BButton variant="danger" class="w-100" @click="resetFilters()">{{$t('filters.clear')}}</BButton>
-         </BCol>
-       </BRow>
+  <div class="main-page">
+    <b-sidebar id="sidebar" :title="$t('filters.filters')" shadow>
+      <div class="p-3">
+        <BFormGroup  :label="$t('filters.date')" class="mb-2">
+          <DatePicker v-model="date" range class="w-100" value-type="DD-MM-YYYY" />
+        </BFormGroup>
+        <BFormGroup  :label="$t('filters.region')" class="mb-2">
+          <v-select v-model="regions" :options="regionsOptions" multiple  />
+        </BFormGroup>
+        <BFormGroup  :label="$t('filters.state')" class="mb-2">
+          <v-select v-model="states" :options="statesOptions" multiple :disabled="!regions.length"  />
+        </BFormGroup>
+        <BFormGroup  :label="$t('filters.otg')" class="mb-2">
+          <v-select v-model="otg" :options="otgOptions" multiple :disabled="!states.length"  />
+        </BFormGroup>
+        <BFormGroup  :label="$t('filters.type')" class="mb-2">
+          <v-select v-model="types" :options="typesOptions" multiple  />
+        </BFormGroup>
+        <BFormGroup  :label="$t('filters.subtype')" class="mb-2">
+          <v-select v-model="subtypes" :options="subtypesOptions" multiple :disabled="!types.length"  />
+        </BFormGroup>
+        <BFormGroup  :label="$t('filters.active')" class="mb-3">
+          <v-select v-model="active" :options="activeOptions"  />
+        </BFormGroup>
+        <BButton variant="success" class="w-100 mb-3">{{$t('filters.accept')}}</BButton>
+        <BButton variant="danger" class="w-100" @click="resetFilters()">{{$t('filters.clear')}}</BButton>
+      </div>
+    </b-sidebar>
+    <BContainer fluid>
+      <BRow>
+        <BCol cols="12" >
+          <div class="main-page shadow bg-white p-3 rounded mt-3 ">
+            <h2 class="mb-4">KPI</h2>
+            <div class="mb-4 d-flex justify-content-end">
+              <b-button v-b-toggle.sidebar>{{$t('filters.filters')}}</b-button>
+            </div>
+            <div class="overflow-auto w-100">
+              <b-table
+                id="statistic-table"
+                :items="items"
+                :fields="fields"
+                small
+              />
+            </div>
+          </div>
+        </BCol>
+      </BRow>
     </BContainer>
-    <div class="overflow-auto w-100">
-      <b-table
-        id="statistic-table"
-        :items="items"
-        :fields="fields"
-        small
-      />
-    </div>
   </div>
 </template>
 

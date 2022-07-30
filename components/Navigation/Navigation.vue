@@ -1,5 +1,5 @@
 <template>
-  <b-nav vertical>
+  <b-nav>
     <b-nav-item active>
       <NuxtLink to="/">Home</NuxtLink>
     </b-nav-item>
