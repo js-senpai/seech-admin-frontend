@@ -72,7 +72,7 @@ export default {
     activeOptions: ['true','false']
   }),
   async fetch(){
-    await this.getData();
+    await this.getData({query: {},serverFetch: true});
   },
   computed: {
     typesOptions(){
@@ -115,59 +115,57 @@ export default {
   },
   fetchOnServer: true,
   methods: {
-     async getData() {
+     async getData({query = {},serverFetch = true}) {
        try {
-         const getQueryParams = this.$route.query;
+         const getQueryParams = serverFetch ? this.$route.query: query;
          const queryParamsToString = Object.values(this.$route.query).length ? Object.keys(getQueryParams)
            .map(key => `${key}=${getQueryParams[key]}`)
            .join('&'): '';
          const { data: { items = [] } } = await this.$axios.get(`${this.$config.backendUrl}/kpi${queryParamsToString.length ? `?${queryParamsToString}`: ''}`);
          this.items = items;
-         if(queryParamsToString.length){
-           const { types = '',subtypes = '',regions = '',states = '',otg = '',startDate = '',endDate = '',active } = this.$route.query;
-           this.types = types ? types.split(','): [];
-           this.subtypes = types.length && subtypes.length ? subtypes.split(','): [];
-           this.regions = regions.length ? this.regionsOptions.filter(({code}) => regions.split(',').includes(code)): [];
-           this.states = states.length && regions.length ? this.statesOptions.filter(({code}) => states.split(',').includes(code)): [];
-           this.otg = states.length && regions.length && otg.length ? this.otgOptions.filter(({code}) => otg.split(',').includes(code)): [];
-           this.active = active;
-           this.date = startDate && endDate ? [startDate,endDate]: [];
-         }
+         const { types = '',subtypes = '',regions = '',states = '',otg = '',startDate = '',endDate = '',active } = getQueryParams;
+         this.types = types ? types.split(','): [];
+         this.subtypes = types.length && subtypes.length ? subtypes.split(','): [];
+         this.regions = regions.length ? this.regionsOptions.filter(({code}) => regions.split(',').includes(code)): [];
+         this.states = states.length && regions.length ? this.statesOptions.filter(({code}) => states.split(',').includes(code)): [];
+         this.otg = states.length && regions.length && otg.length ? this.otgOptions.filter(({code}) => otg.split(',').includes(code)): [];
+         this.active = active;
+         this.date = startDate && endDate ? [startDate,endDate]: [];
        } catch (e) {
          console.error(e);
        }
      },
-     resetFilters() {
-       this.$router.push({ path: '/', query: {} });
+     async resetFilters() {
+       await this.$router.push({ path: '/', query: {} });
+       await this.getData({query: {},serverFetch: false});
      },
      async applyFilters() {
-       this.$router.replace({ path: '/', query: {
-           ...(this.types.length && {
-             types: this.types.join(',')
-           }),
-           ...((this.types.length && this.subtypes.length) && {
-             subtypes: this.subtypes.join(',')
-           }),
-           ...(this.regions.length && {
-             regions: this.regions.map(({code}) => code).join(',')
-           }),
-           ...((this.regions.length && this.states.length) && {
-             states: this.states.map(({code}) => code).join(',')
-           }),
-           ...((this.regions.length && this.states.length && this.otg.length) && {
-             otg: this.otg.map(({code}) => code).join(',')
-           }),
-           ...(this.active && {
-             active: this.active
-           }),
-           ...(this.date.length && {
-             startDate: this.date[0],
-             endDate: this.date[1]
-           })
-         }
-        }
-       );
-       await this.getData();
+       const query = {
+         ...(this.types.length && {
+           types: this.types.join(',')
+         }),
+         ...((this.types.length && this.subtypes.length) && {
+           subtypes: this.subtypes.join(',')
+         }),
+         ...(this.regions.length && {
+           regions: this.regions.map(({code}) => code).join(',')
+         }),
+         ...((this.regions.length && this.states.length) && {
+           states: this.states.map(({code}) => code).join(',')
+         }),
+         ...((this.regions.length && this.states.length && this.otg.length) && {
+           otg: this.otg.map(({code}) => code).join(',')
+         }),
+         ...(this.active && {
+           active: this.active
+         }),
+         ...(this.date.length && {
+           startDate: this.date[0],
+           endDate: this.date[1]
+         })
+       };
+       await this.$router.push({ path: '/', query});
+       await this.getData({query,serverFetch: false});
      }
   }
 }
