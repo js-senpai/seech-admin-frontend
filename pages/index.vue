@@ -118,7 +118,7 @@ export default {
      async getData({query = {},serverFetch = true}) {
        try {
          const getQueryParams = serverFetch ? this.$route.query: query;
-         const queryParamsToString = Object.values(this.$route.query).length ? Object.keys(getQueryParams)
+         const queryParamsToString = Object.values(getQueryParams).length ? Object.keys(getQueryParams)
            .map(key => `${key}=${getQueryParams[key]}`)
            .join('&'): '';
          const { data: { items = [] } } = await this.$axios.get(`${this.$config.backendUrl}/kpi${queryParamsToString.length ? `?${queryParamsToString}`: ''}`);
