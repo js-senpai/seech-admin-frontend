@@ -46,7 +46,7 @@
                 :current-page="currentPage"
                 :sort-by.sync="sortBy"
                 :sort-desc.sync="sortDesc"
-                :sort-compare="customSort"
+                @sort-changed="customSort"
               />
               <div class="d-flex justify-content-between align-content-center">
                 <div>{{ $t('other.totalItems', { total: rows }) }}</div>
