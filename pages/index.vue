@@ -11,6 +11,9 @@
 <script>
 export default {
   name: 'IndexPage',
+  components: {
+    StatisticTable: () => import("~/components/StatisticTable/StatisticTable")
+  },
   layout: 'auth',
   middleware: 'isAuthenticated',
   data: () => ({

@@ -1,4 +1,7 @@
 {
+  "other": {
+    "totalItems": "Всього {total} запиcів"
+  },
   "filters": {
     "date": "Дата",
     "region": "Область",
@@ -18,7 +21,21 @@
     "totalSaleTickets": "К-ть тікетів на продаж",
     "totalBuyTickets": "К-ть тікетів на покупку"
   },
-  "tickets": {
+  "ticketsBuy": {
+    "date": "Дата",
+    "dateTime": "Час",
+    "type": "Тип",
+    "col": "К-ть",
+    "weightType": "Тип ваги",
+    "active": "Активність",
+    "region": "Область",
+    "state": "Район",
+    "otg": "ОТГ",
+    "name": "Ім'я",
+    "phone": "Номер",
+    "description": "Опис"
+  },
+  "ticketsSale": {
     "date": "Дата",
     "dateTime": "Час",
     "type": "Тип",

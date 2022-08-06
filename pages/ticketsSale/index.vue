@@ -10,6 +10,9 @@
 <script>
 export default {
   name: 'TicketsSalePage',
+  components: {
+    StatisticTable: () => import("~/components/StatisticTable/StatisticTable")
+  },
   layout: 'auth',
   middleware: 'isAuthenticated',
   data: () => ({
@@ -18,7 +21,7 @@ export default {
   computed: {
     fields() {
       const sortNames = ['date','col','price'];
-      return Object.entries(this.$i18n.t('tickets')).map(([name,value]) => ({
+      return Object.entries(this.$i18n.t('ticketsSale')).map(([name,value]) => ({
         key: name,
         label: value,
         ...(sortNames.includes(name) && {
@@ -31,22 +34,14 @@ export default {
     async getData({queryParams = ''}) {
       try {
         const { data: { items = [] } } = await this.$axios.get(`${this.$config.backendUrl}/tickets-sale${queryParams ? `?${queryParams}`: ''}`);
-        this.items = items.map((active,region,state,otg,...data) => ({
+        const getRegions = this.$i18n.t(`regions`);
+        this.items = items.map(({active,region,state,otg,...data}) => ({
           ...data,
-          region,
-          state,
-          otg,
+          region: getRegions[region]?.name || '-',
+          state: getRegions[region]?.states[state]?.name || '-',
+          otg: getRegions[region]?.states[state]?.otg[otg] || '-',
           ...(typeof active !== 'undefined' && {
             active: active ? '🟢': '🔴'
-          }),
-          ...((region && region !== '-') && {
-            region: this.$i18n.t(`regions.${region}.name`)
-          }),
-          ...((region && state && region !== '-' && state !== '-') && {
-            state: this.$i18n.t(`regions.${region}.states.${state}.name`)
-          }),
-          ...((region && state && otg && region !== '-' && state !== '-' && otg !== '-') && {
-            otg: this.$i18n.t(`regions.${region}.states.${state}.otg.${otg}`)
           }),
         }));
       } catch (e) {

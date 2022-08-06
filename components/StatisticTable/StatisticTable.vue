@@ -46,13 +46,18 @@
                 :current-page="currentPage"
                 :sort-by.sync="sortBy"
                 :sort-desc.sync="sortDesc"
-              />
-              <b-pagination
-                v-model="currentPage"
-                :total-rows="rows"
-                :per-page="perPage"
-                aria-controls="my-table"
-              ></b-pagination>
+              >
+                <slot />
+              </b-table>
+              <div class="d-flex justify-content-between align-content-center">
+                <div>{{ $t('other.totalItems', { total: rows }) }}</div>
+                <b-pagination
+                  v-model="currentPage"
+                  :total-rows="rows"
+                  :per-page="perPage"
+                  aria-controls="my-table"
+                ></b-pagination>
+              </div>
             </div>
           </div>
         </BCol>

@@ -5,11 +5,18 @@
     redirect-path="/tickets-buy"
     :get-api-data="getData"
     title="Tickets buy"
-  />
+  >
+    <template #cell(description)="data">
+      <div :data-value="data.description">123</div>
+    </template>
+  </StatisticTable>
 </template>
 <script>
 export default {
   name: 'TicketsBuyPage',
+  components: {
+    StatisticTable: () => import("~/components/StatisticTable/StatisticTable")
+  },
   layout: 'auth',
   middleware: 'isAuthenticated',
   data: () => ({
@@ -17,8 +24,8 @@ export default {
   }),
   computed: {
     fields() {
-      const sortNames = ['date','col','price'];
-      return Object.entries(this.$i18n.t('tickets')).map(([name,value]) => ({
+      const sortNames = ['date','col'];
+      return Object.entries(this.$i18n.t('ticketsBuy')).map(([name,value]) => ({
         key: name,
         label: value,
           ...(sortNames.includes(name) && {
@@ -29,25 +36,16 @@ export default {
   },
   methods: {
     async getData({queryParams = ''}) {
-      console.log(this.$i18n.t(`regions.257.name`))
       try {
         const { data: { items = [] } } = await this.$axios.get(`${this.$config.backendUrl}/tickets-buy${queryParams ? `?${queryParams}`: ''}`);
-        this.items = items.map((active,region,state,otg,...data) => ({
+        const getRegions = this.$i18n.t(`regions`);
+        this.items = items.map(({active,region,state,otg,...data}) => ({
           ...data,
-          region,
-          state,
-          otg,
+          region: getRegions[region]?.name || '-',
+          state: getRegions[region]?.states[state]?.name || '-',
+          otg: getRegions[region]?.states[state]?.otg[otg] || '-',
           ...(typeof active !== 'undefined' && {
             active: active ? '🟢': '🔴'
-          }),
-          ...((region && region !== '-') && {
-            region: this.$i18n.t(`regions.${region}.name`)
-          }),
-          ...((region && state && region !== '-' && state !== '-') && {
-            state: this.$i18n.t(`regions.${region}.states.${state}.name`)
-          }),
-          ...((region && state && otg && region !== '-' && state !== '-' && otg !== '-') && {
-            otg: this.$i18n.t(`regions.${region}.states.${state}.otg.${otg}`)
           }),
         }));
       } catch (e) {
