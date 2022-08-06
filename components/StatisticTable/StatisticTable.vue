@@ -208,6 +208,7 @@ export default {
           sortByDesc: this.sortDesc
         })
       };
+      await this.$router.push({ path: this.redirectPath, query});
       await this.getData({query,serverFetch: false});
     },
     async resetFilters(hide) {
