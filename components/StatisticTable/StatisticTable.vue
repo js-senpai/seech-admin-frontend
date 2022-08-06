@@ -46,6 +46,7 @@
                 :current-page="currentPage"
                 :sort-by.sync="sortBy"
                 :sort-desc.sync="sortDesc"
+                :sort-compare="customSort"
               />
               <div class="d-flex justify-content-between align-content-center">
                 <div>{{ $t('other.totalItems', { total: rows }) }}</div>
@@ -95,7 +96,7 @@ export default {
   },
   data: () => ({
     sortBy: '',
-    sortDesc: false,
+    sortDesc: true,
     date: [],
     types: [],
     subtypes: [],
@@ -164,7 +165,9 @@ export default {
           .map(key => `${key}=${getQueryParams[key]}`)
           .join('&'): '';
         await this.getApiData({queryParams: queryParamsToString});
-        const { types = '',subtypes = '',regions = '',states = '',otg = '',startDate = '',endDate = '',active } = getQueryParams;
+        const { types = '',subtypes = '',regions = '',states = '',otg = '',startDate = '',endDate = '',active,sortBy = '',sortByDesc = true } = getQueryParams;
+        this.sortBy = sortBy;
+        this.sortDesc = sortByDesc;
         this.types = types ? types.split(','): [];
         this.subtypes = types.length && subtypes.length ? subtypes.split(','): [];
         this.regions = regions.length ? this.regionsOptions.filter(({code}) => regions.split(',').includes(code)): [];
@@ -175,6 +178,37 @@ export default {
       } catch (e) {
         console.error(e);
       }
+    },
+    async customSort(){
+      const query = {
+        ...(this.types.length && {
+          types: this.types.join(',')
+        }),
+        ...((this.types.length && this.subtypes.length) && {
+          subtypes: this.subtypes.join(',')
+        }),
+        ...(this.regions.length && {
+          regions: this.regions.map(({code}) => code).join(',')
+        }),
+        ...((this.regions.length && this.states.length) && {
+          states: this.states.map(({code}) => code).join(',')
+        }),
+        ...((this.regions.length && this.states.length && this.otg.length) && {
+          otg: this.otg.map(({code}) => code).join(',')
+        }),
+        ...(this.active && {
+          active: this.active
+        }),
+        ...(this.date.length && {
+          startDate: this.date[0],
+          endDate: this.date[1]
+        }),
+        ...(this.sortBy && {
+          sortBy: this.sortBy,
+          sortByDesc: this.sortDesc
+        })
+      };
+      await this.getData({query,serverFetch: false});
     },
     async resetFilters(hide) {
       await this.$router.push({ path: this.redirectPath, query: {} });
@@ -204,6 +238,10 @@ export default {
         ...(this.date.length && {
           startDate: this.date[0],
           endDate: this.date[1]
+        }),
+        ...(this.sortBy && {
+          sortBy: this.sortBy,
+          sortByDesc: this.sortDesc
         })
       };
       await this.$router.push({ path: this.redirectPath, query});
