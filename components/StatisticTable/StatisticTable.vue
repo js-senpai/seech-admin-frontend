@@ -114,7 +114,7 @@ export default {
     states: [],
     otg: [],
     active: '',
-    activeOptions: ['true','false'],
+    activeOptions: [{key: 'true',label: '🟢'},{key: 'false',label: '🔴'}],
     currentPage: 1,
     perPage: 20,
     isLoad: true
@@ -188,7 +188,7 @@ export default {
         this.regions = regions.length ? this.regionsOptions.filter(({code}) => regions.split(',').includes(code)): [];
         this.states = states.length && regions.length ? this.statesOptions.filter(({code}) => states.split(',').includes(code)): [];
         this.otg = states.length && regions.length && otg.length ? this.otgOptions.filter(({code}) => otg.split(',').includes(code)): [];
-        this.active = active;
+        this.active = active === 'true' ? {key: 'true',label: '🟢'}:{key: 'false',label: '🔴'} ;
         this.date = startDate && endDate ? [startDate,endDate]: [];
       } catch (e) {
         console.error(e);
@@ -214,7 +214,7 @@ export default {
           otg: this.otg.map(({code}) => code).join(',')
         }),
         ...(this.active && {
-          active: this.active
+          active: this.active.key
         }),
         ...(this.date.length && {
           startDate: this.date[0],
@@ -226,11 +226,11 @@ export default {
         })
       };
       await this.$router.push({ path: this.redirectPath, query});
-      await this.getData({query,serverFetch: false});
+      // await this.getData({query,serverFetch: false});
     },
     async resetFilters(hide) {
       await this.$router.push({ path: this.redirectPath, query: {} });
-      await this.getData({query: {},serverFetch: false});
+      // await this.getData({query: {},serverFetch: false});
       hide();
     },
     async applyFilters(hide) {
@@ -263,7 +263,7 @@ export default {
         })
       };
       await this.$router.push({ path: this.redirectPath, query});
-      await this.getData({query,serverFetch: false});
+      // await this.getData({query,serverFetch: false});
       hide();
     }
   }
