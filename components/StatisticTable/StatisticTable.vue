@@ -251,7 +251,7 @@ export default {
           otg: this.otg.map(({code}) => code).join(',')
         }),
         ...(this.active && {
-          active: this.active
+          active: this.active.key
         }),
         ...(this.date.length && {
           startDate: this.date[0],
