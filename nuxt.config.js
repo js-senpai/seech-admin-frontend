@@ -41,7 +41,7 @@ export default {
     '@nuxtjs/moment',
   ],
   styleResources: {
-    sass: [
+    scss: [
       '~/assets/scss/main.scss',
     ],
   },
