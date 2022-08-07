@@ -166,6 +166,10 @@ export default {
       }
     }
   },
+  watch: {
+    '$route.query': '$fetch'
+  },
+  fetchOnServer: false,
   methods: {
     async getData({query = {},serverFetch = true}) {
       this.isLoad = true;
