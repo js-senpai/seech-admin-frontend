@@ -46,9 +46,10 @@
                 :current-page="currentPage"
                 :sort-by.sync="sortBy"
                 :sort-desc.sync="sortDesc"
+                show-empty
                 @sort-changed="customSort"
               >
-                <template slot="empty">
+                <template #emptyHtml="scope">
                   <div v-if="isLoad" class="text-center">
                     <b-spinner label="Spinning"></b-spinner>
                   </div>
