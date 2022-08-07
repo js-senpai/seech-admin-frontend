@@ -47,7 +47,16 @@
                 :sort-by.sync="sortBy"
                 :sort-desc.sync="sortDesc"
                 @sort-changed="customSort"
-              />
+              >
+                <template slot="empty">
+                  <div v-if="isLoad" class="text-center">
+                    <b-spinner label="Spinning"></b-spinner>
+                  </div>
+                  <div v-else class="text-center">
+                    No rows to display!
+                  </div>
+                </template>
+              </b-table>
               <div class="d-flex justify-content-between align-content-center">
                 <div>{{ $t('other.totalItems', { total: rows }) }}</div>
                 <b-pagination
@@ -106,7 +115,8 @@ export default {
     active: '',
     activeOptions: ['true','false'],
     currentPage: 1,
-    perPage: 20
+    perPage: 20,
+    isLoad: true
   }),
   async fetch(){
     await this.getData({query: {},serverFetch: true});
@@ -159,6 +169,7 @@ export default {
   fetchOnServer: true,
   methods: {
     async getData({query = {},serverFetch = true}) {
+      this.isLoad = true;
       try {
         const getQueryParams = serverFetch ? this.$route.query: query;
         const queryParamsToString = Object.values(getQueryParams).length ? Object.keys(getQueryParams)
@@ -177,6 +188,8 @@ export default {
         this.date = startDate && endDate ? [startDate,endDate]: [];
       } catch (e) {
         console.error(e);
+      } finally {
+        this.isLoad = false;
       }
     },
     async customSort(){
