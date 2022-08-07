@@ -40,7 +40,11 @@ export default {
     '@nuxt/typescript-build',
     '@nuxtjs/moment',
   ],
-
+  styleResources: {
+    sass: [
+      '~/assets/scss/main.scss',
+    ],
+  },
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/bootstrap

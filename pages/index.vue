@@ -4,7 +4,7 @@
     :fields="fields"
     redirect-path="/"
     :get-api-data="getData"
-    title="KPI"
+    :title="$t('kpi.title')"
   />
 </template>
 
@@ -21,7 +21,7 @@ export default {
   }),
   computed: {
     fields() {
-      return Object.entries(this.$i18n.t('kpi')).map(([name,value]) => ({
+      return Object.entries(this.$i18n.t('kpi.table.headers')).map(([name,value]) => ({
         [name]: value
       }))
     },

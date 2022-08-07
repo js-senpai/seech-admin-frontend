@@ -4,7 +4,7 @@
     :fields="fields"
     redirect-path="/ticketsSale"
     :get-api-data="getData"
-    title="Tickets sale"
+    :title="$t('ticketsSale.title')"
   />
 </template>
 <script>
@@ -21,7 +21,7 @@ export default {
   computed: {
     fields() {
       const sortNames = ['date','col','price'];
-      return Object.entries(this.$i18n.t('ticketsSale')).map(([name,value]) => ({
+      return Object.entries(this.$i18n.t('ticketsSale.table.headers')).map(([name,value]) => ({
         key: name,
         label: value,
         ...(sortNames.includes(name) && {

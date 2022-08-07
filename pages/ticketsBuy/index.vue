@@ -4,12 +4,8 @@
     :fields="fields"
     redirect-path="/ticketsBuy"
     :get-api-data="getData"
-    title="Tickets buy"
-  >
-    <template #cell(description)="data">
-      <div :data-value="data.description">123</div>
-    </template>
-  </StatisticTable>
+    :title="$t('ticketsBuy.title')"
+  />
 </template>
 <script>
 export default {
@@ -25,7 +21,7 @@ export default {
   computed: {
     fields() {
       const sortNames = ['date','col'];
-      return Object.entries(this.$i18n.t('ticketsBuy')).map(([name,value]) => ({
+      return Object.entries(this.$i18n.t('ticketsBuy.table.headers')).map(([name,value]) => ({
         key: name,
         label: value,
           ...(sortNames.includes(name) && {
