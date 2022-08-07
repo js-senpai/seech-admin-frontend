@@ -166,7 +166,6 @@ export default {
       }
     }
   },
-  fetchOnServer: true,
   methods: {
     async getData({query = {},serverFetch = true}) {
       this.isLoad = true;
