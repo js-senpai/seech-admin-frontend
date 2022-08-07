@@ -182,13 +182,17 @@ export default {
         await this.getApiData({queryParams: queryParamsToString});
         const { types = '',subtypes = '',regions = '',states = '',otg = '',startDate = '',endDate = '',active,sortBy = '',sortByDesc = true } = getQueryParams;
         this.sortBy = sortBy;
-        this.sortDesc = sortByDesc;
+        this.sortDesc = sortByDesc === 'true';
         this.types = types ? types.split(','): [];
         this.subtypes = types.length && subtypes.length ? subtypes.split(','): [];
         this.regions = regions.length ? this.regionsOptions.filter(({code}) => regions.split(',').includes(code)): [];
         this.states = states.length && regions.length ? this.statesOptions.filter(({code}) => states.split(',').includes(code)): [];
         this.otg = states.length && regions.length && otg.length ? this.otgOptions.filter(({code}) => otg.split(',').includes(code)): [];
-        this.active = active === 'true' ? {key: 'true',label: '🟢'}:{key: 'false',label: '🔴'} ;
+        this.active = active ? {
+          ...(active === 'true' ? {
+            key: 'true',label: '🟢'
+          }: {key: 'false',label: '🔴'})
+        }: '' ;
         this.date = startDate && endDate ? [startDate,endDate]: [];
       } catch (e) {
         console.error(e);
@@ -196,7 +200,9 @@ export default {
         this.isLoad = false;
       }
     },
-    async customSort(){
+    async customSort({sortBy = '',sortDesc = true}){
+      this.sortBy = sortBy;
+      this.sortDesc = sortDesc;
       const query = {
         ...(this.types.length && {
           types: this.types.join(',')
@@ -226,11 +232,9 @@ export default {
         })
       };
       await this.$router.push({ path: this.redirectPath, query});
-      // await this.getData({query,serverFetch: false});
     },
     async resetFilters(hide) {
       await this.$router.push({ path: this.redirectPath, query: {} });
-      // await this.getData({query: {},serverFetch: false});
       hide();
     },
     async applyFilters(hide) {
@@ -263,7 +267,6 @@ export default {
         })
       };
       await this.$router.push({ path: this.redirectPath, query});
-      // await this.getData({query,serverFetch: false});
       hide();
     }
   }
