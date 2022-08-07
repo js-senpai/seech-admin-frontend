@@ -49,7 +49,7 @@
                 show-empty
                 @sort-changed="customSort"
               >
-                <template #emptyHtml="scope">
+                <template #empty="scope">
                   <div v-if="isLoad" class="text-center">
                     <b-spinner label="Spinning"></b-spinner>
                   </div>
