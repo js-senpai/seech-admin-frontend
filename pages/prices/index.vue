@@ -5,6 +5,8 @@
     redirect-path="/prices"
     :get-api-data="getData"
     :title="$t('prices.title')"
+    disable-active
+    disable-types
   />
 </template>
 
