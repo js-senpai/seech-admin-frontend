@@ -4,25 +4,25 @@
       <template #default="{ hide }">
         <div class="p-3">
           <BFormGroup  :label="$t('filters.date')" class="mb-2">
-            <DatePicker v-model="date" range class="w-100" value-type="DD-MM-YYYY" />
+            <DatePicker v-model="date" range class="w-100" value-type="DD-MM-YYYY" :disabled="disableDates" />
           </BFormGroup>
           <BFormGroup  :label="$t('filters.region')" class="mb-2">
-            <v-select v-model="regions" :options="regionsOptions" multiple  />
+            <v-select v-model="regions" :options="regionsOptions" multiple :disabled="disableRegion"  />
           </BFormGroup>
           <BFormGroup  :label="$t('filters.state')" class="mb-2">
-            <v-select v-model="states" :options="statesOptions" multiple :disabled="!regions.length"  />
+            <v-select v-model="states" :options="statesOptions" multiple :disabled="!regions.length || disableRegion"  />
           </BFormGroup>
           <BFormGroup  :label="$t('filters.otg')" class="mb-2">
-            <v-select v-model="otg" :options="otgOptions" multiple :disabled="!states.length"  />
+            <v-select v-model="otg" :options="otgOptions" multiple :disabled="!states.length || disableRegion"  />
           </BFormGroup>
           <BFormGroup  :label="$t('filters.type')" class="mb-2">
-            <v-select v-model="types" :options="typesOptions" multiple  />
+            <v-select v-model="types" :options="typesOptions" multiple :disabled="disableTypes" />
           </BFormGroup>
           <BFormGroup  :label="$t('filters.subtype')" class="mb-2">
-            <v-select v-model="subtypes" :options="subtypesOptions" multiple :disabled="!types.length"  />
+            <v-select v-model="subtypes" :options="subtypesOptions" multiple :disabled="!types.length || disableTypes"  />
           </BFormGroup>
           <BFormGroup  :label="$t('filters.active')" class="mb-3">
-            <v-select v-model="active" :options="activeOptions"  />
+            <v-select v-model="active" :options="activeOptions" :disabled="disableActive"  />
           </BFormGroup>
           <BButton variant="success" class="w-100 mb-3" @click="applyFilters(hide)">{{$t('filters.accept')}}</BButton>
           <BButton variant="danger" class="w-100" @click="resetFilters(hide)">{{$t('filters.clear')}}</BButton>
@@ -58,7 +58,7 @@
                   </div>
                 </template>
               </b-table>
-              <div class="d-flex justify-content-between align-content-center">
+              <div v-if="items.length > 1" class="d-flex justify-content-between align-content-center">
                 <div>{{ $t('other.totalItems', { total: rows }) }}</div>
                 <b-pagination
                   v-model="currentPage"
@@ -102,6 +102,26 @@ export default {
       required: true,
       type: String,
       default: ''
+    },
+    disableDates: {
+      required: false,
+      type: Boolean,
+      default: false
+    },
+    disableTypes: {
+      required: false,
+      type: Boolean,
+      default: false
+    },
+    disableActive: {
+      required: false,
+      type: Boolean,
+      default: false
+    },
+    disableRegion: {
+      required: false,
+      type: Boolean,
+      default: false
     }
   },
   data: () => ({

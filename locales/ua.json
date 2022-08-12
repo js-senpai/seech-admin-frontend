@@ -26,6 +26,22 @@
       }
     }
   },
+  "kpiMonthly": {
+    "title": "KPI місячне",
+    "table": {
+      "headers": {
+        "date": "Дата",
+        "totalUsers": "Всього користувачів",
+        "activeUsers": "Активні користувачі",
+        "ratingOfService": "Оцінка сервісу",
+        "totalSaleTickets": "К-ть тікетів на продаж",
+        "totalBuyTickets": "К-ть тікетів на покупку"
+      }
+    }
+  },
+  "prices": {
+    "title": "Ціни"
+  },
   "ticketsBuy": {
     "title": "Купити",
     "table": {
