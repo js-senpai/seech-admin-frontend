@@ -24,8 +24,8 @@
           <BFormGroup  :label="$t('filters.active')" class="mb-3">
             <v-select v-model="active" :options="activeOptions" :disabled="disableActive"  />
           </BFormGroup>
-          <BButton variant="success" class="w-100 mb-3" @click="applyFilters(hide)">{{$t('filters.accept')}}</BButton>
-          <BButton variant="danger" class="w-100" @click="resetFilters(hide)">{{$t('filters.clear')}}</BButton>
+          <BButton variant="success" class="w-100 mb-3" @click="applyFilters(hide)">{{$t('buttons.accept')}}</BButton>
+          <BButton variant="danger" class="w-100" @click="resetFilters(hide)">{{$t('buttons.clear')}}</BButton>
         </div>
       </template>
     </b-sidebar>
@@ -35,7 +35,12 @@
           <div class="main-page shadow bg-white p-3 rounded mt-3 ">
             <h2 class="mb-4">{{title}}</h2>
             <div class="mb-4 d-flex justify-content-end">
-              <b-button v-b-toggle.sidebar>{{$t('filters.filters')}}</b-button>
+              <b-button v-if="selectable" class="mr-1">
+                <b-form-checkbox
+                  v-model="selected"
+                >{{$t('buttons.selected')}}</b-form-checkbox>
+              </b-button>
+              <b-button v-b-toggle.sidebar>{{$t('buttons.filters')}}</b-button>
             </div>
             <div class="overflow-auto w-100">
               <b-table
@@ -49,6 +54,12 @@
                 show-empty
                 @sort-changed="customSort"
               >
+                <template v-if="selectable" #cell(checked)="data">
+                  <b-form-checkbox
+                    v-model="data.item.checked"
+                    @change="updateSelectedTickets()"
+                  />
+                </template>
                 <template #empty="scope">
                   <div v-if="isLoad" class="text-center">
                     <b-spinner label="Spinning"></b-spinner>
@@ -122,6 +133,16 @@ export default {
       required: false,
       type: Boolean,
       default: false
+    },
+    updateSelectedTickets: {
+      required: false,
+      type: Function,
+      default: () => {}
+    },
+    selectable: {
+      required: false,
+      type: Boolean,
+      default: false
     }
   },
   data: () => ({
@@ -137,7 +158,8 @@ export default {
     activeOptions: [{key: 'true',label: '🟢'},{key: 'false',label: '🔴'}],
     currentPage: 1,
     perPage: 20,
-    isLoad: true
+    isLoad: true,
+    selected: false
   }),
   async fetch(){
     await this.getData({query: {},serverFetch: true});
@@ -185,10 +207,46 @@ export default {
       set (value) {
         this.$emit('update:data', value);
       }
+    },
+    getQueries(){
+      return {
+        ...(this.selected && {
+          selected: this.selected
+        }),
+        ...(this.types.length && {
+          types: this.types.join(',')
+        }),
+        ...((this.types.length && this.subtypes.length) && {
+          subtypes: this.subtypes.join(',')
+        }),
+        ...(this.regions.length && {
+          regions: this.regions.map(({code}) => code).join(',')
+        }),
+        ...((this.regions.length && this.states.length) && {
+          states: this.states.map(({code}) => code).join(',')
+        }),
+        ...((this.regions.length && this.states.length && this.otg.length) && {
+          otg: this.otg.map(({code}) => code).join(',')
+        }),
+        ...(this.active && {
+          active: this.active.key
+        }),
+        ...(this.date.length && {
+          startDate: this.date[0],
+          endDate: this.date[1]
+        }),
+        ...(this.sortBy && {
+          sortBy: this.sortBy,
+          sortByDesc: this.sortDesc
+        })
+      }
     }
   },
   watch: {
-    '$route.query': '$fetch'
+    '$route.query': '$fetch',
+    async selected(){
+      await this.$router.push({ path: this.redirectPath, query: this.getQueries});
+    }
   },
   fetchOnServer: false,
   methods: {
@@ -200,9 +258,10 @@ export default {
           .map(key => `${key}=${getQueryParams[key]}`)
           .join('&'): '';
         await this.getApiData({queryParams: queryParamsToString});
-        const { types = '',subtypes = '',regions = '',states = '',otg = '',startDate = '',endDate = '',active,sortBy = '',sortByDesc = true } = getQueryParams;
+        const { types = '',subtypes = '',regions = '',states = '',otg = '',startDate = '',endDate = '',active,sortBy = '',sortByDesc = true, selected = false } = getQueryParams;
         this.sortBy = sortBy;
         this.sortDesc = sortByDesc === 'true';
+        this.selected = selected === 'true';
         this.types = types ? types.split(','): [];
         this.subtypes = types.length && subtypes.length ? subtypes.split(','): [];
         this.regions = regions.length ? this.regionsOptions.filter(({code}) => regions.split(',').includes(code)): [];
@@ -223,72 +282,16 @@ export default {
     async customSort({sortBy = '',sortDesc = true}){
       this.sortBy = sortBy;
       this.sortDesc = sortDesc;
-      const query = {
-        ...(this.types.length && {
-          types: this.types.join(',')
-        }),
-        ...((this.types.length && this.subtypes.length) && {
-          subtypes: this.subtypes.join(',')
-        }),
-        ...(this.regions.length && {
-          regions: this.regions.map(({code}) => code).join(',')
-        }),
-        ...((this.regions.length && this.states.length) && {
-          states: this.states.map(({code}) => code).join(',')
-        }),
-        ...((this.regions.length && this.states.length && this.otg.length) && {
-          otg: this.otg.map(({code}) => code).join(',')
-        }),
-        ...(this.active && {
-          active: this.active.key
-        }),
-        ...(this.date.length && {
-          startDate: this.date[0],
-          endDate: this.date[1]
-        }),
-        ...(this.sortBy && {
-          sortBy: this.sortBy,
-          sortByDesc: this.sortDesc
-        })
-      };
-      await this.$router.push({ path: this.redirectPath, query});
+      await this.$router.push({ path: this.redirectPath, query: this.getQueries});
     },
     async resetFilters(hide) {
       await this.$router.push({ path: this.redirectPath, query: {} });
       hide();
     },
     async applyFilters(hide) {
-      const query = {
-        ...(this.types.length && {
-          types: this.types.join(',')
-        }),
-        ...((this.types.length && this.subtypes.length) && {
-          subtypes: this.subtypes.join(',')
-        }),
-        ...(this.regions.length && {
-          regions: this.regions.map(({code}) => code).join(',')
-        }),
-        ...((this.regions.length && this.states.length) && {
-          states: this.states.map(({code}) => code).join(',')
-        }),
-        ...((this.regions.length && this.states.length && this.otg.length) && {
-          otg: this.otg.map(({code}) => code).join(',')
-        }),
-        ...(this.active && {
-          active: this.active.key
-        }),
-        ...(this.date.length && {
-          startDate: this.date[0],
-          endDate: this.date[1]
-        }),
-        ...(this.sortBy && {
-          sortBy: this.sortBy,
-          sortByDesc: this.sortDesc
-        })
-      };
-      await this.$router.push({ path: this.redirectPath, query});
+      await this.$router.push({ path: this.redirectPath, query: this.getQueries});
       hide();
-    }
+    },
   }
 }
 </script>

@@ -5,6 +5,8 @@
     redirect-path="/ticketsSale"
     :get-api-data="getData"
     :title="$t('ticketsSale.title')"
+    :update-selected-tickets="updateSelectedTickets"
+    selectable
   />
 </template>
 <script>
@@ -48,6 +50,18 @@ export default {
         console.error(e);
       }
     },
+    async updateSelectedTickets(){
+      try {
+        await this.$axios.post(`${this.$config.backendUrl}/selected-tickets`,{
+          isSale: true,
+          tickets: this.items.map(({_id,checked = false}) => ({
+            _id,checked
+          }))
+        })
+      } catch (e) {
+        console.error(e);
+      }
+    }
   }
 }
 </script>

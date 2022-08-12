@@ -5,6 +5,8 @@
     redirect-path="/ticketsBuy"
     :get-api-data="getData"
     :title="$t('ticketsBuy.title')"
+    :update-selected-tickets="updateSelectedTickets"
+    selectable
   />
 </template>
 <script>
@@ -21,13 +23,17 @@ export default {
   computed: {
     fields() {
       const sortNames = ['date','col'];
-      return Object.entries(this.$i18n.t('ticketsBuy.table.headers')).map(([name,value]) => ({
+      const filterData = Object.entries(this.$i18n.t('ticketsBuy.table.headers')).map(([name,value]) => ({
         key: name,
         label: value,
-          ...(sortNames.includes(name) && {
-            sortable: true
-          })
-      }))
+        ...(sortNames.includes(name) && {
+          sortable: true
+        })
+      }));
+      return [
+        {key: 'checked',label: ''},
+        ...filterData,
+      ]
     },
   },
   methods: {
@@ -48,6 +54,18 @@ export default {
         console.error(e);
       }
     },
+    async updateSelectedTickets(){
+      try {
+        await this.$axios.post(`${this.$config.backendUrl}/selected-tickets`,{
+          isSale: false,
+          tickets: this.items.map(({_id,checked = false}) => ({
+            _id,checked
+          }))
+        })
+      } catch (e) {
+        console.error(e);
+      }
+    }
   }
 }
 </script>
