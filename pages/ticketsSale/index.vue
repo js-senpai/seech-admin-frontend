@@ -23,13 +23,17 @@ export default {
   computed: {
     fields() {
       const sortNames = ['date','col','price'];
-      return Object.entries(this.$i18n.t('ticketsSale.table.headers')).map(([name,value]) => ({
+      const filterData = Object.entries(this.$i18n.t('ticketsSale.table.headers')).map(([name,value]) => ({
         key: name,
         label: value,
         ...(sortNames.includes(name) && {
           sortable: true
         })
-      }))
+      }));
+      return [
+        {key: 'checked',label: ''},
+        ...filterData,
+      ]
     },
   },
   methods: {
