@@ -1,4 +1,15 @@
 {
+  "auth": {
+    "links": {
+      "sell": "\uD83D\uDCB8 Продати",
+      "buy": "\uD83D\uDED2 Купити"
+    },
+    "title": {
+      "first": "чи",
+      "second": "в своїй громаді"
+    },
+    "telegramLink": "З лану до телеграму"
+  },
   "other": {
     "totalItems": "Всього {total} запиcів"
   },

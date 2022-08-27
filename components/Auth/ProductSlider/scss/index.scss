@@ -1,0 +1,26 @@
+.auth-product-slider{
+  margin-bottom: 73px;
+  &__wrapper{
+    transition-timing-function: linear;
+  }
+  &__item{
+    height: 150px;
+    position: relative;
+  }
+  &__icon{
+    font-size: 30px;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+  }
+}
+@media (min-width: 768px){
+  .auth-product-slider{
+    &__item{
+      height: 240px;
+    }
+    &__icon{
+      font-size: 50px;
+    }
+  }
+}

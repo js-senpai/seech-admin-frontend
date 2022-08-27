@@ -11,7 +11,7 @@
         <b-nav-item-dropdown  right>
           <!-- Using 'button-content' slot -->
           <template #button-content>
-            <b-img-lazy src="~/assets/img/user.png" rounded="true" width="30" class="mr-1" />
+            <b-img-lazy src="~/assets/img/header/user.png" rounded="true" width="30" class="mr-1" />
             <span>{{user.name}}</span>
           </template>
           <b-dropdown-item href="#" @click="logout()">Logout</b-dropdown-item>
@@ -21,9 +21,10 @@
   </b-navbar>
 </template>
 <script>
-import Navigation from "../Navigation/Navigation";
 export default {
-  components: {Navigation},
+  components: {
+    Navigation: () => import("../Navigation/Navigation")
+  },
   computed: {
     user(){
       return this.$auth.user

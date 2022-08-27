@@ -1,17 +1,11 @@
 <template>
-  <BContainer>
-    <BRow>
-      <BCol class="d-flex align-items-center justify-content-center login-container">
-        <client-only>
-          <VueTelegramLogin
-            mode="callback"
-            :telegram-login="botName"
-            @callback="telegramCallback" />
-        </client-only>
-
-      </BCol>
-    </BRow>
-  </BContainer>
+  <client-only>
+    <VueTelegramLogin
+      class="telegram-login"
+      mode="callback"
+      :telegram-login="botName"
+      @callback="telegramCallback" />
+  </client-only>
 </template>
 <script>
 export default {

@@ -16,7 +16,9 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [],
+  css: [
+    { src: '~/assets/scss/main.scss',lang: 'scss' },
+  ],
 
   server: {
     host: '127.0.0.1',
@@ -26,7 +28,8 @@ export default {
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
     { src: '~/plugins/telegram-auth.js', mode: 'client' },
-    { src: '~/plugins/datepicker.js' }
+    { src: '~/plugins/datepicker.js' },
+    { src: '~/plugins/swiper.js', mode: 'client' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -39,12 +42,14 @@ export default {
     // https://go.nuxtjs.dev/typescript
     '@nuxt/typescript-build',
     '@nuxtjs/moment',
+    ['@nuxtjs/fontawesome', {
+      icons: {
+        solid: true,
+        brands: true
+      }
+    }],
+    'nuxt-gsap-module'
   ],
-  styleResources: {
-    scss: [
-      '~/assets/scss/main.scss',
-    ],
-  },
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/bootstrap
