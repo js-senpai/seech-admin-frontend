@@ -16,7 +16,7 @@ export default {
           sliderPerView: 1
         },
         768: {
-          slidesPerView: 3,
+          slidesPerView: 6,
         }
       },
       loop: true,
@@ -64,7 +64,6 @@ export default {
         [prop]: Math.random() * value,
         duration: 8,
         ease:'none',
-        filter: `blur(${gsap.utils.random(0,3)}px)`,
         onComplete: this.randomMove,
         onCompleteParams: [target, prop, value],
       });

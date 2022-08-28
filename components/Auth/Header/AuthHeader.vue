@@ -1,10 +1,10 @@
 <template>
   <BContainer class="auth-header">
     <BRow>
-      <BCol cols="6">
+      <BCol sm="12" md="6" class="d-flex justify-content-center justify-content-md-start">
          <b-img-lazy src="~/assets/img/header/logo.svg" />
       </BCol>
-      <BCol cols="6" class="d-flex justify-content-end">
+      <BCol sm="12" md="6" class="d-flex justify-content-center justify-content-md-end">
          <Login />
       </BCol>
     </BRow>
