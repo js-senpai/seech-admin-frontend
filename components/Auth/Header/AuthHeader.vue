@@ -1,7 +1,7 @@
 <template>
   <BContainer class="auth-header">
     <BRow>
-      <BCol sm="12" md="6" class="d-flex justify-content-center justify-content-md-start">
+      <BCol sm="12" md="6" class="d-flex justify-content-center justify-content-md-start mb-2 mb-md-0">
          <b-img-lazy src="~/assets/img/header/logo.svg" />
       </BCol>
       <BCol sm="12" md="6" class="d-flex justify-content-center justify-content-md-end">
