@@ -64,7 +64,7 @@ export default {
         [prop]: Math.random() * value,
         duration: 8,
         ease:'none',
-        filter: `blur(${gsap.utils.random(0,5)}px)`,
+        filter: `blur(${gsap.utils.random(0,3)}px)`,
         onComplete: this.randomMove,
         onCompleteParams: [target, prop, value],
       });
