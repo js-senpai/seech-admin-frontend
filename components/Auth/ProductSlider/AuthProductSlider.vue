@@ -13,7 +13,7 @@ export default {
     options: {
       breakpoints: {
         320: {
-          sliderPerView: 1
+          sliderPerView: 3
         },
         768: {
           slidesPerView: 6,
