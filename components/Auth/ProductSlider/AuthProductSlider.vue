@@ -11,7 +11,14 @@
 export default {
   data: () => ({
     options: {
-      slidesPerView: 6,
+      breakpoints: {
+        320: {
+          sliderPerView: 5
+        },
+        768: {
+          slidesPerView: 6,
+        }
+      },
       loop: true,
       speed: 15000,
       autoplay: {
