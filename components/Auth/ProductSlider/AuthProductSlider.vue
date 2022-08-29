@@ -11,7 +11,7 @@
 export default {
   data: () => ({
     options: {
-      slidesPerView: 6,
+      slidesPerView: 3,
       loop: true,
       speed: 15000,
       autoplay: {
