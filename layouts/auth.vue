@@ -1,5 +1,5 @@
 <template>
-  <div class="auth-layout bg-light">
+  <div class="h-100 bg-light">
     <Header/>
     <Nuxt />
   </div>

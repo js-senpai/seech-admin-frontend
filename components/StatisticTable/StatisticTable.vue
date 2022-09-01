@@ -1,50 +1,48 @@
 <template>
   <div class="statistic-table">
-    <b-sidebar id="sidebar" :title="$t('filters.filters')" shadow>
-      <template #default="{ hide }">
-        <div class="p-3">
-          <BFormGroup  :label="$t('filters.date')" class="mb-2">
-            <DatePicker v-model="date" range class="w-100" value-type="DD-MM-YYYY" :disabled="disableDates" />
-          </BFormGroup>
-          <BFormGroup  :label="$t('filters.region')" class="mb-2">
-            <v-select v-model="regions" :options="regionsOptions" multiple :disabled="disableRegion"  />
-          </BFormGroup>
-          <BFormGroup  :label="$t('filters.state')" class="mb-2">
-            <v-select v-model="states" :options="statesOptions" multiple :disabled="!regions.length || disableRegion"  />
-          </BFormGroup>
-          <BFormGroup  :label="$t('filters.otg')" class="mb-2">
-            <v-select v-model="otg" :options="otgOptions" multiple :disabled="!states.length || disableRegion"  />
-          </BFormGroup>
-          <BFormGroup  :label="$t('filters.type')" class="mb-2">
-            <v-select v-model="types" :options="typesOptions" multiple :disabled="disableTypes" />
-          </BFormGroup>
-          <BFormGroup  :label="$t('filters.subtype')" class="mb-2">
-            <v-select v-model="subtypes" :options="subtypesOptions" multiple :disabled="!types.length || disableTypes"  />
-          </BFormGroup>
-          <BFormGroup  :label="$t('filters.active')" class="mb-3">
-            <v-select v-model="active" :options="activeOptions" :disabled="disableActive"  />
-          </BFormGroup>
-          <BButton variant="success" class="w-100 mb-3" @click="applyFilters(hide)">{{$t('buttons.accept')}}</BButton>
-          <BButton variant="danger" class="w-100" @click="resetFilters(hide)">{{$t('buttons.clear')}}</BButton>
-        </div>
-      </template>
-    </b-sidebar>
     <BContainer fluid>
       <BRow>
         <BCol cols="12" >
-          <div class="main-page shadow bg-white p-3 rounded mt-3 ">
-            <h2 class="mb-4">{{title}}</h2>
-            <div class="mb-4 d-flex justify-content-end">
-              <b-button v-if="selectable" class="mr-1">
-                <b-form-checkbox
-                  v-model="selected"
-                >{{$t('buttons.selected')}}</b-form-checkbox>
-              </b-button>
-              <b-button v-b-toggle.sidebar>{{$t('buttons.filters')}}</b-button>
+          <div class="statistic-table__card bg-white">
+            <div class="mb-4 d-flex justify-content-between flex-wrap align-items-center">
+              <h2 class="statistic-table__title mb-2 mb-md-0 text-center text-md-left">{{title}}</h2>
+              <div class="d-flex align-items-center mb-2 mb-md-0 statistic-table__btn-container">
+                <button v-if="selectable" :class="`light-btn statistic-table__select-btn ${selected ? 'active': ''} mr-1`"  type="button" @click="selected = !selected">
+                  {{$t('buttons.selected')}}
+                </button>
+                <div class="position-relative statistic-table__filter-btn-container">
+                  <button class="light-btn statistic-table__filter-btn" type="button" @click="showModal = !showModal">
+                    {{$t('buttons.filters')}}
+                  </button>
+                  <StatisticFilterModal
+                    class="statistic-table__filter-modal"
+                    :show-modal.sync="showModal"
+                    :apply-filters="applyFilters"
+                    :reset-filters="resetFilters"
+                    :date.sync="date"
+                    :regions.sync="regions"
+                    :regions-options="regionsOptions"
+                    :states.sync="states"
+                    :states-options="statesOptions"
+                    :otg.sync="otg"
+                    :otg-options="otgOptions"
+                    :types.sync="types"
+                    :types-options="typesOptions"
+                    :subtypes.sync="subtypes"
+                    :subtypes-options="subtypesOptions"
+                    :active-options="activeOptions"
+                    :active.sync="active"
+                    :disable-dates="disableDates"
+                    :disable-types="disableTypes"
+                    :disable-active="disableActive"
+                    :disable-region="disableRegion"
+                  />
+                </div>
+              </div>
             </div>
             <div class="overflow-auto w-100">
               <b-table
-                id="statistic-table"
+                class="statistic-table__table"
                 :items="items"
                 :fields="fields"
                 :per-page="perPage"
@@ -88,6 +86,9 @@
 
 <script>
 export default {
+  components: {
+    StatisticFilterModal: () => import("@/components/StatisticFilterModal/StatisticFilterModal")
+  },
   props: {
     fields: {
       required: true,
@@ -146,6 +147,7 @@ export default {
     }
   },
   data: () => ({
+    showModal: false,
     sortBy: '',
     sortDesc: true,
     date: [],
@@ -284,14 +286,17 @@ export default {
       this.sortDesc = sortDesc;
       await this.$router.push({ path: this.redirectPath, query: this.getQueries});
     },
-    async resetFilters(hide) {
+    async resetFilters() {
       await this.$router.push({ path: this.redirectPath, query: {} });
-      hide();
+      this.showModal = false;
     },
-    async applyFilters(hide) {
+    async applyFilters() {
       await this.$router.push({ path: this.redirectPath, query: this.getQueries});
-      hide();
+      this.showModal = false;
     },
   }
 }
 </script>
+<style lang="scss">
+ @import "scss/index";
+</style>
