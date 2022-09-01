@@ -1,0 +1,16 @@
+.header{
+  padding-top: 30px;
+  padding-bottom: 30px;
+  &__user-settings{
+    .dropdown-toggle::after{
+      display: none;
+    }
+    &__name{
+       color: #171717;
+    }
+    &__icon{
+      color: #171717;
+      font-size: 10px;
+    }
+  }
+}
