@@ -18,13 +18,12 @@ body{
   text-decoration: none;
   color: rgba(0, 0, 0, 0.8);
   transition: all ease-in-out 500ms;
-  border: none;
   outline: none;
+  border: 2px solid #171717;
   &:hover,&.active,&:active{
     background: #171717;
     text-decoration: none;
     color: #fff;
-    border: none;
     outline: none;
   }
 }
