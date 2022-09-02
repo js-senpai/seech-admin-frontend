@@ -32,6 +32,12 @@
     background-color: #171717;
     border-color: #171717;
   }
+  .page-link{
+    color: #171717;
+    &:hover{
+      color: #fff;
+    }
+  }
 }
 @media (min-width: 768px){
   .statistic-table{
