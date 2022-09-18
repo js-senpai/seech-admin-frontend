@@ -57,6 +57,14 @@
       left: inherit;
     }
     &__list{
+      grid-template-columns: repeat(2,1fr);
+      grid-gap: 25px;
+    }
+  }
+}
+@media (min-width: 992px){
+  .products-shop{
+    &__list{
       grid-template-columns: repeat(4,1fr);
       grid-gap: 25px;
     }
