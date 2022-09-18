@@ -25,6 +25,11 @@ export default {
     showDescriptionModal: false,
     modalDescriptionText: ''
   }),
+  computed: {
+    user(){
+      return this.$auth.user
+    }
+  },
   methods: {
     getDescription({_id}){
       this.showDescriptionModal = true
@@ -45,7 +50,13 @@ export default {
           weight: `${weight} ${this.$i18n.t(`units.${weightType}`)}`,
           price: `${price} ${this.$i18n.t(`units.currency`)}/${this.$i18n.t(`units.${weightType}`)}`,
           address: `${getRegions[region]?.name || '-'} ${this.$i18n.t(`units.state`)}, ${getRegions[region]?.states[state]?.otg[otg] || '-'} ${this.$i18n.t(`units.otg`)}`
-        }));
+        })).sort((a) =>
+          a?.region === this.user?.region ||
+          a?.state === this.user?.countryState ||
+          a?.otg=== this.user?.countryOtg
+            ? 1
+            : -1,
+        );
       } catch (e) {
         console.error(e);
       }

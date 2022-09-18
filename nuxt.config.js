@@ -2,9 +2,9 @@ import ua from './locales/ua.json'
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'seech-admin-frontend',
+    title: 'Seech -  online базар овочів та фруктів',
     htmlAttrs: {
-      lang: 'en',
+      lang: 'ua',
     },
     meta: [
       { charset: 'utf-8' },
