@@ -45,11 +45,16 @@ export default {
     ['@nuxtjs/fontawesome', {
       icons: {
         solid: true,
-        brands: true
+        brands: true,
+        regular: true
       }
     }],
     'nuxt-gsap-module'
   ],
+  bootstrapVue: {
+    // Install the `IconsPlugin` plugin (in addition to `BootstrapVue` plugin)
+    icons: true
+  },
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/bootstrap

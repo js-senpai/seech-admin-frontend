@@ -9,9 +9,9 @@
 export default {
   name: 'LoginPage',
   components: {
-    AuthFooter: () => import("../../components/Auth/Footer/AuthFooter"),
-    AuthBody: () => import("../../components/Auth/Body/AuthBody"),
-    AuthHeader: () => import("../../components/Auth/Header/AuthHeader"),
+    AuthFooter: () => import("../../components/Ui/Auth/Footer/AuthFooter"),
+    AuthBody: () => import("../../components/Ui/Auth/Body/AuthBody"),
+    AuthHeader: () => import("../../components/Ui/Auth/Header/AuthHeader"),
   },
 }
 </script>

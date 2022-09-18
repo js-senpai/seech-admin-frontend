@@ -1,40 +1,21 @@
 <template>
-  <StatisticTable
-    :data.sync="items"
-    :fields="fields"
-    redirect-path="/"
-    :get-api-data="getData"
-    :title="$t('kpi.title')"
-  />
+  <AdminHome v-if="['admin','moderator'].includes(user.type)" />
+  <UserHome v-else />
 </template>
 
 <script>
 export default {
   name: 'IndexPage',
   components: {
-    StatisticTable: () => import("~/components/StatisticTable/StatisticTable")
+    UserHome: () => import("@/components/Templates/UserHome/UserHome"),
+    AdminHome: () => import("@/components/Templates/AdminHome/AdminHome"),
   },
   layout: 'auth',
   middleware: 'isAuthenticated',
-  data: () => ({
-    items: [],
-  }),
   computed: {
-    fields() {
-      return Object.entries(this.$i18n.t('kpi.table.headers')).map(([name,value]) => ({
-        [name]: value
-      }))
-    },
+    user(){
+      return this.$auth.user
+    }
   },
-  methods: {
-     async getData({queryParams = ''}) {
-       try {
-         const { data: { items = [] } } = await this.$axios.get(`${this.$config.backendUrl}/kpi${queryParams ? `?${queryParams}`: ''}`);
-         this.items = items;
-       } catch (e) {
-         console.error(e);
-       }
-     },
-  }
 }
 </script>

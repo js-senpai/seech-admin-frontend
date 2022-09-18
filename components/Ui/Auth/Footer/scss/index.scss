@@ -1,0 +1,13 @@
+.auth-footer{
+  padding-bottom: 25px;
+  &__email{
+    font-size: 18px;
+    line-height: 25px;
+    color: var(--main-color);
+    font-weight: 700;
+    &:hover{
+      text-decoration: none;
+      color: var(--main-color);
+    }
+  }
+}

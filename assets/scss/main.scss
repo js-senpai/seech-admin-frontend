@@ -1,4 +1,16 @@
 @import "fonts";
+@import "custom-btn";
+:root{
+  --main-color: #171717;
+}
+*::-webkit-scrollbar {
+  width: 8px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: #DBDBDB;
+  border-radius: 30px;
+}
 #__layout{
   height: 100vh;
 }
@@ -8,28 +20,15 @@ body{
   line-height: 22px;
   font-weight: 500;
 }
-.light-btn{
-  padding: 10px 16px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: #FFFFFF;
-  border-radius: 30px;
-  text-decoration: none;
-  color: rgba(0, 0, 0, 0.8);
-  transition: all ease-in-out 500ms;
-  outline: none;
-  border: 2px solid #171717;
-  &:hover,&.active,&:active{
-    background: #171717;
-    text-decoration: none;
+
+.custom-control-input:checked ~ .custom-control-label::before,.page-item.active .page-link,.page-link:hover{
+  background-color: var(--main-color);
+  border-color: var(--main-color);
+}
+.page-link{
+  color: var(--main-color);
+  &:hover{
     color: #fff;
-    outline: none;
   }
 }
-@media (min-width: 768px){
-  .light-btn{
-    padding: 10px 24px;
-    line-height: 30px;
-  }
-}
+

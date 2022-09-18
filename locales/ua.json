@@ -27,7 +27,8 @@
     "accept": "Застосувати",
     "clear": "Очистити",
     "selected": "Вибране",
-    "filters": "Фільтри"
+    "filters": "Фільтри",
+    "add": "Додати"
   },
   "kpi": {
     "title": "Загальне",
@@ -2498,6 +2499,35 @@
           }
         }
       }
+    }
+  },
+  "sell": {
+    "title": "Продати",
+    "buttons": {
+      "left": "Опис",
+      "right": "В корзину"
+    }
+  },
+  "buy": {
+    "title": "Купити"
+  },
+  "myRequests": {
+    "title": "Мої запити"
+  },
+  "cart": {
+    "title": "Корзина"
+  },
+  "units": {
+    "kilogram": "кг",
+    "weightTon": "т",
+    "liter": "л",
+    "amount": "шт",
+    "currency": "грн"
+  },
+  "errors": {
+    "notFound": {
+      "img": "Немає фото",
+      "products": "На ваш запит нічого не знайдено"
     }
   }
 }

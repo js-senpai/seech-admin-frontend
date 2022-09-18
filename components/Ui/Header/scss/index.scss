@@ -1,0 +1,25 @@
+.header{
+  padding-top: 30px;
+  padding-bottom: 30px;
+  &__toggle{
+    background: #F5F5F5;
+    border-radius: 24px;
+    width: 48px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  &__user-settings{
+    .dropdown-toggle::after{
+      display: none;
+    }
+    &__name{
+       color: var(--main-color);
+    }
+    &__icon{
+      color: var(--main-color);
+      font-size: 10px;
+    }
+  }
+}

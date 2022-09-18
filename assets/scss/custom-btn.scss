@@ -1,0 +1,42 @@
+.custom-btn{
+  padding: 10px 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  transition: all ease-in-out 500ms;
+  outline: none;
+  border: 2px solid var(--main-color);
+  &.light{
+    background: #FFFFFF;
+    color:  var(--main-color);
+    &:hover,&.active,&:active{
+      background: var(--main-color);
+      color: #fff;
+    }
+  }
+  &.dark{
+    background: var(--main-color);
+    color: #fff;
+    &:hover,&.active,&:active{
+      background: #fff;
+      color: var(--main-color);
+    }
+  }
+  &.round-circle{
+    border-radius: 30px;
+  }
+  &.round-square {
+    border-radius: 8px;
+  }
+  &:hover,&.active,&:active{
+    outline: none;
+    text-decoration: none;
+  }
+}
+@media (min-width: 768px){
+  .custom-btn{
+    padding: 10px 24px;
+    line-height: 30px;
+  }
+}
