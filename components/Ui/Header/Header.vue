@@ -1,7 +1,7 @@
 <template>
   <b-navbar toggleable="lg" class="header">
     <b-navbar-brand href="/">
-      <b-img src="~/assets/img/header/logo.svg" />
+      <b-img-lazy src="~/assets/img/header/logo.svg" />
     </b-navbar-brand>
 
     <b-navbar-toggle target="nav-collapse" class="header__toggle">
