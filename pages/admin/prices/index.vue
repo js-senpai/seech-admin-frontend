@@ -1,8 +1,7 @@
 <template>
   <StatisticMultiTable
     :data.sync="items"
-    :fields="fields"
-    redirect-path="/prices"
+    redirect-path="/admin/prices"
     :get-api-data="getData"
     :title="$t('prices.title')"
     disable-active

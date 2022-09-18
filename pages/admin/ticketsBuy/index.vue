@@ -2,7 +2,7 @@
   <StatisticTable
     :data.sync="items"
     :fields="fields"
-    redirect-path="/ticketsBuy"
+    redirect-path="/admin/ticketsBuy"
     :get-api-data="getData"
     :title="$t('ticketsBuy.title')"
     :update-selected-tickets="updateSelectedTickets"

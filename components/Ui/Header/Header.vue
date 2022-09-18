@@ -44,12 +44,12 @@ export default {
         url: '/admin/kpiMonthly'
       },
       {
-        name: this.$i18n.t('ticketsBuy.title'),
-        url: '/admin/ticketsBuy'
-      },
-      {
         name: this.$i18n.t('ticketsSale.title'),
         url: '/admin/ticketsSale'
+      },
+      {
+        name: this.$i18n.t('ticketsBuy.title'),
+        url: '/admin/ticketsBuy'
       },
       {
         name: this.$i18n.t('prices.title'),

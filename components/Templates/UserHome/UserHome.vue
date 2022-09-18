@@ -53,7 +53,7 @@ export default {
         })).sort((a) =>
           a?.region === this.user?.region ||
           a?.state === this.user?.countryState ||
-          a?.otg=== this.user?.countryOtg
+          a?.otg === this.user?.countryOtg
             ? 1
             : -1,
         );

@@ -2,7 +2,7 @@
   <StatisticTable
     :data.sync="items"
     :fields="fields"
-    redirect-path="/kpiMonthly"
+    redirect-path="/admin/kpiMonthly"
     :get-api-data="getData"
     :title="$t('kpiMonthly.title')"
     disable-active
