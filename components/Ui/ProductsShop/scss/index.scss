@@ -65,8 +65,14 @@
 @media (min-width: 992px){
   .products-shop{
     &__list{
+      grid-template-columns: repeat(3,1fr);
+    }
+  }
+}
+@media (min-width: 1400px){
+  .products-shop{
+    &__list{
       grid-template-columns: repeat(4,1fr);
-      grid-gap: 25px;
     }
   }
 }
