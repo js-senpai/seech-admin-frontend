@@ -69,6 +69,7 @@
                  >{{btnRightText}}</button>
                </footer>
              </ProductCard>
+             <h3 class="text-center">{{$t('errors.notFound.products')}}</h3>
            </div>
            <div v-if="items.length > 1" class="d-flex justify-content-between align-content-center">
              <div>{{ $t('other.totalItems', { total: rows }) }}</div>

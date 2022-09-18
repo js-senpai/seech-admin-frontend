@@ -2502,27 +2502,29 @@
     }
   },
   "sell": {
-    "title": "Продати",
+    "title": "Оголошення про продаж",
     "buttons": {
       "left": "Опис",
-      "right": "В корзину"
+      "right": "В обрані"
     }
   },
   "buy": {
-    "title": "Купити"
+    "title": "Запити на покупку"
   },
   "myRequests": {
-    "title": "Мої запити"
+    "title": "Мої товари/запити"
   },
   "cart": {
-    "title": "Корзина"
+    "title": "Вибране"
   },
   "units": {
     "kilogram": "кг",
     "weightTon": "т",
     "liter": "л",
     "amount": "шт",
-    "currency": "грн"
+    "currency": "грн",
+    "state": "обл.",
+    "otg": "ОТГ"
   },
   "errors": {
     "notFound": {

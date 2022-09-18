@@ -33,8 +33,8 @@ export default {
         this.items = items.map(({active,region,state,otg,weight,weightType,price,...data}) => ({
           ...data,
           weight: `${weight} ${this.$i18n.t(`units.${weightType}`)}`,
-          price: `${price} ${this.$i18n.t(`units.${weightType}`)}/${this.$i18n.t(`units.currency`)}`,
-          address: `${getRegions[region]?.name || '-'} ${getRegions[region]?.states[state]?.name || '-'} ${getRegions[region]?.states[state]?.otg[otg] || '-'}`
+          price: `${price} ${this.$i18n.t(`units.currency`)}/${this.$i18n.t(`units.${weightType}`)}`,
+          address: `${getRegions[region]?.name || '-'} ${this.$i18n.t(`units.state`)}, ${getRegions[region]?.states[state]?.otg[otg] || '-'} ${this.$i18n.t(`units.otg`)}`
         }));
       } catch (e) {
         console.error(e);
