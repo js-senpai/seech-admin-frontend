@@ -9,6 +9,10 @@
     :show-img="true"
     :btn-left-method="getDescription"
     :btn-right-method="addToCart"
+    :show-modal-description.sync="showDescriptionModal"
+    :modal-description-text="modalDescriptionText"
+    :modal-description-title="$t('sell.descriptionModal.title')"
+    :modal-description-sub-title="$t('sell.descriptionModal.subtitle')"
   />
 </template>
 <script>
@@ -18,10 +22,16 @@ export default {
   },
   data: () => ({
     items: [],
+    showDescriptionModal: false,
+    modalDescriptionText: ''
   }),
   methods: {
-    getDescription(){
-      console.log('description')
+    getDescription({_id}){
+      this.showDescriptionModal = true
+      const findIndex = this.items.findIndex(data => data._id === _id);
+      if(findIndex !== -1){
+        this.modalDescriptionText = this.items[findIndex].description
+      }
     },
     addToCart(){
       console.log('addToCart')
