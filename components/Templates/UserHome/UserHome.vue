@@ -28,10 +28,10 @@ export default {
   },
   methods: {
     getDescription({_id}){
-      this.items = this.items.map(item => ({
-        ...item,
-        showModal: item._id === _id
-      }))
+      const findIndex = this.items.findIndex(item => item._id === _id);
+      if(findIndex !== -1){
+        this.items[findIndex].showModal = !this.items[findIndex].showModal
+      }
     },
     addToCart(){
       console.log('addToCart')

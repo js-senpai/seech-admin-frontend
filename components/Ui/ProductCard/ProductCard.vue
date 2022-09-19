@@ -59,7 +59,7 @@ export default {
       required: true,
       default: 'Unknown'
     },
-    createdAt: {
+    updatedAt: {
       type: String,
       required: true,
       default: new Date()
@@ -91,7 +91,7 @@ export default {
   },
   computed: {
     getTime() {
-      return this.$moment(this.createdAt).format('DD.MM.YYYY HH:mm')
+      return this.$moment(this.updatedAt).format('DD.MM.YYYY HH:mm')
     }
   }
 }
