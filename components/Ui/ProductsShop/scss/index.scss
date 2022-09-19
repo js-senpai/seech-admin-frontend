@@ -54,8 +54,9 @@
       &__body,&__header{
         padding: 13px 0;
       }
-      &__body{
+      &__text{
         overflow: auto;
+        max-height: 250px;
       }
       &__close{
         background-color: #fff;
