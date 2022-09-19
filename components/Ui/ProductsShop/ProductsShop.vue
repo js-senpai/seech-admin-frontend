@@ -56,7 +56,7 @@
                :phone="phone"
                :address="address"
              >
-               <footer v-if="!ownTicket" class="products-shop__list-footer">
+               <footer v-if="!ownTicket" class="products-shop__list-footer mt-2">
                  <button
                    type="button"
                    class="custom-btn light round-square"
@@ -73,7 +73,7 @@
                    <BRow>
                      <BCol cols="12" >
                        <header class="products-shop__modal-description__header">
-                         <button type="button" class="products-shop__modal-description__close" @click.prevent="showModal = !showModal">
+                         <button type="button" class="products-shop__modal-description__close" @click="hideDescriptionModal(_id)">
                            <b-icon  icon="chevron-left" />
                          </button>
                          <div class="products-shop__modal-description__title">{{modalDescriptionTitle}}</div>
@@ -238,15 +238,8 @@ export default {
         return this.data;
       },
       set (value) {
+        console.log(value)
         this.$emit('update:data', value);
-      }
-    },
-    showModalDesc: {
-      get () {
-        return this.showModalDescription;
-      },
-      set (value) {
-        this.$emit('update:showModalDescription', value);
       }
     },
     getQueries(){
@@ -278,6 +271,12 @@ export default {
     '$route.query': '$fetch',
   },
   methods: {
+    hideDescriptionModal(_id){
+      const findIndex = this.items.findIndex(item => item._id === _id);
+      if(findIndex !== -1){
+        this.items[findIndex].showModal = false
+      }
+    },
     async getData({query = {},serverFetch = true}) {
       this.isLoad = true;
       try {
