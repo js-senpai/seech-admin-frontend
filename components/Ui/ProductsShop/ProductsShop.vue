@@ -45,7 +45,7 @@
                v-else-if="!isLoad && items.length"
                class="products-shop__list-item"
                :show-img="showImg"
-               v-for="{description,title,img,createdAt,price,weight,author,phone,address,_id,ownTicket = false} in items"
+               v-for="{description,title,img,createdAt,price,weight,author,phone,address,_id,ownTicket = false,showModal = false} in items"
                :key="_id"
                :title="title"
                :img="img"
@@ -68,6 +68,24 @@
                    @click="btnRightMethod({_id})"
                  >{{btnRightText}}</button>
                </footer>
+               <div v-show="showModal" class="products-shop__modal-description">
+                 <BContainer fluid>
+                   <BRow>
+                     <BCol cols="12" >
+                       <header class="products-shop__modal-description__header">
+                         <button type="button" class="products-shop__modal-description__close" @click.prevent="showModal = !showModal">
+                           <b-icon  icon="chevron-left" />
+                         </button>
+                         <div class="products-shop__modal-description__title">{{modalDescriptionTitle}}</div>
+                       </header>
+                       <div class="products-shop__modal-description__body">
+                         <div class="products-shop__modal-description__subtitle">{{modalDescriptionSubTitle}}</div>
+                         <div class="products-shop__modal-description__text" v-html="description" />
+                       </div>
+                     </BCol>
+                   </BRow>
+                 </BContainer>
+               </div>
              </ProductCard>
              <h3 v-else class="w-100 text-center position-absolute">{{$t('errors.notFound.products')}}</h3>
            </div>
@@ -78,24 +96,6 @@
                :total-rows="rows"
                :per-page="perPage"
              />
-           </div>
-           <div v-show="showModalDesc" class="products-shop__modal-description">
-             <BContainer fluid>
-              <BRow>
-                <BCol cols="12" >
-                  <header class="products-shop__modal-description__header">
-                    <button type="button" class="products-shop__modal-description__close" @click="showModalDesc = !showModalDesc">
-                      <b-icon  icon="chevron-left" />
-                    </button>
-                    <div class="products-shop__modal-description__title">{{modalDescriptionTitle}}</div>
-                  </header>
-                  <div class="products-shop__modal-description__body">
-                    <div class="products-shop__modal-description__subtitle">{{modalDescriptionSubTitle}}</div>
-                    <div class="products-shop__modal-description__text" v-html="modalDescriptionText" />
-                  </div>
-                </BCol>
-              </BRow>
-             </BContainer>
            </div>
          </div>
         </BCol>
@@ -110,22 +110,12 @@ export default {
     ProductCard: () => import('@/components/Ui/ProductCard/ProductCard')
   },
   props: {
-    showModalDescription: {
-      required: false,
-      type: Boolean,
-      default: false
-    },
     modalDescriptionTitle: {
       required: false,
       type: String,
       default: ''
     },
     modalDescriptionSubTitle: {
-      required: false,
-      type: String,
-      default: ''
-    },
-    modalDescriptionText: {
       required: false,
       type: String,
       default: ''

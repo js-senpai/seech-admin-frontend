@@ -9,8 +9,6 @@
     :show-img="true"
     :btn-left-method="getDescription"
     :btn-right-method="addToCart"
-    :show-modal-description.sync="showDescriptionModal"
-    :modal-description-text="modalDescriptionText"
     :modal-description-title="$t('sell.descriptionModal.title')"
     :modal-description-sub-title="$t('sell.descriptionModal.subtitle')"
   />
@@ -22,8 +20,6 @@ export default {
   },
   data: () => ({
     items: [],
-    showDescriptionModal: false,
-    modalDescriptionText: ''
   }),
   computed: {
     user(){
@@ -32,11 +28,10 @@ export default {
   },
   methods: {
     getDescription({_id}){
-      this.showDescriptionModal = true
-      const findIndex = this.items.findIndex(data => data._id === _id);
-      if(findIndex !== -1){
-        this.modalDescriptionText = this.items[findIndex].description
-      }
+      this.items = this.items.map(item => ({
+        ...item,
+        showModal: item._id === _id
+      }))
     },
     addToCart(){
       console.log('addToCart')
@@ -47,6 +42,7 @@ export default {
         const getRegions = this.$i18n.t(`regions`);
         this.items = items.map(({active,region,state,otg,weight,weightType,price,...data}) => ({
           ...data,
+          showModal: false,
           weight: `${weight} ${this.$i18n.t(`units.${weightType}`)}`,
           price: `${price} ${this.$i18n.t(`units.currency`)}/${this.$i18n.t(`units.${weightType}`)}`,
           address: `${getRegions[region]?.name || '-'} ${this.$i18n.t(`units.state`)}, ${getRegions[region]?.states[state]?.otg[otg] || '-'} ${this.$i18n.t(`units.otg`)}`
