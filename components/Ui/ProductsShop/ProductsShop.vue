@@ -4,15 +4,15 @@
       <BRow>
         <BCol cols="12" >
          <div class="products-shop__card bg-white">
-           <div class="mb-4 d-flex justify-content-between flex-wrap align-items-center">
-             <h2 class="products-shop__title mb-2 mb-md-0 text-center text-md-left">{{title}}</h2>
-             <div class="d-flex align-items-center mb-4 mb-md-0 statistic-table__btn-container">
+           <header class="mb-4 d-md-flex justify-content-between flex-wrap align-items-center products-shop__card-header">
+             <h2 class="products-shop__title mb-2 mb-md-0">{{title}}</h2>
+             <div class="d-flex align-items-center statistic-table__btn-container">
                <button  class="custom-btn light round-square products-shop__add-btn mr-1"  type="button" @click="showAddModal = !showAddModal">
                  <font-awesome-icon :icon="['fas', 'plus']" class="mr-2"   />
-                 <span>{{$t('buttons.addProduct')}}</span>
+                 <span>{{$t('buttons.add')}}</span>
                </button>
              </div>
-           </div>
+           </header>
            <StatisticFilterBlock
              class="mb-4"
              :apply-filters="applyFilters"
