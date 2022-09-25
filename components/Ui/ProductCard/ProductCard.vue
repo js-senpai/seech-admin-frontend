@@ -24,13 +24,13 @@
             <b-img-lazy src="~/assets/img/productCard/user.svg" class="product-card__icon" />
             <span>{{author}}</span>
           </li>
-          <li v-if="phone" class="product-card__info-item">
-            <b-img-lazy src="~/assets/img/productCard/phone.svg" class="product-card__icon" />
-            <a :href="`tel:${phone}`">{{phone}}</a>
-          </li>
           <li v-if="address" class="product-card__info-item">
             <b-img-lazy src="~/assets/img/productCard/map.svg" class="product-card__icon" />
             <span>{{address}}</span>
+          </li>
+          <li v-if="phone" class="product-card__info-item">
+            <b-img-lazy src="~/assets/img/productCard/phone.svg" class="product-card__icon" />
+            <a :href="`tel:${phone}`">{{phone}}</a>
           </li>
         </ul>
       </div>

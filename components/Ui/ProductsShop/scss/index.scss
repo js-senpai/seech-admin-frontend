@@ -1,17 +1,19 @@
 .products-shop{
   &__card{
     border-radius: 30px;
-    padding: 20px 30px;
+    padding: 20px 0px;
     margin-bottom: 40px;
     box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.03);
     &-header{
       display: grid;
       grid-template-columns: repeat(2,1fr);
       grid-gap: 16px;
+      padding: 0 30px;
     }
   }
   &__title{
-    font-size: 20px;
+    font-weight: bold;
+    font-size: 25px;
     line-height: 30px;
     color: var(--main-color);
     margin-bottom: 0;
@@ -101,7 +103,10 @@
       line-height: 49px;
     }
     &__card{
-      padding: 40px 60px;
+      padding: 40px 0px;
+      &-header{
+        padding: 0 60px;
+      }
     }
     &__filter-btn,&__add-btn,&__title,&__filter-btn-container,&__btn-container{
       width: inherit;

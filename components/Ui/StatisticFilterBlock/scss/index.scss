@@ -2,7 +2,6 @@
   background: #EB6758;
   border-radius: 12px;
   padding: 24px 12px;
-  margin: 0 -30px;
   &__title,label,legend{
     color: #fff;
   }
@@ -54,7 +53,6 @@
 @media (min-width: 768px){
   .statistic-filter-block{
     padding: 24px;
-    margin: 0 -60px;
     &__title{
       display: none;
     }
