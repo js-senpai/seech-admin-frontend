@@ -7,9 +7,9 @@
            <div class="mb-4 d-flex justify-content-between flex-wrap align-items-center">
              <h2 class="products-shop__title mb-2 mb-md-0 text-center text-md-left">{{title}}</h2>
              <div class="d-flex align-items-center mb-4 mb-md-0 statistic-table__btn-container">
-               <button  class="custom-btn dark round-circle products-shop__add-btn mr-1"  type="button" @click="showAddModal = !showAddModal">
+               <button  class="custom-btn light round-square products-shop__add-btn mr-1"  type="button" @click="showAddModal = !showAddModal">
                  <font-awesome-icon :icon="['fas', 'plus']" class="mr-2"   />
-                 <span>{{$t('buttons.add')}}</span>
+                 <span>{{$t('buttons.addProduct')}}</span>
                </button>
              </div>
            </div>
@@ -17,7 +17,6 @@
              class="mb-4"
              :apply-filters="applyFilters"
              :reset-filters="resetFilters"
-             :date.sync="date"
              :regions.sync="regions"
              :regions-options="regionsOptions"
              :states.sync="states"
@@ -177,7 +176,6 @@ export default {
   },
   data: () => ({
     showAddModal: false,
-    date: [],
     types: [],
     subtypes: [],
     regions: [],
@@ -252,10 +250,6 @@ export default {
         ...((this.regions.length && this.states.length && this.otg.length) && {
           otg: this.otg.map(({code}) => code).join(',')
         }),
-        ...(this.date.length && {
-          startDate: this.date[0],
-          endDate: this.date[1]
-        }),
       }
     }
   },
@@ -284,7 +278,6 @@ export default {
         this.regions = regions.length ? this.regionsOptions.filter(({code}) => regions.split(',').includes(code)): [];
         this.states = states.length && regions.length ? this.statesOptions.filter(({code}) => states.split(',').includes(code)): [];
         this.otg = states.length && regions.length && otg.length ? this.otgOptions.filter(({code}) => otg.split(',').includes(code)): [];
-        this.date = startDate && endDate ? [startDate,endDate]: [];
       } catch (e) {
         console.error(e);
       } finally {

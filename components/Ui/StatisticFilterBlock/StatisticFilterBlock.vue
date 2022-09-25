@@ -5,7 +5,7 @@
         <h4 class="statistic-filter-block__title">{{$t('filters.filters')}}</h4>
       </header>
       <div class="statistic-filter-block__body">
-        <div class="statistic-filter-block__body-item">
+        <div v-if="getDate.length" class="statistic-filter-block__body-item">
           <DatePicker v-model="getDate" :placeholder="$t('filters.date')" range class="w-100" value-type="DD-MM-YYYY" :disabled="disableDates" />
         </div>
         <div class="statistic-filter-block__body-item">
