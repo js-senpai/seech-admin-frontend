@@ -153,7 +153,10 @@ export default {
   },
   computed: {
     typesOptions(){
-      return Object.values(this.$i18n.t('types'))
+      return Object.entries(this.$i18n.t('types')).map(([key,data]) => ({
+        label: data[key],
+        code: key
+      }))
     },
     subtypesOptions(){
       return Object.entries(this.$i18n.t('types')).filter(([_,value]) => this.types.includes(value)).flatMap(([name]) => Object.values(this.$i18n.t(`subtypes.${name}List`)))
