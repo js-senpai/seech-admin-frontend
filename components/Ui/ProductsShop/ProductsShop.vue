@@ -194,7 +194,7 @@ export default {
     },
     typesOptions(){
       return Object.entries(this.$i18n.t('types')).map(([key,data]) => ({
-        label: data[key],
+        label: data,
         code: key
       }))
     },
@@ -275,8 +275,8 @@ export default {
           .map(key => `${key}=${getQueryParams[key]}`)
           .join('&'): '';
         await this.getApiData({queryParams: queryParamsToString});
-        const { types = '',subtypes = '',regions = '',states = '',otg = '',startDate = '',endDate = '' } = getQueryParams;
-        this.types = types ? types.split(','): [];
+        const { types = '',subtypes = '',regions = '',states = '',otg = '' } = getQueryParams;
+        this.types = types ? this.types.filter(({code}) => types.split(',').includes(code)): [];
         this.subtypes = types.length && subtypes.length ? subtypes.split(','): [];
         this.regions = regions.length ? this.regionsOptions.filter(({code}) => regions.split(',').includes(code)): [];
         this.states = states.length && regions.length ? this.statesOptions.filter(({code}) => states.split(',').includes(code)): [];
