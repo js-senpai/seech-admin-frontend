@@ -14,7 +14,7 @@
   &__body{
     display: grid;
     grid-template-columns: 100%;
-    grid-gap: 12px;
+    grid-gap: 15px;
     margin-bottom: 12px;
     &-item{
       height: 40px;
@@ -55,6 +55,11 @@
     padding: 24px;
     &__title{
       display: none;
+    }
+    &__btn{
+      &-cancel{
+        margin-right: 15px;
+      }
     }
     &__body{
       grid-template-columns: repeat(5,1fr);
