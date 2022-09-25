@@ -239,7 +239,7 @@ export default {
     getQueries(){
       return {
         ...(this.types.length && {
-          types: this.types.join(',')
+          types: this.types.map(({code}) => code).join(',')
         }),
         ...((this.types.length && this.subtypes.length) && {
           subtypes: this.subtypes.join(',')
