@@ -11,34 +11,28 @@
                  <font-awesome-icon :icon="['fas', 'plus']" class="mr-2"   />
                  <span>{{$t('buttons.add')}}</span>
                </button>
-               <div class="position-relative products-shop__filter-btn-container">
-                 <button class="custom-btn light round-circle products-shop__filter-btn" type="button" @click="showModal = !showModal">
-                   {{$t('buttons.filters')}}
-                 </button>
-                 <StatisticFilterModal
-                   class="products-shop__filter-modal"
-                   :show-modal.sync="showModal"
-                   :apply-filters="applyFilters"
-                   :reset-filters="resetFilters"
-                   :date.sync="date"
-                   :regions.sync="regions"
-                   :regions-options="regionsOptions"
-                   :states.sync="states"
-                   :states-options="statesOptions"
-                   :otg.sync="otg"
-                   :otg-options="otgOptions"
-                   :types.sync="types"
-                   :types-options="typesOptions"
-                   :subtypes.sync="subtypes"
-                   :subtypes-options="subtypesOptions"
-                   :disable-dates="disableDates"
-                   :disable-types="disableTypes"
-                   :disable-active="true"
-                   :disable-region="disableRegion"
-                 />
-               </div>
              </div>
            </div>
+           <StatisticFilterBlock
+             class="mb-4"
+             :apply-filters="applyFilters"
+             :reset-filters="resetFilters"
+             :date.sync="date"
+             :regions.sync="regions"
+             :regions-options="regionsOptions"
+             :states.sync="states"
+             :states-options="statesOptions"
+             :otg.sync="otg"
+             :otg-options="otgOptions"
+             :types.sync="types"
+             :types-options="typesOptions"
+             :subtypes.sync="subtypes"
+             :subtypes-options="subtypesOptions"
+             :disable-dates="disableDates"
+             :disable-types="disableTypes"
+             :disable-active="true"
+             :disable-region="disableRegion"
+           />
            <div class="mb-4 products-shop__list">
              <b-spinner v-if="isLoad" class="products-shop__loader" />
              <ProductCard
@@ -106,7 +100,7 @@
 <script>
 export default {
   components: {
-    StatisticFilterModal: () => import("@/components/Ui/StatisticFilterModal/StatisticFilterModal"),
+    StatisticFilterBlock: () => import("@/components/Ui/StatisticFilterBlock/StatisticFilterBlock"),
     ProductCard: () => import('@/components/Ui/ProductCard/ProductCard')
   },
   props: {
@@ -182,7 +176,6 @@ export default {
     },
   },
   data: () => ({
-    showModal: false,
     showAddModal: false,
     date: [],
     types: [],
@@ -300,11 +293,9 @@ export default {
     },
     async resetFilters() {
       await this.$router.push({ path: this.redirectPath, query: {} });
-      this.showModal = false;
     },
     async applyFilters() {
       await this.$router.push({ path: this.redirectPath, query: this.getQueries});
-      this.showModal = false;
     },
   }
 }
