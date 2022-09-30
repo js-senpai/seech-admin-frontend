@@ -32,6 +32,9 @@
              :disable-active="true"
              :disable-region="disableRegion"
            />
+           <div class="mb-4 d-flex">
+             <div>{{ $t('other.totalItems', { total: rows }) }}</div>
+           </div>
            <div class="mb-4 products-shop__list">
              <b-spinner v-if="isLoad" class="products-shop__loader" />
              <ProductCard
@@ -83,7 +86,6 @@
              <h3 v-else class="w-100 text-center position-absolute">{{$t('errors.notFound.products')}}</h3>
            </div>
            <div v-if="items.length > 1" class="d-flex justify-content-between align-content-center">
-             <div>{{ $t('other.totalItems', { total: rows }) }}</div>
              <b-pagination
                v-model="currentPage"
                :total-rows="rows"
