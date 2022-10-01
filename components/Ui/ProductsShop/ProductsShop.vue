@@ -6,11 +6,19 @@
          <div class="products-shop__card bg-white">
            <header class="mb-4 d-md-flex justify-content-between flex-wrap align-items-center products-shop__card-header">
              <h2 class="products-shop__title mb-2 mb-md-0">{{title}}</h2>
-             <div class="d-flex align-items-center statistic-table__btn-container">
+             <div class="d-flex position-relative align-items-center statistic-table__btn-container">
                <button  class="custom-btn light round-square products-shop__add-btn mr-1"  type="button" @click="showAddModal = !showAddModal">
                  <font-awesome-icon :icon="['fas', 'plus']" class="mr-2"   />
                  <span>{{$t('buttons.add')}}</span>
                </button>
+               <CreateRequestModal
+                 class="products-shop__request-modal"
+                 :show-modal.sync="showAddModal"
+                 :enable-photo="enablePhoto"
+                 :enable-price="enablePrice"
+                 :reset-modal="hideAddModal"
+                 :apply-modal="applyAddModal"
+               />
              </div>
            </header>
            <StatisticFilterBlock
@@ -35,57 +43,59 @@
            <div class="mb-4 d-flex">
              <div>{{ $t('other.totalItems', { total: rows }) }}</div>
            </div>
-           <div class="mb-4 products-shop__list">
-             <b-spinner v-if="isLoad" class="products-shop__loader" />
-             <ProductCard
-               v-else-if="!isLoad && items.length"
-               class="products-shop__list-item"
-               :show-img="showImg"
-               v-for="{description,title,img,updatedAt,price,weight,author,phone,address,_id,ownTicket = false,showModal = false} in items"
-               :key="_id"
-               :title="title"
-               :img="img"
-               :updated-at="updatedAt"
-               :price="price"
-               :weight="weight"
-               :author="author"
-               :phone="phone"
-               :address="address"
-             >
-               <footer v-if="!ownTicket" class="products-shop__list-footer mt-2">
-                 <button
-                   type="button"
-                   class="custom-btn light round-square"
-                   @click="btnLeftMethod({_id})"
-                 >{{btnLeftText}}</button>
-                 <button
-                   type="button"
-                   class="custom-btn dark round-square"
-                   @click="btnRightMethod({_id})"
-                 >{{btnRightText}}</button>
-               </footer>
-               <div v-show="showModal" class="products-shop__modal-description">
-                 <BContainer fluid>
-                   <BRow>
-                     <BCol cols="12" >
-                       <header class="products-shop__modal-description__header">
-                         <button type="button" class="products-shop__modal-description__close" @click="hideDescriptionModal(_id)">
-                           <b-icon  icon="chevron-left" />
-                         </button>
-                         <div class="products-shop__modal-description__title">{{modalDescriptionTitle}}</div>
-                       </header>
-                       <div class="products-shop__modal-description__body">
-                         <div class="products-shop__modal-description__subtitle">{{modalDescriptionSubTitle}}</div>
-                         <div class="products-shop__modal-description__text" v-html="description" />
-                       </div>
-                     </BCol>
-                   </BRow>
-                 </BContainer>
-               </div>
-             </ProductCard>
-             <h3 v-else class="w-100 text-center position-absolute">{{$t('errors.notFound.products')}}</h3>
+           <div class="mb-4 products-shop__list-container">
+             <div class="products-shop__list">
+               <b-spinner v-if="isLoad" class="products-shop__loader" />
+               <ProductCard
+                 :enable-img="enablePhoto"
+                 v-else-if="!isLoad && items.length"
+                 class="products-shop__list-item"
+                 v-for="{description,title,img,updatedAt,price,weight,author,phone,address,_id,ownTicket = false,showModal = false} in items"
+                 :key="_id"
+                 :title="title"
+                 :img="img"
+                 :updated-at="updatedAt"
+                 :price="price"
+                 :weight="weight"
+                 :author="author"
+                 :phone="phone"
+                 :address="address"
+               >
+                 <footer v-if="!ownTicket" class="products-shop__list-footer mt-2">
+                   <button
+                     type="button"
+                     class="custom-btn light round-square"
+                     @click="btnLeftMethod({_id})"
+                   >{{btnLeftText}}</button>
+                   <button
+                     type="button"
+                     class="custom-btn dark round-square"
+                     @click="btnRightMethod({_id})"
+                   >{{btnRightText}}</button>
+                 </footer>
+                 <div v-show="showModal" class="products-shop__modal-description">
+                   <BContainer fluid>
+                     <BRow>
+                       <BCol cols="12" >
+                         <header class="products-shop__modal-description__header">
+                           <button type="button" class="products-shop__modal-description__close" @click="hideDescriptionModal(_id)">
+                             <b-icon  icon="chevron-left" />
+                           </button>
+                           <div class="products-shop__modal-description__title">{{modalDescriptionTitle}}</div>
+                         </header>
+                         <div class="products-shop__modal-description__body">
+                           <div class="products-shop__modal-description__subtitle">{{modalDescriptionSubTitle}}</div>
+                           <div class="products-shop__modal-description__text" v-html="description" />
+                         </div>
+                       </BCol>
+                     </BRow>
+                   </BContainer>
+                 </div>
+               </ProductCard>
+               <h3 v-else class="w-100 text-center position-absolute">{{$t('errors.notFound.products')}}</h3>
+             </div>
            </div>
-           <div v-if="items.length > 1" class="d-flex justify-content-between align-content-center">
+           <div v-if="items.length > 1" class="d-flex justify-content-end align-content-center">
              <b-pagination
                v-model="currentPage"
                :total-rows="rows"
@@ -101,6 +111,7 @@
 <script>
 export default {
   components: {
+    CreateRequestModal: () => import("@/components/Ui/CreateRequestModal/CreateRequestModal"),
     StatisticFilterBlock: () => import("@/components/Ui/StatisticFilterBlock/StatisticFilterBlock"),
     ProductCard: () => import('@/components/Ui/ProductCard/ProductCard')
   },
@@ -140,7 +151,12 @@ export default {
       type: Array,
       default: () => []
     },
-    showImg: {
+    enablePhoto: {
+      required: false,
+      type: Boolean,
+      default: false
+    },
+    enablePrice: {
       required: false,
       type: Boolean,
       default: false
@@ -175,6 +191,11 @@ export default {
       type: Boolean,
       default: false
     },
+    addNewTicket: {
+      required: true,
+      type: Function,
+      default: () => {}
+    }
   },
   data: () => ({
     showAddModal: false,
@@ -295,6 +316,12 @@ export default {
     async applyFilters() {
       await this.$router.push({ path: this.redirectPath, query: this.getQueries});
     },
+    hideAddModal(){
+      this.showAddModal = false;
+    },
+    applyAddModal(data){
+      this.addNewTicket(data)
+    }
   }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div class="product-card">
-    <div :class="`product-card__container ${showImg ? 'two-columns': ''}`">
-      <div v-if="showImg" class="product-card__img-container">
+    <div :class="`product-card__container ${img ? 'two-columns': ''}`">
+      <div v-if="enableImg" class="product-card__img-container">
         <b-img-lazy v-if="img" :src="img"  class="product-card__img" />
         <ImgError v-else />
       </div>
@@ -44,10 +44,9 @@ export default {
     ImgError: () => import("@/components/Ui/Errors/ImgError/ImgError")
   },
   props: {
-    showImg: {
+    enableImg: {
       type: Boolean,
-      required: false,
-      default: false
+      default: false,
     },
     img: {
       type: String,
@@ -67,12 +66,10 @@ export default {
     price: {
       type: String,
       required: false,
-      default: '0 грн/кг'
     },
     weight: {
       type: String,
       required: true,
-      default: '0 кг'
     },
     author: {
       type: String,

@@ -1,0 +1,22 @@
+.range-input{
+  display: flex;
+  align-content: center;
+  &__btn{
+    background-color: #fff;
+    border: none;
+    outline: none;
+    &:hover{
+      border: none;
+      outline: none;
+    }
+  }
+  &__input{
+    background: #F5F5F5;
+    border-radius: 4px;
+    text-align: center;
+    border: none;
+    outline: none;
+    padding: 4px 0px;
+    max-width: 35px;
+  }
+}

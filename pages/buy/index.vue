@@ -7,14 +7,17 @@
     :btn-left-text="$t('buy.buttons.left')"
     :btn-right-text="$t('buy.buttons.right')"
     :show-img="true"
-    :btn-left-method="getDescription"
-    :btn-right-method="addToCart"
+    :btn-left-method="addToCart"
+    :btn-right-method="getDescription"
     :modal-description-title="$t('buy.descriptionModal.title')"
     :modal-description-sub-title="$t('buy.descriptionModal.subtitle')"
+    :add-new-ticket="addNewTicket"
   />
 </template>
 <script>
 export default {
+  layout: 'auth',
+  middleware: 'isAuthenticated',
   components: {
     ProductsShop: () => import("@/components/Ui/ProductsShop/ProductsShop")
   },
@@ -36,6 +39,14 @@ export default {
     addToCart(){
       console.log('addToCart')
     },
+    async addNewTicket(data){
+      try {
+        await this.$axios.post(`${this.$config.backendUrl}/buy-products`,data)
+        await this.getData({queryParams: ''})
+      } catch (e) {
+        console.error(e);
+      }
+    },
     async getData({queryParams = ''}) {
       try {
         const { data: { items = [] } } = await this.$axios.get(`${this.$config.backendUrl}/buy-products${queryParams ? `?${queryParams}`: ''}`);
@@ -44,7 +55,6 @@ export default {
           ...data,
           showModal: false,
           weight: `${weight} ${this.$i18n.t(`units.${weightType}`)}`,
-          price: `${price} ${this.$i18n.t(`units.currency`)}/${this.$i18n.t(`units.${weightType}`)}`,
           address: `${getRegions[region]?.name || '-'} ${this.$i18n.t(`units.state`)}, ${getRegions[region]?.states[state]?.otg[otg] || '-'} ${this.$i18n.t(`units.otg`)}`
         })).sort((a) =>
           a?.region === this.user?.region ||

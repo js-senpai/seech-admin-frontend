@@ -1,4 +1,11 @@
 .products-shop{
+  &__request-modal{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 20;
+  }
   &__card{
     border-radius: 30px;
     padding: 20px 0px;
@@ -8,7 +15,7 @@
       display: grid;
       grid-template-columns: repeat(2,1fr);
       grid-gap: 16px;
-      padding: 0 30px;
+      padding: 0 12px;
     }
   }
   &__title{
@@ -30,10 +37,12 @@
   }
   &__list{
     position: relative;
-    min-height: 500px;
     display: grid;
     grid-template-columns: 1fr;
     grid-gap: 15px;
+    &-container{
+      min-height: 500px;
+    }
     &-footer{
       position: relative;
       z-index: 11;
@@ -98,6 +107,12 @@
 }
 @media (min-width: 768px){
   .products-shop{
+    &__request-modal{
+      position: absolute;
+      top: -40px;
+      left: inherit;
+      right: 140px;
+    }
     &__title{
       font-size: 36px;
       line-height: 49px;
@@ -105,7 +120,7 @@
     &__card{
       padding: 40px 0px;
       &-header{
-        padding: 0 60px;
+        padding: 0 24px;
       }
     }
     &__filter-btn,&__add-btn,&__title,&__filter-btn-container,&__btn-container{

@@ -11,6 +11,9 @@
     :btn-right-method="addToCart"
     :modal-description-title="$t('sell.descriptionModal.title')"
     :modal-description-sub-title="$t('sell.descriptionModal.subtitle')"
+    :enable-price="true"
+    :enable-photo="true"
+    :add-new-ticket="addNewTicket"
   />
 </template>
 <script>
@@ -35,6 +38,14 @@ export default {
     },
     addToCart(){
       console.log('addToCart')
+    },
+    async addNewTicket(data){
+      try {
+        await this.$axios.post(`${this.$config.backendUrl}/sell-products`,data)
+        await this.getData({queryParams: ''})
+      } catch (e) {
+        console.error(e);
+      }
     },
     async getData({queryParams = ''}) {
       try {
