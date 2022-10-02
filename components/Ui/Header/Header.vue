@@ -15,6 +15,9 @@
       <Navigation :menu="menu" />
       <!-- Right aligned nav items -->
       <b-navbar-nav class="ml-auto header__user-settings">
+        <b-nav-item class="mr-2">
+          <BasketButton />
+        </b-nav-item>
         <b-nav-item-dropdown  right>
           <!-- Using 'button-content' slot -->
           <template #button-content>
@@ -29,6 +32,7 @@
   </b-navbar>
 </template>
 <script>
+import BasketButton from "@/components/Ui/BasketButton/BasketButton";
 export default {
   data: () => ({
     menu: []
@@ -76,6 +80,7 @@ export default {
   },
   fetchOnServer: true,
   components: {
+    BasketButton,
     Navigation: () => import("../Navigation/Navigation")
   },
   computed: {

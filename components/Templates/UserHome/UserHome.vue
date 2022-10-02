@@ -17,6 +17,8 @@
   />
 </template>
 <script>
+import {mapActions} from "vuex";
+
 export default {
   components: {
     ProductsShop: () => import("@/components/Ui/ProductsShop/ProductsShop")
@@ -30,14 +32,27 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      addToBasket: 'basket/addToCart',
+      getTotal: 'basket/getTotalBasket'
+    }),
     getDescription({_id}){
       const findIndex = this.items.findIndex(item => item._id === _id);
       if(findIndex !== -1){
         this.items[findIndex].showModal = !this.items[findIndex].showModal
       }
     },
-    addToCart(){
-      console.log('addToCart')
+    async addToCart({_id}){
+      try {
+        const findIndex = this.items.findIndex(item => item._id === _id);
+        if(findIndex !== -1){
+          await this.addToBasket(this.items[findIndex]);
+          await this.getTotal();
+          await this.getData({queryParams: ''})
+        }
+      } catch (e) {
+        console.error(e);
+      }
     },
     async addNewTicket(data){
       try {
