@@ -1,0 +1,7 @@
+.basket{
+  position: relative;
+  display: flex;
+  &__total{
+    margin-left: 5px;
+  }
+}

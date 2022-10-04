@@ -1,7 +1,7 @@
 <template>
   <ProductsShop
     :data.sync="items"
-    redirect-path="/"
+    redirect-path="/buy"
     :get-api-data="getData"
     :title="$t('buy.title')"
     :btn-left-text="$t('buy.buttons.left')"

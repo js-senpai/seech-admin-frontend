@@ -1,6 +1,6 @@
 <template>
   <div class="product-card">
-    <div :class="`product-card__container ${img ? 'two-columns': ''}`">
+    <div :class="`product-card__container ${enableImg ? 'two-columns': ''}`">
       <div v-if="enableImg" class="product-card__img-container">
         <b-img-lazy v-if="img" :src="img"  class="product-card__img" />
         <ImgError v-else />

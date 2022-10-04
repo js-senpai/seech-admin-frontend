@@ -1,8 +1,8 @@
 <template>
-  <NuxtLink to="/basket" class="basket">
-    <div class="basket__total">{{total}}</div>
-    <b-icon class="basket__icon"  icon="basket-fill" />
-  </NuxtLink>
+  <div class="basket">
+    <slot />
+    <div class="basket__total">({{total}})</div>
+  </div>
 </template>
 <script>
 import {mapGetters,mapActions} from "vuex";

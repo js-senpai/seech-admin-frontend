@@ -1,6 +1,14 @@
 .header{
   padding-top: 30px;
   padding-bottom: 30px;
+  &__cart{
+    text-decoration: none;
+    color: var(--main-color);
+    list-style-type: none;
+  }
+  &__container{
+    margin-bottom: 121px;
+  }
   &__toggle{
     background: #F5F5F5;
     border-radius: 24px;

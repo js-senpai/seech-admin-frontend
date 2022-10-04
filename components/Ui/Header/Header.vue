@@ -1,38 +1,42 @@
 <template>
-  <b-navbar toggleable="lg" class="header">
-    <b-navbar-brand href="/">
-      <b-img-lazy src="~/assets/img/header/logo.svg" />
-    </b-navbar-brand>
+  <div class="header__container">
+    <b-navbar toggleable="lg" class="bg-light header" fixed="top">
+      <b-navbar-brand href="/">
+        <b-img-lazy src="~/assets/img/header/logo.svg" />
+      </b-navbar-brand>
 
-    <b-navbar-toggle target="nav-collapse" class="header__toggle">
-      <template #default="{ expanded }">
-        <b-icon v-if="expanded" icon="x"></b-icon>
-        <b-icon v-else icon="justify"></b-icon>
-      </template>
-    </b-navbar-toggle>
+      <NuxtLink to="/cart" class="d-md-none header__cart">
+        <BasketContainer>
+          <span>{{$t('cart.title')}}</span>
+        </BasketContainer>
+      </NuxtLink>
 
-    <b-collapse id="nav-collapse" is-nav>
-      <Navigation :menu="menu" />
-      <!-- Right aligned nav items -->
-      <b-navbar-nav class="ml-auto header__user-settings">
-        <b-nav-item class="mr-2">
-          <BasketButton />
-        </b-nav-item>
-        <b-nav-item-dropdown  right>
-          <!-- Using 'button-content' slot -->
-          <template #button-content>
-            <b-img-lazy src="~/assets/img/header/user.png" rounded="true" width="40" class="mr-2" />
-            <span class="header__user-settings__name">{{user.name}}</span>
-            <font-awesome-icon :icon="['fas','chevron-down']" class="header__user-settings__icon" />
-          </template>
-          <b-dropdown-item href="#" @click="logout()">Logout</b-dropdown-item>
-        </b-nav-item-dropdown>
-      </b-navbar-nav>
-    </b-collapse>
-  </b-navbar>
+      <b-navbar-toggle target="nav-collapse" class="header__toggle">
+        <template #default="{ expanded }">
+          <b-icon v-if="expanded" icon="x"></b-icon>
+          <b-icon v-else icon="justify"></b-icon>
+        </template>
+      </b-navbar-toggle>
+
+      <b-collapse id="nav-collapse" is-nav>
+        <Navigation :menu="menu" />
+        <!-- Right aligned nav items -->
+        <b-navbar-nav class="ml-auto header__user-settings">
+          <b-nav-item-dropdown  right>
+            <!-- Using 'button-content' slot -->
+            <template #button-content>
+              <b-img-lazy src="~/assets/img/header/user.png" rounded="true" width="40" class="mr-2" />
+              <span class="header__user-settings__name">{{user.name}}</span>
+              <font-awesome-icon :icon="['fas','chevron-down']" class="header__user-settings__icon" />
+            </template>
+            <b-dropdown-item href="#" @click="logout()">Logout</b-dropdown-item>
+          </b-nav-item-dropdown>
+        </b-navbar-nav>
+      </b-collapse>
+    </b-navbar>
+  </div>
 </template>
 <script>
-import BasketButton from "@/components/Ui/BasketButton/BasketButton";
 export default {
   data: () => ({
     menu: []
@@ -74,14 +78,15 @@ export default {
       },
       {
         name: this.$i18n.t('cart.title'),
-        url: '/cart'
+        url: '/cart',
+        isCart: true
       },
     ]
   },
   fetchOnServer: true,
   components: {
-    BasketButton,
-    Navigation: () => import("../Navigation/Navigation")
+    Navigation: () => import("../Navigation/Navigation"),
+    BasketContainer: () => import("@/components/Containers/BasketContainer/BasketContainer")
   },
   computed: {
     user(){
@@ -92,6 +97,7 @@ export default {
     async logout(){
       try {
         await this.$auth.logout();
+        await this.$auth.strategy.token.reset();
         await this.$router.push('/login');
       } catch (e) {
         console.error(e);
