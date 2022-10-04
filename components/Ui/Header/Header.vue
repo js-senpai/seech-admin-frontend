@@ -5,7 +5,7 @@
         <b-img-lazy src="~/assets/img/header/logo.svg" />
       </b-navbar-brand>
 
-      <NuxtLink to="/cart" class="d-md-none header__cart">
+      <NuxtLink to="/cart" class="d-md-none custom-btn round-circle btn-light header__cart">
         <BasketContainer>
           <span>{{$t('cart.title')}}</span>
         </BasketContainer>

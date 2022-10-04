@@ -5,6 +5,24 @@
     text-decoration: none;
     color: var(--main-color);
     list-style-type: none;
+    position: relative;
+    .basket__total{
+      position: absolute;
+      background: var(--main-color);
+      color: #fff;
+      font-weight: 750;
+      font-size: 12px;
+      line-height: 15px;
+      border-radius: 10px;
+      top: -13px;
+      right: -20px;
+      width: 15px;
+      height: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 5;
+    }
   }
   &__container{
     margin-bottom: 121px;

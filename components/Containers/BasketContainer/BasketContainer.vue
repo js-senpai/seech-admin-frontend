@@ -1,7 +1,7 @@
 <template>
   <div class="basket">
     <slot />
-    <div class="basket__total">({{total}})</div>
+    <div class="basket__total">{{total}}</div>
   </div>
 </template>
 <script>
