@@ -4,11 +4,12 @@
     redirect-path="/buy"
     :get-api-data="getData"
     :title="$t('buy.title')"
-    :btn-left-text="$t('buy.buttons.left')"
-    :btn-right-text="$t('buy.buttons.right')"
+    :btn-basket-text="$t('buy.buttons.left')"
+    :btn-description-text="$t('buy.buttons.right')"
     :show-img="true"
-    :btn-left-method="addToCart"
-    :btn-right-method="getDescription"
+    :btn-delete-from-basket-method="removeFromCart"
+    :btn-basket-method="addToCart"
+    :btn-description-method="getDescription"
     :modal-description-title="$t('buy.descriptionModal.title')"
     :modal-description-sub-title="$t('buy.descriptionModal.subtitle')"
     :add-new-ticket="addNewTicket"
@@ -18,11 +19,11 @@
 import {mapActions} from "vuex";
 
 export default {
-  layout: 'auth',
-  middleware: 'isAuthenticated',
   components: {
     ProductsShop: () => import("@/components/Ui/ProductsShop/ProductsShop")
   },
+  layout: 'auth',
+  middleware: 'isAuthenticated',
   data: () => ({
     items: [],
   }),
@@ -34,12 +35,25 @@ export default {
   methods: {
     ...mapActions({
       addToBasket: 'basket/addToCart',
-      getTotal: 'basket/getTotalBasket'
+      getTotal: 'basket/getTotalBasket',
+      removeFromBasket: 'basket/removeFromCart'
     }),
     getDescription({_id}){
       const findIndex = this.items.findIndex(item => item._id === _id);
       if(findIndex !== -1){
         this.items[findIndex].showModal = !this.items[findIndex].showModal
+      }
+    },
+    async removeFromCart({_id}){
+      try {
+        const findIndex = this.items.findIndex(item => item._id === _id);
+        if(findIndex !== -1){
+          await this.removeFromBasket(this.items[findIndex]);
+          await this.getTotal();
+          await this.getData({queryParams: ''})
+        }
+      } catch (e) {
+        console.error(e);
       }
     },
     async addToCart({_id}){

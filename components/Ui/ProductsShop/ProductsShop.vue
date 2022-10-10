@@ -47,11 +47,11 @@
              <div class="products-shop__list">
                <b-spinner v-if="isLoad" class="products-shop__loader" />
                <ProductCard
-                 :enable-img="enablePhoto"
+                 v-for="{description,inBasket = false,title,img,updatedAt,price,weight,author,phone,address,_id,ownTicket = false,showModal = false} in items"
                  v-else-if="!isLoad && items.length"
-                 class="products-shop__list-item"
-                 v-for="{description,title,img,updatedAt,price,weight,author,phone,address,_id,ownTicket = false,showModal = false} in items"
                  :key="_id"
+                 :enable-img="enablePhoto"
+                 class="products-shop__list-item"
                  :title="title"
                  :img="img"
                  :updated-at="updatedAt"
@@ -63,15 +63,22 @@
                >
                  <footer v-if="!ownTicket" class="products-shop__list-footer mt-2">
                    <button
+                     v-if="inBasket"
                      type="button"
                      class="custom-btn light round-square"
-                     @click="btnLeftMethod({_id})"
-                   >{{btnLeftText}}</button>
+                     @click="btnDeleteFromBasketMethod({_id})"
+                   >{{$t('buttons.cancel')}}</button>
+                   <button
+                     v-else
+                     type="button"
+                     class="custom-btn light round-square"
+                     @click="btnBasketMethod({_id})"
+                   >{{btnBasketText}}</button>
                    <button
                      type="button"
                      class="custom-btn dark round-square"
-                     @click="btnRightMethod({_id})"
-                   >{{btnRightText}}</button>
+                     @click="btnDescriptionMethod({_id})"
+                   >{{btnDescriptionText}}</button>
                  </footer>
                  <div v-show="showModal" class="products-shop__modal-description">
                    <BContainer fluid>
@@ -126,22 +133,27 @@ export default {
       type: String,
       default: ''
     },
-    btnLeftText: {
+    btnBasketText: {
       required: true,
       type: String,
       default: 'Left button'
     },
-    btnLeftMethod: {
+    btnBasketMethod: {
       required: true,
       type: Function,
       default: () => {}
     },
-    btnRightText: {
+    btnDeleteFromBasketMethod: {
+      required: true,
+      type: Function,
+      default: () => {}
+    },
+    btnDescriptionText: {
       required: true,
       type: String,
       default: 'Right button'
     },
-    btnRightMethod: {
+    btnDescriptionMethod: {
       required: true,
       type: Function,
       default: () => {}

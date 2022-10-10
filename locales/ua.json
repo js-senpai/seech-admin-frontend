@@ -30,7 +30,8 @@
     "filters": "Фільтри",
     "add": "Додати",
     "addProduct": "Додати товар",
-    "uploadPhoto": "Завантажити фото"
+    "uploadPhoto": "Завантажити фото",
+    "cancel": "Скасувати вибір"
   },
   "kpi": {
     "title": "Загальне",
@@ -2506,8 +2507,8 @@
   "sell": {
     "title": "Оголошення про продаж",
     "buttons": {
-      "left": "Опис",
-      "right": "В обрані"
+      "left": "В обрані",
+      "right": "Опис"
     },
     "descriptionModal": {
       "title": "Опис",
@@ -2517,7 +2518,7 @@
   "buy": {
     "title": "Запити на покупку",
     "buttons": {
-      "left": "В корзину",
+      "left": "В обрані",
       "right": "Коментар"
     },
     "descriptionModal": {

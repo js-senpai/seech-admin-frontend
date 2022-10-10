@@ -4,11 +4,12 @@
     redirect-path="/"
     :get-api-data="getData"
     :title="$t('sell.title')"
-    :btn-left-text="$t('sell.buttons.left')"
-    :btn-right-text="$t('sell.buttons.right')"
+    :btn-basket-text="$t('sell.buttons.left')"
+    :btn-description-text="$t('sell.buttons.right')"
     :show-img="true"
-    :btn-left-method="getDescription"
-    :btn-right-method="addToCart"
+    :btn-description-method="getDescription"
+    :btn-basket-method="addToCart"
+    :btn-delete-from-basket-method="removeFromCart"
     :modal-description-title="$t('sell.descriptionModal.title')"
     :modal-description-sub-title="$t('sell.descriptionModal.subtitle')"
     :enable-price="true"
@@ -34,7 +35,8 @@ export default {
   methods: {
     ...mapActions({
       addToBasket: 'basket/addToCart',
-      getTotal: 'basket/getTotalBasket'
+      getTotal: 'basket/getTotalBasket',
+      removeFromBasket: 'basket/removeFromCart'
     }),
     getDescription({_id}){
       const findIndex = this.items.findIndex(item => item._id === _id);
@@ -47,6 +49,18 @@ export default {
         const findIndex = this.items.findIndex(item => item._id === _id);
         if(findIndex !== -1){
           await this.addToBasket(this.items[findIndex]);
+          await this.getTotal();
+          await this.getData({queryParams: ''})
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    },
+    async removeFromCart({_id}){
+      try {
+        const findIndex = this.items.findIndex(item => item._id === _id);
+        if(findIndex !== -1){
+          await this.removeFromBasket(this.items[findIndex]);
           await this.getTotal();
           await this.getData({queryParams: ''})
         }
