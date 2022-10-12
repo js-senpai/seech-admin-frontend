@@ -86,8 +86,8 @@ export default {
   data: () => ({
     type: '',
     subtype: '',
-    price: 25,
-    weight: 25,
+    price: 1,
+    weight: 1,
     description: '',
     photoUrl: '',
     priceTitle: '',
@@ -162,8 +162,12 @@ export default {
         subtypeCode: this.subtype.code,
         price: this.price,
         weight: this.weight,
-        description: this.description,
-        photoUrl: this.photoUrl
+        ...(this.description && {
+          description: this.description
+        }),
+        ...(this.photoUrl && {
+          photoUrl: this.photoUrl
+        })
       })
       this.show = false;
       this.type = '';

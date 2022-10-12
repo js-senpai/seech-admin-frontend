@@ -173,6 +173,12 @@
     "milks": "\uD83E\uDD5B Молоко"
   },
   "subtypes": {
+    "honeyList": {
+      "honey": "\uD83C\uDF6F Мед"
+    },
+    "walnutsList": {
+      "walnuts": "\uD83E\uDD5C Горіхи"
+    },
     "cerealsList": {
       "wheat": "Пшениця",
       "barley": "Ячмінь",
