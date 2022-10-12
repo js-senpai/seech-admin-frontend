@@ -12,6 +12,11 @@
 <script>
 export default {
   props: {
+    float: {
+      type: Boolean,
+      required: false,
+      default: false
+    },
     value:{
       type: Number,
       required: true,
@@ -41,13 +46,12 @@ export default {
   methods: {
     add(){
       if(this.inputValue < this.max){
-        console.log('i here')
-        this.inputValue = this.inputValue + 1;
+        this.inputValue = this.float ? +(+this.inputValue + .1).toFixed(2): +this.inputValue + 1;
       }
     },
     subtract(){
       if(this.inputValue > this.min){
-        this.inputValue = this.inputValue - 1;
+        this.inputValue = this.float ? +(+this.inputValue - .1).toFixed(2): +this.inputValue - 1;
       }
     }
   }

@@ -234,7 +234,7 @@ export default {
       }))
     },
     subtypesOptions(){
-      return Object.entries(this.$i18n.t('types')).filter(([_,value]) => this.types.includes(value)).flatMap(([name]) => Object.values(this.$i18n.t(`subtypes.${name}List`)))
+      return this.types.length ? Object.entries(this.$i18n.t('types')).filter(([_,value]) => this.types.includes(value)).flatMap(([name]) => Object.values(this.$i18n.t(`subtypes.${name}List`))): []
     },
     regionsOptions(){
       return Object.entries(this.$i18n.t('regions')).map(([key,data]) => ({
@@ -267,7 +267,6 @@ export default {
         return this.data;
       },
       set (value) {
-        console.log(value)
         this.$emit('update:data', value);
       }
     },

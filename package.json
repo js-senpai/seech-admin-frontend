@@ -23,6 +23,7 @@
     "core-js": "^3.19.3",
     "nuxt": "^2.15.8",
     "nuxt-gsap-module": "^1.7.2",
+    "nuxt-validate": "^1.0.1",
     "nuxt-vue-select": "^0.1.4",
     "sass": "^1.53.0",
     "swiper": "^5.2.0",

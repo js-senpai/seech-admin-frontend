@@ -94,7 +94,9 @@ export default {
         }
       }
     ],
-
+    ['nuxt-validate',{
+      lang: 'uk',
+    }],
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios

@@ -8,24 +8,42 @@
         </button>
       </header>
       <div class="create-request-modal__body">
-        <BFormGroup  :label="$t('createRequestModal.type')" class="mb-4">
-          <v-select v-model="type" :options="typeOptions" />
-        </BFormGroup>
-        <BFormGroup  :label="$t('createRequestModal.subtype')" class="mb-4">
-          <v-select v-model="subtype" :options="subtypeOptions" :disabled="!type"  />
-        </BFormGroup>
-        <BFormGroup  :label="$t('createRequestModal.weight')" class="mb-4">
-          <RangeInput :min="1" :max="5000" :value.sync="weight" />
-        </BFormGroup>
-        <BFormGroup v-if="enablePrice"  :label="$t('createRequestModal.price')" class="mb-4">
-          <RangeInput :min="1" :max="5000" :value.sync="price" />
-        </BFormGroup>
-        <BFormGroup   :label="$t('createRequestModal.description')" class="mb-4">
-          <b-form-textarea v-model="description" />
-        </BFormGroup>
-        <UploadFile v-if="enablePhoto" class="mb-4" :file-url.sync="photoUrl" />
-        <button  class="mb-1 create-request-modal__btn create-request-modal__btn-accept" @click="saveChanges()">{{$t('buttons.accept')}}</button>
-        <button class="create-request-modal__btn create-request-modal__btn-cancel" @click="resetModal()">{{$t('buttons.clear')}}</button>
+        <ValidationObserver v-slot="{ valid }" ref="observer">
+          <form @submit.prevent="saveChanges">
+          <BFormGroup  :label="$t('createRequestModal.type')" class="mb-4">
+            <ValidationProvider
+              v-slot="{ errors, classes }"
+              rules="required"
+              :name="$t('createRequestModal.type')"
+            >
+              <v-select v-model="type" :class="classes" :options="typeOptions" />
+              <span class="text-danger mt-1">{{ errors[0] }}</span>
+            </ValidationProvider>
+          </BFormGroup>
+          <BFormGroup  :label="$t('createRequestModal.subtype')" class="mb-4">
+            <ValidationProvider
+              v-slot="{ errors, classes }"
+              rules="required"
+              :name="$t('createRequestModal.subtype')"
+            >
+              <v-select v-model="subtype" :class="classes" :options="subtypeOptions" :disabled="!type" @option:selected="onSelect()" />
+              <span class="text-danger mt-1">{{ errors[0] }}</span>
+            </ValidationProvider>
+          </BFormGroup>
+          <BFormGroup  :label="$t('createRequestModal.weight')" class="mb-4">
+            <RangeInput :min="minWeight" :float="isTonWeight" :value.sync="weight" />
+          </BFormGroup>
+          <BFormGroup v-if="enablePrice"  :label="priceTitle" class="mb-4">
+            <RangeInput :min="1" :value.sync="price" />
+          </BFormGroup>
+          <BFormGroup   :label="$t('createRequestModal.description')" class="mb-4">
+            <b-form-textarea v-model="description" />
+          </BFormGroup>
+          <UploadFile v-if="enablePhoto" class="mb-4" :file-url.sync="photoUrl" />
+          <button type="submit" :disabled="!valid"  class="mb-1 create-request-modal__btn create-request-modal__btn-accept">{{$t('buttons.accept')}}</button>
+          <button class="create-request-modal__btn create-request-modal__btn-cancel" @click="resetModal()">{{$t('buttons.clear')}}</button>
+          </form>
+        </ValidationObserver>
       </div>
     </div>
   </div>
@@ -34,7 +52,9 @@
 export default {
   components: {
     UploadFile: () => import("@/components/Ui/UploadFile/UploadFile"),
-    RangeInput: () => import("@/components/Ui/RangeInput/RangeInput")
+    RangeInput: () => import("@/components/Ui/RangeInput/RangeInput"),
+    ValidationObserver: () => import('vee-validate').then(module => module.ValidationObserver),
+    ValidationProvider: () => import('vee-validate').then(module => module.ValidationProvider)
   },
   props: {
     showModal: {
@@ -69,9 +89,15 @@ export default {
     price: 25,
     weight: 25,
     description: '',
-    photoUrl: ''
+    photoUrl: '',
+    priceTitle: '',
+    weightType: 'kilogram',
+    minWeight: 1
   }),
   computed: {
+    isTonWeight(){
+      return this.weightType === 'weightTon';
+    },
     show: {
       get () {
         return this.showModal;
@@ -87,13 +113,47 @@ export default {
       }))
     },
     subtypeOptions(){
-      return Object.entries(this.$i18n.t('types')).filter(([_,value]) => this.type.label === value).flatMap(([name]) => Object.entries(this.$i18n.t(`subtypes.${name}List`)).flatMap(([key,data]) => ({
+      return this.type ? Object.entries(this.$i18n.t('types')).filter(([_,value]) => this.type.label === value).flatMap(([name]) => Object.entries(this.$i18n.t(`subtypes.${name}List`)).flatMap(([key,data]) => ({
         label: data,
         code: key
-      })))
+      }))): []
     },
   },
+  mounted() {
+    this.priceTitle = this.$i18n.t('createRequestModal.price',{
+      weightType: this.$i18n.t('units.kilogram')
+    })
+  },
   methods: {
+    custom() {
+      return { on: ['search:blur', 'input'] };
+    },
+    onSelect(){
+      const cultureWithLiters = ['honey', 'milk', 'sourCream'];
+      const cultureWithTon = ['wheat', 'barley', 'corn', 'buckwheat', 'soy'];
+      if (
+        cultureWithLiters.includes(this.subtype.code) ||
+        cultureWithLiters.includes(this.type.code)
+      ) {
+        this.weightType = 'liter';
+        this.minWeight = 1;
+        this.weight = 1;
+      } else if (
+        cultureWithTon.includes(this.subtype.code) ||
+        cultureWithTon.includes(this.type.code)
+      ) {
+       this.weightType = 'weightTon';
+       this.minWeight = .1;
+       this.weight = .1;
+      } else if (this.subtype.code === 'egg') {
+        this.weightType = 'amount';
+        this.minWeight = 1;
+        this.weight = 1;
+      }
+      this.priceTitle = this.$i18n.t('createRequestModal.price',{
+        weightType: this.$i18n.t(`units.${this.weightType}`)
+      })
+    },
     saveChanges(){
       this.applyModal({
         type: this.type.label,
