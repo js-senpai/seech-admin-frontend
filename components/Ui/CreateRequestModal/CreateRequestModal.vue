@@ -16,7 +16,7 @@
               rules="required"
               :name="$t('createRequestModal.type')"
             >
-              <v-select v-model="type" :class="classes" :options="typeOptions" />
+              <v-select v-model="type" :class="classes" :options="typeOptions" @option:selected="onSelectType()" />
               <span class="text-danger mt-1">{{ errors[0] }}</span>
             </ValidationProvider>
           </BFormGroup>
@@ -26,11 +26,11 @@
               rules="required"
               :name="$t('createRequestModal.subtype')"
             >
-              <v-select v-model="subtype" :class="classes" :options="subtypeOptions" :disabled="!type" @option:selected="onSelect()" />
+              <v-select v-model="subtype" :class="classes" :options="subtypeOptions" :disabled="!type" @option:selected="onSelectSubtype()" />
               <span class="text-danger mt-1">{{ errors[0] }}</span>
             </ValidationProvider>
           </BFormGroup>
-          <BFormGroup  :label="$t('createRequestModal.weight')" class="mb-4">
+          <BFormGroup  :label="weightTitle" class="mb-4">
             <RangeInput :min="minWeight" :float="isTonWeight" :value.sync="weight" />
           </BFormGroup>
           <BFormGroup v-if="enablePrice"  :label="priceTitle" class="mb-4">
@@ -91,6 +91,7 @@ export default {
     description: '',
     photoUrl: '',
     priceTitle: '',
+    weightTitle: '',
     weightType: 'kilogram',
     minWeight: 1
   }),
@@ -123,12 +124,18 @@ export default {
     this.priceTitle = this.$i18n.t('createRequestModal.price',{
       weightType: this.$i18n.t('units.kilogram')
     })
+    this.weightTitle = this.$i18n.t('createRequestModal.weight',{
+      weightType: this.$i18n.t('units.kilogram')
+    })
   },
   methods: {
     custom() {
       return { on: ['search:blur', 'input'] };
     },
-    onSelect(){
+    onSelectType() {
+      this.subtype = '';
+    },
+    onSelectSubtype(){
       const cultureWithLiters = ['honey', 'milk', 'sourCream'];
       const cultureWithTon = ['wheat', 'barley', 'corn', 'buckwheat', 'soy'];
       if (
@@ -149,8 +156,15 @@ export default {
         this.weightType = 'amount';
         this.minWeight = 1;
         this.weight = 1;
+      } else {
+        this.weightType = 'kilogram';
+        this.minWeight = 1;
+        this.weight = 1;
       }
       this.priceTitle = this.$i18n.t('createRequestModal.price',{
+        weightType: this.$i18n.t(`units.${this.weightType}`)
+      })
+      this.weightTitle = this.$i18n.t('createRequestModal.weight',{
         weightType: this.$i18n.t(`units.${this.weightType}`)
       })
     },
