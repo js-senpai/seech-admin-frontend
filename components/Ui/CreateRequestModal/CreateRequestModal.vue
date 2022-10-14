@@ -3,7 +3,7 @@
     <div class="create-request-modal__container">
       <header class="create-request-modal__header">
         <h4 class="create-request-modal__title">{{ $t('createRequestModal.title') }}</h4>
-        <button type="button" class="create-request-modal__btn-close" @click="show = !show">
+        <button type="button" class="create-request-modal__btn-close" @click="closeModal()">
           <font-awesome-icon :icon="['fas','xmark']" />
         </button>
       </header>
@@ -47,7 +47,7 @@
           </BFormGroup>
           <UploadFile v-if="enablePhoto" class="mb-4" :file-url.sync="photoUrl" />
           <button type="submit" :disabled="!valid"  class="mb-1 create-request-modal__btn create-request-modal__btn-accept">{{$t('buttons.accept')}}</button>
-          <button class="create-request-modal__btn create-request-modal__btn-cancel" @click="resetModal()">{{$t('buttons.clear')}}</button>
+          <button type="button" class="create-request-modal__btn create-request-modal__btn-cancel" @click="closeModal()">{{$t('buttons.clear')}}</button>
           </form>
         </ValidationObserver>
       </div>
@@ -167,6 +167,19 @@ export default {
         weightType: this.$i18n.t(`units.${this.weightType}`)
       })
     },
+    closeModal() {
+      this.show = false;
+      this.type = '';
+      this.subtype = '';
+      this.price = 25;
+      this.weight = 25;
+      this.description = '';
+      this.photoUrl = '';
+      this.priceTitle =  '';
+      this.weightType =  'kilogram';
+      this.minWeight =  1;
+      this.resetModal();
+    },
     saveChanges(){
       this.applyModal({
         type: this.type.label,
@@ -189,6 +202,9 @@ export default {
       this.weight = 25;
       this.description = '';
       this.photoUrl = '';
+      this.priceTitle =  '';
+      this.weightType =  'kilogram';
+      this.minWeight =  1;
     }
   }
 }
