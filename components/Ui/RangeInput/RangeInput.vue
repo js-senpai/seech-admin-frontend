@@ -3,7 +3,7 @@
     <button type="button" class="range-input__btn range-input__btn-minus" @click="subtract">
       <font-awesome-icon :icon="['fas','minus']" />
     </button>
-    <input type="number" :min="min" :max="max" class="range-input__input" :value="inputValue" />
+    <input :disabled="disabled" type="number" :min="min" :max="max" class="range-input__input" :value="inputValue" />
     <button type="button" class="range-input__btn range-input__btn-plus" @click="add">
       <font-awesome-icon :icon="['fas','plus']" />
     </button>
@@ -12,6 +12,11 @@
 <script>
 export default {
   props: {
+    disabled: {
+      type: Boolean,
+      default: false,
+      required: false
+    },
     float: {
       type: Boolean,
       required: false,
@@ -45,12 +50,12 @@ export default {
   },
   methods: {
     add(){
-      if(this.inputValue < this.max){
+      if(this.inputValue < this.max && !this.disabled){
         this.inputValue = this.float ? +(+this.inputValue + .1).toFixed(2): +this.inputValue + 1;
       }
     },
     subtract(){
-      if(this.inputValue > this.min){
+      if(this.inputValue > this.min && !this.disabled){
         this.inputValue = this.float ? +(+this.inputValue - .1).toFixed(2): +this.inputValue - 1;
       }
     }

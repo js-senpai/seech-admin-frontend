@@ -30,15 +30,15 @@
               <span class="text-danger mt-1">{{ errors[0] }}</span>
             </ValidationProvider>
           </BFormGroup>
-          <BFormGroup  :label="weightTitle" class="mb-4">
+          <BFormGroup  :label="$t('createRequestModal.weight')" class="mb-4">
             <div class="d-flex align-items-center">
-              <RangeInput :min="minWeight" :float="isTonWeight" :value.sync="weight" />
+              <RangeInput :disabled="!type" :min="minWeight" :float="isTonWeight" :value.sync="weight" />
               <div class="ml-2">{{$t(`units.${weightType}`)}}</div>
             </div>
           </BFormGroup>
           <BFormGroup v-if="enablePrice"  :label="priceTitle" class="mb-4">
             <div class="d-flex align-items-center">
-              <RangeInput :min="1" :value.sync="price" />
+              <RangeInput :disabled="!type" :min="1" :value.sync="price" />
               <div class="ml-2">{{$t(`units.currency`)}}</div>
             </div>
           </BFormGroup>
@@ -97,7 +97,6 @@ export default {
     description: '',
     photoUrl: '',
     priceTitle: '',
-    weightTitle: '',
     weightType: 'kilogram',
     minWeight: 1
   }),
@@ -128,9 +127,6 @@ export default {
   },
   mounted() {
     this.priceTitle = this.$i18n.t('createRequestModal.price',{
-      weightType: this.$i18n.t('units.kilogram')
-    })
-    this.weightTitle = this.$i18n.t('createRequestModal.weight',{
       weightType: this.$i18n.t('units.kilogram')
     })
   },
@@ -168,9 +164,6 @@ export default {
         this.weight = 1;
       }
       this.priceTitle = this.$i18n.t('createRequestModal.price',{
-        weightType: this.$i18n.t(`units.${this.weightType}`)
-      })
-      this.weightTitle = this.$i18n.t('createRequestModal.weight',{
         weightType: this.$i18n.t(`units.${this.weightType}`)
       })
     },
