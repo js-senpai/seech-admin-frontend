@@ -31,10 +31,16 @@
             </ValidationProvider>
           </BFormGroup>
           <BFormGroup  :label="weightTitle" class="mb-4">
-            <RangeInput :min="minWeight" :float="isTonWeight" :value.sync="weight" />
+            <div class="d-flex align-items-center">
+              <RangeInput :min="minWeight" :float="isTonWeight" :value.sync="weight" />
+              <div class="ml-2">{{$t(`units.${weightType}`)}}</div>
+            </div>
           </BFormGroup>
           <BFormGroup v-if="enablePrice"  :label="priceTitle" class="mb-4">
-            <RangeInput :min="1" :value.sync="price" />
+            <div class="d-flex align-items-center">
+              <RangeInput :min="1" :value.sync="price" />
+              <div class="ml-2">{{$t(`units.currency`)}}</div>
+            </div>
           </BFormGroup>
           <BFormGroup   :label="$t('createRequestModal.description')" class="mb-4">
             <b-form-textarea v-model="description" />

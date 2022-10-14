@@ -3,7 +3,7 @@
     <button type="button" class="range-input__btn range-input__btn-minus" @click="subtract">
       <font-awesome-icon :icon="['fas','minus']" />
     </button>
-    <input type="text" :min="min" :max="max" class="range-input__input" :value="inputValue" />
+    <input type="number" :min="min" :max="max" class="range-input__input" :value="inputValue" />
     <button type="button" class="range-input__btn range-input__btn-plus" @click="add">
       <font-awesome-icon :icon="['fas','plus']" />
     </button>
