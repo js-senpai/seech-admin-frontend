@@ -47,7 +47,7 @@
           </BFormGroup>
           <UploadFile v-if="enablePhoto" class="mb-4" :file-url.sync="photoUrl" />
           <button type="submit" :disabled="!valid"  class="mb-1 create-request-modal__btn create-request-modal__btn-accept">{{$t('buttons.accept')}}</button>
-          <button type="button" class="create-request-modal__btn create-request-modal__btn-cancel" @click="closeModal()">{{$t('buttons.clear')}}</button>
+          <button type="button" class="create-request-modal__btn create-request-modal__btn-cancel" @click="clearFields()">{{$t('buttons.clear')}}</button>
           </form>
         </ValidationObserver>
       </div>
@@ -167,17 +167,20 @@ export default {
         weightType: this.$i18n.t(`units.${this.weightType}`)
       })
     },
-    closeModal() {
-      this.show = false;
+    clearFields(){
       this.type = '';
       this.subtype = '';
-      this.price = 25;
-      this.weight = 25;
+      this.price = 1;
+      this.weight = 1;
       this.description = '';
       this.photoUrl = '';
       this.priceTitle =  '';
       this.weightType =  'kilogram';
       this.minWeight =  1;
+    },
+    closeModal() {
+      this.show = false;
+      this.clearFields();
       this.resetModal();
     },
     saveChanges(){
@@ -196,15 +199,7 @@ export default {
         })
       })
       this.show = false;
-      this.type = '';
-      this.subtype = '';
-      this.price = 25;
-      this.weight = 25;
-      this.description = '';
-      this.photoUrl = '';
-      this.priceTitle =  '';
-      this.weightType =  'kilogram';
-      this.minWeight =  1;
+      this.clearFields();
     }
   }
 }
