@@ -32,13 +32,13 @@
           </BFormGroup>
           <BFormGroup  :label="$t('createRequestModal.weight')" class="mb-4">
             <div class="d-flex align-items-center">
-              <RangeInput :disabled="!type" :min="minWeight" :float="isTonWeight" :value.sync="weight" />
+              <RangeInput :disabled="!subtype" :min="minWeight" :float="isTonWeight" :value.sync="weight" />
               <div class="ml-2">{{$t(`units.${weightType}`)}}</div>
             </div>
           </BFormGroup>
           <BFormGroup v-if="enablePrice"  :label="priceTitle" class="mb-4">
             <div class="d-flex align-items-center">
-              <RangeInput :disabled="!type" :min="1" :value.sync="price" />
+              <RangeInput :disabled="!subtype" :min="1" :value.sync="price" />
               <div class="ml-2">{{$t(`units.currency`)}}</div>
             </div>
           </BFormGroup>
