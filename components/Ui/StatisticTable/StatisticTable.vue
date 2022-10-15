@@ -290,6 +290,12 @@ export default {
       await this.$router.push({ path: this.redirectPath, query: this.getQueries});
     },
     async resetFilters() {
+      this.types =  [];
+      this.subtypes = [];
+      this.regions = [];
+      this.states = [];
+      this.otg = [];
+      this.active = '';
       await this.$router.push({ path: this.redirectPath, query: {} });
       this.showModal = false;
     },

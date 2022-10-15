@@ -322,6 +322,11 @@ export default {
       }
     },
     async resetFilters() {
+      this.types =  [];
+      this.subtypes = [];
+      this.regions = [];
+      this.states = [];
+      this.otg = [];
       await this.$router.push({ path: this.redirectPath, query: {} });
     },
     async applyFilters() {
