@@ -152,8 +152,8 @@ export default {
         cultureWithTon.includes(this.type.code)
       ) {
        this.weightType = 'weightTon';
-       this.minWeight = .1;
-       this.weight = .1;
+       this.minWeight = 0.1;
+       this.weight = 0.1;
       } else if (this.subtype.code === 'egg') {
         this.weightType = 'amount';
         this.minWeight = 1;

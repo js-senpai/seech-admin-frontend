@@ -3,7 +3,7 @@
     <button type="button" class="range-input__btn range-input__btn-minus" @click="subtract">
       <font-awesome-icon :icon="['fas','minus']" />
     </button>
-    <input :disabled="disabled" type="number" :min="min" :max="max" class="range-input__input" :value="inputValue" />
+    <input :disabled="disabled" type="number" step="any" :min="min" :max="max" class="range-input__input" :value="inputValue" />
     <button type="button" class="range-input__btn range-input__btn-plus" @click="add">
       <font-awesome-icon :icon="['fas','plus']" />
     </button>
@@ -35,7 +35,7 @@ export default {
     max: {
       type: Number,
       required: false,
-      default: 100
+      default: 10000
     }
   },
   computed: {
