@@ -151,7 +151,8 @@
       },
       "otherList": {
         "honey": "\uD83C\uDF6F Мед",
-        "walnuts": "\uD83E\uDD5C Горіхи"
+        "walnuts": "\uD83E\uDD5C Горіхи",
+        "wood": "\uD83E\uDEB5 Дрова"
       }
     },
     "cereals":"\uD83C\uDF3D Зернові",
@@ -161,6 +162,7 @@
     "honey": "\uD83C\uDF6F Мед",
     "walnuts": "\uD83E\uDD5C Горіхи",
     "milks": "\uD83E\uDD5B Молоко",
+    "wood": "\uD83E\uDEB5 Дрова",
     "other": "Інше"
   },
   "types": {
@@ -170,9 +172,13 @@
     "fruits": "\uD83C\uDF4D Фрукти",
     "honey": "\uD83C\uDF6F Мед",
     "walnuts": "\uD83E\uDD5C Горіхи",
-    "milks": "\uD83E\uDD5B Молоко"
+    "milks": "\uD83E\uDD5B Молоко",
+    "wood": "\uD83E\uDEB5 Дрова"
   },
   "subtypes": {
+    "woodList": {
+      "wood": "\uD83E\uDEB5 Дрова"
+    },
     "honeyList": {
       "honey": "\uD83C\uDF6F Мед"
     },
