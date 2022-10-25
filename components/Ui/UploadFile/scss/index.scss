@@ -1,9 +1,11 @@
 .upload-file{
-  display: grid;
-  grid-template-columns: 24px 1fr;
-  grid-gap: 6px;
-  align-content: center;
-  cursor: pointer;
+  &__label{
+    display: grid;
+    grid-template-columns: 24px 1fr;
+    grid-gap: 6px;
+    align-content: center;
+    cursor: pointer;
+  }
   &__text{
     width: fit-content;
     border-bottom: 2px solid var(--main-color);

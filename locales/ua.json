@@ -2551,7 +2551,8 @@
     "amount": "шт",
     "currency": "грн",
     "state": "обл.",
-    "otg": "ОТГ"
+    "otg": "ОТГ",
+    "weightCubeValue": "куб. м."
   },
   "errors": {
     "notFound": {
