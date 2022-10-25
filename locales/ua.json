@@ -2568,5 +2568,17 @@
     "price": "Введіть ціну за {weightType}",
     "description": "Додайте опис",
     "photo": "Завантажити фото"
+  },
+  "notifications": {
+    "wishlist": {
+      "add": {
+        "title": "Додано у вибране",
+        "description": "Товар додан у вибране"
+      },
+      "cancel": {
+        "title": "Вибір скасовано",
+        "description": "Товар прибран з вибраного"
+      }
+    }
   }
 }

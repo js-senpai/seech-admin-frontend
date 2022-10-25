@@ -54,6 +54,12 @@ export default {
         }
       } catch (e) {
         console.error(e);
+      } finally {
+        this.$bvToast.toast(this.$i18n.t('notifications.wishlist.cancel.description'), {
+          title: this.$i18n.t('notifications.wishlist.cancel.title'),
+          variant: 'success',
+          solid: true
+        })
       }
     },
     async addToCart({_id}){
@@ -66,6 +72,12 @@ export default {
         }
       } catch (e) {
         console.error(e);
+      } finally {
+        this.$bvToast.toast(this.$i18n.t('notifications.wishlist.add.description'), {
+          title: this.$i18n.t('notifications.wishlist.add.title'),
+          variant: 'success',
+          solid: true
+        })
       }
     },
     async addNewTicket(data){

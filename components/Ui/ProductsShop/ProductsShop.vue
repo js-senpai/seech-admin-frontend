@@ -65,15 +65,17 @@
                    <button
                      v-if="inBasket"
                      type="button"
-                     class="custom-btn light round-square"
+                     class="products-shop__btn-wishlist active"
                      @click="btnDeleteFromBasketMethod({_id})"
-                   >{{$t('buttons.cancel')}}</button>
+                   >
+                     <b-icon  icon="heart-fill" />
+                   </button>
                    <button
                      v-else
                      type="button"
-                     class="custom-btn light round-square"
+                     class="products-shop__btn-wishlist"
                      @click="btnBasketMethod({_id})"
-                   >{{btnBasketText}}</button>
+                   ><b-icon  icon="heart" /></button>
                    <button
                      type="button"
                      class="custom-btn dark round-square"
@@ -132,11 +134,6 @@ export default {
       required: false,
       type: String,
       default: ''
-    },
-    btnBasketText: {
-      required: true,
-      type: String,
-      default: 'Left button'
     },
     btnBasketMethod: {
       required: true,
