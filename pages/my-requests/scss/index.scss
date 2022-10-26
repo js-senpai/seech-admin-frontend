@@ -1,0 +1,107 @@
+.my-requests{
+  &__btn{
+    &-tab{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      &__total{
+        margin-left: 8px;
+        background: #CC2929;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 12px;
+        line-height: 15px;
+        font-weight: 750;
+        padding: 2px 5px;
+        color: #fff;
+      }
+    }
+  }
+  &__card{
+    border-radius: 30px;
+    padding: 20px 0px;
+    margin-bottom: 40px;
+    box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.03);
+    &-header{
+      display: grid;
+      grid-template-columns: repeat(2,1fr);
+      grid-gap: 16px;
+      padding: 0 12px;
+    }
+  }
+  &__title{
+    font-weight: bold;
+    font-size: 25px;
+    line-height: 30px;
+    color: var(--main-color);
+    margin-bottom: 0;
+  }
+  &__list{
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 15px;
+    &-container{
+      min-height: 500px;
+    }
+    &-footer{
+      &__btn{
+        border: 1px solid #F5F5F5;
+        &-complete{
+          border-color: rgba(0, 186, 0, 0.13);
+          background-color: rgba(0, 186, 0, 0.13);
+          &:hover{
+            background-color: #fff;
+          }
+          &__icon{
+            color: var(--main-color);
+            margin-right: 10px;
+            font-size: 20px;
+          }
+        }
+      }
+    }
+  }
+  &__loader{
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+  }
+}
+@media (min-width: 768px){
+  .my-requests{
+    &__title{
+      font-size: 36px;
+      line-height: 49px;
+    }
+    &__card{
+      padding: 40px 0px;
+      &-header{
+        padding: 0 24px;
+      }
+    }
+    &__list{
+      grid-template-columns: repeat(2,1fr);
+      grid-gap: 25px;
+    }
+  }
+}
+@media (min-width: 992px){
+  .my-requests{
+    &__list{
+      grid-template-columns: repeat(3,1fr);
+    }
+  }
+}
+@media (min-width: 1400px){
+  .my-requests{
+    &__list{
+      grid-template-columns: repeat(4,1fr);
+    }
+  }
+}
