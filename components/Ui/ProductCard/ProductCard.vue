@@ -12,6 +12,9 @@
           <span>{{getTime}}</span>
         </time>
         <ul class="product-card__info">
+          <li v-if="typeof active !== 'undefined'" class="product-card__info-item d-block">
+            <span class="font-weight-bold">{{$t('productCard.activity')}} {{active ? $t('entities.active'):$t('entities.inactive')}}</span>
+          </li>
           <li v-if="price" class="product-card__info-item">
             <b-img-lazy src="~/assets/img/productCard/money.svg" class="product-card__icon" />
             <span class="font-weight-bold">{{price}}</span>
@@ -63,8 +66,12 @@ export default {
       required: true,
       default: new Date()
     },
+    active: {
+      type: Boolean,
+      required: false,
+    },
     price: {
-      type: String,
+      type: [String,Number],
       required: false,
     },
     weight: {

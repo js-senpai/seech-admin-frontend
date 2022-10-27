@@ -63,6 +63,11 @@
                >
                  <footer v-if="!ownTicket" class="products-shop__list-footer mt-2">
                    <button
+                     type="button"
+                     class="custom-btn dark round-square"
+                     @click="btnDescriptionMethod({_id})"
+                   >{{btnDescriptionText}}</button>
+                   <button
                      v-if="inBasket"
                      type="button"
                      class="products-shop__btn-wishlist active"
@@ -76,11 +81,6 @@
                      class="products-shop__btn-wishlist"
                      @click="btnBasketMethod({_id})"
                    ><b-icon  icon="heart" /></button>
-                   <button
-                     type="button"
-                     class="custom-btn dark round-square"
-                     @click="btnDescriptionMethod({_id})"
-                   >{{btnDescriptionText}}</button>
                  </footer>
                  <div v-show="showModal" class="products-shop__modal-description">
                    <BContainer fluid>

@@ -55,10 +55,11 @@ export default {
       } catch (e) {
         console.error(e);
       } finally {
-        this.$bvToast.toast(this.$i18n.t('notifications.wishlist.add.description'), {
+        this.$bvToast.toast(' ', {
           title: this.$i18n.t('notifications.wishlist.add.title'),
           variant: 'success',
-          solid: true
+          solid: true,
+          toaster: 'b-toaster-bottom-right'
         })
       }
     },
@@ -73,10 +74,11 @@ export default {
       } catch (e) {
         console.error(e);
       } finally {
-        this.$bvToast.toast(this.$i18n.t('notifications.wishlist.cancel.description'), {
+        this.$bvToast.toast(' ', {
           title: this.$i18n.t('notifications.wishlist.cancel.title'),
           variant: 'success',
-          solid: true
+          solid: true,
+          toaster: 'b-toaster-bottom-right'
         })
       }
     },

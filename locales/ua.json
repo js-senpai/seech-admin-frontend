@@ -2549,7 +2549,7 @@
     "currency": "грн",
     "state": "обл.",
     "otg": "ОТГ",
-    "weightCubeValue": "куб. м."
+    "weightCube": "куб. м."
   },
   "errors": {
     "notFound": {
@@ -2579,15 +2579,22 @@
     }
   },
   "myRequests": {
-    "title": "Мої запити",
+    "title": "Мої товари/запити",
     "tabs": {
-      "sell": "Продаю",
-      "buy": "Купую"
+      "sell": "Мої товари",
+      "buy": "Мої запити"
     },
     "buttons": {
       "complete": "Виконано",
       "extend": "Продовжити на 24 год.",
       "delete": "Видалити"
     }
+  },
+  "productCard": {
+    "activity": "Активний:"
+  },
+  "entities": {
+    "active": "🟢",
+    "inactive": "🔴"
   }
 }
