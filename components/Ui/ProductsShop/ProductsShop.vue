@@ -7,7 +7,7 @@
            <header class="mb-4 d-md-flex justify-content-between flex-wrap align-items-center products-shop__card-header">
              <h2 class="products-shop__title mb-2 mb-md-0">{{title}}</h2>
              <div class="d-flex position-relative align-items-center statistic-table__btn-container">
-               <button  class="custom-btn light round-square products-shop__add-btn mr-1"  type="button" @click="showAddModal = !showAddModal">
+               <button  class="custom-btn light round-circle products-shop__add-btn mr-1"  type="button" @click="showAddModal = !showAddModal">
                  <font-awesome-icon :icon="['fas', 'plus']" class="mr-2"   />
                  <span>{{$t('buttons.add')}}</span>
                </button>

@@ -9,27 +9,27 @@
           <DatePicker v-model="getDate" :placeholder="$t('filters.date')" range class="w-100" value-type="DD-MM-YYYY" :disabled="disableDates" />
         </div>
         <div class="statistic-filter-block__body-item">
-          <v-select :placeholder="$t('filters.region')" v-model="getRegions" :options="regionsOptions" multiple :disabled="disableRegion"  />
+          <v-select v-model="getRegions" :placeholder="$t('filters.region')" :options="regionsOptions" multiple :disabled="disableRegion"  />
         </div>
         <div class="statistic-filter-block__body-item">
-          <v-select :placeholder="$t('filters.state')" v-model="getStates" :options="statesOptions" multiple :disabled="!regions.length || disableRegion"  />
+          <v-select v-model="getStates" :placeholder="$t('filters.state')" :options="statesOptions" multiple :disabled="!regions.length || disableRegion"  />
         </div>
         <div class="statistic-filter-block__body-item">
-          <v-select :placeholder="$t('filters.otg')" v-model="getOtg" :options="otgOptions" multiple :disabled="!states.length || disableRegion"  />
+          <v-select v-model="getOtg" :placeholder="$t('filters.otg')" :options="otgOptions" multiple :disabled="!states.length || disableRegion"  />
         </div>
         <div class="statistic-filter-block__body-item">
-          <v-select :placeholder="$t('filters.type')" v-model="getTypes" :options="typesOptions" multiple :disabled="disableTypes" />
+          <v-select v-model="getTypes" :placeholder="$t('filters.type')" :options="typesOptions" multiple :disabled="disableTypes" />
         </div>
         <div class="statistic-filter-block__body-item">
-          <v-select :placeholder="$t('filters.subtype')" v-model="getSubTypes" :options="subtypesOptions" multiple :disabled="!types.length || disableTypes"  />
+          <v-select v-model="getSubTypes" :placeholder="$t('filters.subtype')" :options="subtypesOptions" multiple :disabled="!types.length || disableTypes"  />
         </div>
         <div v-if="activeOptions.length" class="statistic-filter-block__body-item">
-          <v-select :placeholder="$t('filters.active')" v-model="getActive" :options="activeOptions" :disabled="disableActive"  />
+          <v-select v-model="getActive" :placeholder="$t('filters.active')" :options="activeOptions" :disabled="disableActive"  />
         </div>
       </div>
       <footer class="statistic-filter-block__footer">
-        <button class="custom-btn light round-square statistic-filter-block__btn-cancel" @click="resetFilters()">{{$t('buttons.clear')}}</button>
-        <button  class="custom-btn light round-square statistic-filter-block__btn-accept" @click="applyFilters()">{{$t('buttons.accept')}}</button>
+        <button class="custom-btn light round-circle statistic-filter-block__btn-cancel" @click="resetFilters()">{{$t('buttons.clear')}}</button>
+        <button  class="custom-btn light round-circle statistic-filter-block__btn-accept" @click="applyFilters()">{{$t('buttons.accept')}}</button>
       </footer>
     </div>
   </div>

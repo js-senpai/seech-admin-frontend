@@ -24,11 +24,12 @@
               <div class="my-requests__list">
                 <b-spinner v-if="isLoad" class="my-requests__loader" />
                 <ProductCard
-                  v-for="{title,updatedAt,price,weight,author,phone,address,_id,active = false} in items"
+                  v-for="{title,img,updatedAt,price,weight,author,phone,address,_id,active = false} in items"
                   v-else-if="!isLoad && items.length"
                   :key="_id"
                   :active="active"
-                  :enable-img="false"
+                  :enable-img="pageType === 'sell'"
+                  :img="img"
                   class="my-requests__list-item"
                   :title="title"
                   :updated-at="updatedAt"
@@ -76,6 +77,8 @@ export default {
     pageType: 'sell',
     items: [],
     isLoad: true,
+    currentPage: 1,
+    perPage: 20
   }),
   async fetch(){
     await this.getData();

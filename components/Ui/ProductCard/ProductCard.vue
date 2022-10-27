@@ -69,6 +69,7 @@ export default {
     active: {
       type: Boolean,
       required: false,
+      default: undefined
     },
     price: {
       type: [String,Number],
