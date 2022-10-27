@@ -6,9 +6,9 @@
       background-color: transparent;
       font-size: 1.6rem;
       transition: all 500ms ease-in-out;
-      &:hover,&.active {
-          color: var(--red-color);
-      }
+      //&:hover,&.active {
+      //    color: var(--red-color);
+      //}
     }
   }
   &__request-modal{

@@ -32,16 +32,16 @@
       background-color: #EB6758 !important;
       border-color: #fff;
       color: #fff !important;
-      &:hover{
-        background-color: var(--main-color) !important;
-        border-color: var(--main-color);
-      }
+      //&:hover{
+      //  background-color: var(--main-color) !important;
+      //  border-color: var(--main-color);
+      //}
     }
     &-accept{
       border-color: #fff;
-      &:hover{
-        border-color: var(--main-color);
-      }
+      //&:hover{
+      //  border-color: var(--main-color);
+      //}
     }
   }
   &__footer{

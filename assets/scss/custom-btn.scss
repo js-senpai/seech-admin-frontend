@@ -10,18 +10,18 @@
   &.light{
     background: #FFFFFF;
     color:  var(--main-color);
-    &:hover,&.active,&:active{
-      background: var(--main-color);
-      color: #fff;
-    }
+    //&:hover,&.active,&:active{
+    //  background: var(--main-color);
+    //  color: #fff;
+    //}
   }
   &.dark{
     background: var(--main-color);
     color: #fff;
-    &:hover,&.active,&:active{
-      background: #fff;
-      color: var(--main-color);
-    }
+    //&:hover,&.active,&:active{
+    //  background: #fff;
+    //  color: var(--main-color);
+    //}
   }
   &.round-circle{
     border-radius: 30px;

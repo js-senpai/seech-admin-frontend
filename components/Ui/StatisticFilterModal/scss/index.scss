@@ -26,18 +26,18 @@
     &-cancel{
       color:  var(--main-color);
       background-color: #fff;
-      &:hover{
-        background-color: var(--main-color);
-        color: #fff;
-      }
+      //&:hover{
+      //  background-color: var(--main-color);
+      //  color: #fff;
+      //}
     }
     &-accept{
       background-color: var(--main-color);
       color: #fff;
-      &:hover{
-        color:  var(--main-color);
-        background-color: #fff;
-      }
+      //&:hover{
+      //  color:  var(--main-color);
+      //  background-color: #fff;
+      //}
     }
     &-close{
       width: 12px;
