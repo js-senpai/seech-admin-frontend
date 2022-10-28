@@ -4,18 +4,16 @@
       <BRow>
         <BCol cols="12" >
           <div class="my-requests__card bg-white">
-            <header class="mb-4 d-flex justify-content-between flex-wrap align-items-center my-requests__card-header">
-              <h2 class="my-requests__title mb-2 mb-md-0">{{$t('myRequests.title')}}</h2>
-              <div class="d-flex position-relative align-items-center align-items-md-end my-requests__btn-container">
-                <button  :class="`custom-btn ${pageType === 'sell' ? 'dark': 'light'}  round-circle my-requests__btn-tab  mr-2`" type="button"   @click="chooseTab('sell')">
-                  <span>{{$t('myRequests.tabs.sell')}}</span>
-                  <span class="my-requests__btn-tab__total">{{totalSell}}</span>
-                </button>
-                <button  :class="`custom-btn ${pageType === 'buy' ? 'dark': 'light'} round-circle my-requests__btn-tab`" type="button" @click="chooseTab('buy')">
-                  <span>{{$t('myRequests.tabs.buy')}}</span>
-                  <span class="my-requests__btn-tab__total">{{totalBuy}}</span>
-                </button>
-              </div>
+            <header class="mb-4 d-flex justify-content-center flex-wrap align-items-center my-requests__card-header">
+<!--              <h2 class="my-requests__title mb-2 mb-md-0">{{$t('myRequests.title')}}</h2>-->
+              <button  :class="`custom-btn ${pageType === 'sell' ? 'dark': 'light'}  round-circle my-requests__btn-tab  mr-2`" type="button"   @click="chooseTab('sell')">
+                <span>{{$t('myRequests.tabs.sell')}}</span>
+                <span class="my-requests__btn-tab__total">{{totalSell}}</span>
+              </button>
+              <button  :class="`custom-btn ${pageType === 'buy' ? 'dark': 'light'} round-circle my-requests__btn-tab`" type="button" @click="chooseTab('buy')">
+                <span>{{$t('myRequests.tabs.buy')}}</span>
+                <span class="my-requests__btn-tab__total">{{totalBuy}}</span>
+              </button>
             </header>
             <div class="mb-4 d-flex">
               <div>{{ $t('other.totalItems', { total: rows }) }}</div>
@@ -48,7 +46,7 @@
                     <button type="button" class="custom-btn light my-requests__list-footer__btn w-100" @click="deleteItem(_id)">{{$t('myRequests.buttons.delete')}}</button>
                   </footer>
                 </ProductCard>
-                <h3 v-else class="w-100 text-center position-absolute">{{$t('errors.notFound.products')}}</h3>
+                <h3 v-else class="w-100 text-center position-absolute">{{pageType === 'sell' ? $t('myRequests.notFound.sell'): $t('myRequests.notFound.buy')}}</h3>
               </div>
             </div>
             <div v-if="items.length > 1" class="d-flex justify-content-end align-content-center">
