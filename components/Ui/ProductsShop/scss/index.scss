@@ -6,6 +6,7 @@
       background-color: transparent;
       font-size: 1.6rem;
       transition: all 500ms ease-in-out;
+      text-align: right;
       &.active {
          color: var(--red-color);
       }

@@ -38,6 +38,10 @@
 </template>
 <script>
 export default {
+  components: {
+    Navigation: () => import("../Navigation/Navigation"),
+    BasketContainer: () => import("@/components/Containers/BasketContainer/BasketContainer")
+  },
   data: () => ({
     menu: []
   }),
@@ -84,10 +88,6 @@ export default {
     ]
   },
   fetchOnServer: true,
-  components: {
-    Navigation: () => import("../Navigation/Navigation"),
-    BasketContainer: () => import("@/components/Containers/BasketContainer/BasketContainer")
-  },
   computed: {
     user(){
       return this.$auth.user

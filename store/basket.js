@@ -10,8 +10,8 @@ export const mutations = {
       state.basket.push(ticket);
     }
   },
-  removeFromCart(state,ticket){
-    state.basket = state.basket.filter(({_id}) => _id === ticket._id)
+  removeFromCart(state,{_id}){
+    state.basket = state.basket.filter((item) => item._id === _id)
   },
   setTotal(state,total){
     if(!Number.isNaN(total)){
@@ -27,13 +27,17 @@ export const actions = {
     });
     commit('addToCart',ticket);
   },
-  async removeFromCart({commit},ticket){
-    await this.$axios.delete(`${this.$config.backendUrl}/basket/${ticket._id}`);
-    commit('removeFromCart',ticket);
+  async removeFromCart({commit},{_id}){
+    await this.$axios.delete(`${this.$config.backendUrl}/basket/${_id}`);
+    commit('removeFromCart', {_id});
   },
   async getTotalBasket({commit}){
     const { data: { total = 0 } }  = await this.$axios.get(`${this.$config.backendUrl}/basket/total`);
     commit('setTotal',total);
+  },
+  async completeTicket({commit},{_id}){
+    await this.$axios.put(`${this.$config.backendUrl}/basket/complete/${_id}`);
+    commit('removeFromCart', {_id});
   }
 }
 

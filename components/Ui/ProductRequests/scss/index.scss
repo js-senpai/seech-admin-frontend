@@ -1,4 +1,4 @@
-.my-requests{
+.product-requests{
   &__btn{
     &-tab{
       display: flex;
@@ -71,7 +71,7 @@
   }
 }
 @media (min-width: 768px){
-  .my-requests{
+  .product-requests{
     &__title{
       font-size: 36px;
       line-height: 49px;
@@ -89,14 +89,14 @@
   }
 }
 @media (min-width: 992px){
-  .my-requests{
+  .product-requests{
     &__list{
       grid-template-columns: repeat(3,1fr);
     }
   }
 }
 @media (min-width: 1400px){
-  .my-requests{
+  .product-requests{
     &__list{
       grid-template-columns: repeat(4,1fr);
     }
