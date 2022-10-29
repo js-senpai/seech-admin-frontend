@@ -32,10 +32,14 @@
         <button  class="custom-btn light round-circle statistic-filter-block__btn-accept" @click="applyFilters()">{{$t('buttons.accept')}}</button>
       </footer>
     </div>
+    <AuthProductSlider class="statistic-filter-block__bg" />
   </div>
 </template>
 <script>
 export default {
+  components: {
+    AuthProductSlider: () => import("../Auth/ProductSlider/AuthProductSlider")
+  },
   props: {
     applyFilters: {
       type: Function,

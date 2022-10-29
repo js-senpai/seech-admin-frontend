@@ -1,7 +1,22 @@
 .statistic-filter-block{
-  background: var(--red-color);
   border-radius: 12px;
-  padding: 24px 12px;
+  border: 1px solid var(--main-color);
+  position: relative;
+  overflow: hidden;
+  &__container{
+    position: relative;
+    z-index: 2;
+    padding: 24px 12px;
+  }
+  &__bg{
+    z-index: 1;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin-bottom: 0 !important;
+  }
   &__title,label,legend{
     color: #fff;
   }
@@ -18,6 +33,9 @@
     margin-bottom: 12px;
     &-item{
       height: 40px;
+      .vs__dropdown-toggle{
+        border-color: var(--main-color);
+      }
       .v-select,.vs__dropdown-toggle{
         height: 100%;
       }
@@ -30,7 +48,6 @@
   &__btn{
     &-cancel{
       background-color: #EB6758 !important;
-      border-color: #fff;
       color: #fff !important;
       //&:hover{
       //  background-color: var(--main-color) !important;
@@ -38,7 +55,6 @@
       //}
     }
     &-accept{
-      border-color: #fff;
       //&:hover{
       //  border-color: var(--main-color);
       //}
@@ -52,7 +68,9 @@
 }
 @media (min-width: 768px){
   .statistic-filter-block{
-    padding: 24px;
+    &__container{
+      padding: 24px;
+    }
     &__title{
       display: none;
     }
