@@ -4,9 +4,9 @@
       <BRow>
         <BCol cols="12" >
           <div class="product-requests__card bg-white">
-            <header class="mb-4 d-flex justify-content-center flex-wrap align-items-center product-requests__card-header">
+            <header :class="`mb-4 d-flex ${title ? 'justify-content-md-between': ''}justify-content-center flex-wrap align-items-center product-requests__card-header`">
               <h2 v-if="title" class="product-requests__title mb-2 mb-md-0">{{title}}</h2>
-              <button  :class="`custom-btn ${pageType === 'sell' ? 'dark': 'light'}  round-circle product-requests__btn-tab  mr-2`" type="button"   @click="chooseTab('sell')">
+              <button  :class="`custom-btn ${pageType === 'sell' ? 'dark': 'light'}  round-circle product-requests__btn-tab  mr-2 ${title ? 'ml-md-auto': ''}`" type="button"   @click="chooseTab('sell')">
                 <span>{{sellButton}}</span>
                 <span class="product-requests__btn-tab__total">{{totalSell}}</span>
               </button>
