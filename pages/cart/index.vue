@@ -46,7 +46,7 @@ export default {
         ...data,
         weight: `${weight} ${this.$i18n.t(`units.${weightType}`)}`,
         address: `${getRegions[region]?.name || '-'} ${this.$i18n.t(`units.state`)}, ${getRegions[region]?.states[state]?.otg[otg] || '-'} ${this.$i18n.t(`units.otg`)}`
-      }))
+      }));
       const { data: { totalBuy = 0,totalSell = 0 } } = await this.$axios.get(`${this.$config.backendUrl}/basket/total-by-types`);
       this.totalSell = totalSell;
       this.totalBuy = totalBuy;
