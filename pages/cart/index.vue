@@ -1,5 +1,6 @@
 <template>
   <ProductRequests
+    :title="$t('cart.tabs.sell')"
     :sell-button="$t('cart.tabs.sell')"
     :total-sell="totalSell"
     :buy-button="$t('cart.tabs.buy')"
