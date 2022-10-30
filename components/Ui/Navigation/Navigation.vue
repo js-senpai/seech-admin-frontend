@@ -1,6 +1,6 @@
 <template>
   <b-nav class="header-nav">
-    <b-nav-item class="header-nav__item" v-for="{name,url,isCart} in menu" :key="name">
+    <b-nav-item v-for="{name,url,isCart,classNames} in menu" :key="name" :class="`header-nav__item ${classNames}`">
         <NuxtLink :to="url" class="header-nav__item-link">
           <BasketContainer v-if="isCart">
             <span>{{name}}</span>

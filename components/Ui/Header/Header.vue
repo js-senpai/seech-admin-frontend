@@ -83,7 +83,8 @@ export default {
       {
         name: this.$i18n.t('cart.title'),
         url: '/cart',
-        isCart: true
+        isCart: true,
+        classNames: 'd-sm-none'
       },
     ]
   },
