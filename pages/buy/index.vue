@@ -59,7 +59,7 @@ export default {
           title: this.$i18n.t('notifications.wishlist.cancel.title'),
           variant: 'success',
           solid: true,
-          autoHideDelay: 2500,
+          autoHideDelay: 1500,
           toaster: 'b-toaster-bottom-right'
         })
       }
@@ -79,7 +79,7 @@ export default {
           title: this.$i18n.t('notifications.wishlist.add.title'),
           variant: 'success',
           solid: true,
-          autoHideDelay: 2500,
+          autoHideDelay: 1500,
           toaster: 'b-toaster-bottom-right'
         })
       }

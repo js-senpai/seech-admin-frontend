@@ -2563,7 +2563,7 @@
     "subtype": "Підтип продукту",
     "weight": "Введіть вагу",
     "price": "Введіть ціну за {weightType}",
-    "description": "Додайте опис",
+    "description": "Додайте коментар",
     "photo": "Завантажити фото"
   },
   "notifications": {

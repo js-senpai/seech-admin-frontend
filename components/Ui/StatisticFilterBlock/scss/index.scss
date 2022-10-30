@@ -2,7 +2,6 @@
   border-radius: 12px;
   border: 1px solid var(--main-color);
   position: relative;
-  overflow: hidden;
   &__container{
     position: relative;
     z-index: 2;
@@ -21,11 +20,11 @@
     color: #fff;
   }
   &__title{
-    font-weight: 500;
-    font-size: 16px;
+    font-size: 18px;
     line-height: 22px;
     margin-bottom: 12px;
     color: var(--main-color);
+    font-weight: bold;
   }
   &__body{
     display: grid;
@@ -44,22 +43,6 @@
         color: var(--main-color);
         font-weight: 500;
       }
-    }
-  }
-  &__btn{
-    &-cancel{
-      background-color: #EB6758 !important;
-      color: #fff !important;
-      border-color: transparent;
-      //&:hover{
-      //  background-color: var(--main-color) !important;
-      //  border-color: var(--main-color);
-      //}
-    }
-    &-accept{
-      //&:hover{
-      //  border-color: var(--main-color);
-      //}
     }
   }
   &__footer{
