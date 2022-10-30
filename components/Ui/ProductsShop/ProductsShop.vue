@@ -64,7 +64,7 @@
                  <footer v-if="!ownTicket" class="products-shop__list-footer mt-2">
                    <button
                      type="button"
-                     class="custom-btn dark round-circle"
+                     class="custom-btn light round-circle"
                      @click="btnDescriptionMethod({_id})"
                    >{{btnDescriptionText}}</button>
                    <button
