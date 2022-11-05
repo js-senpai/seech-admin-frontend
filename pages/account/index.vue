@@ -77,11 +77,14 @@
 export default {
   layout: 'auth',
   middleware: 'isAuthenticated',
-  data: () => ({
-    region: '',
-    countryState: '',
-    countryOtg: ''
-  }),
+  async asyncData({$axios,$config}) {
+    const { data: { user } } = await $axios.get(`${$config.backendUrl}/user`)
+    return {
+      region: user.region,
+      countryState: user.countryState,
+      countryOtg: user.countryOtg
+    }
+  },
   computed: {
     isDisabled(){
       return !this.region || !this.countryState || !this.countryOtg || !this.regionsOptions.length || !this.statesOptions.length || !this.otgOptions.length
@@ -116,20 +119,7 @@ export default {
         }))
     },
   },
-  async mounted(){
-    await this.getData();
-  },
   methods: {
-    async getData() {
-      try {
-        const { data: { user } } = await this.$axios.get(`${this.$config.backendUrl}/user`)
-        this.region = user.region
-        this.countryState = user.countryState
-        this.countryOtg = user.countryOtg
-      } catch (e) {
-        console.error(e)
-      }
-    },
     async update(){
       try {
         await this.$axios.put(`${this.$config.backendUrl}/user`,{
@@ -137,7 +127,6 @@ export default {
           countryState: +this.countryState,
           countryOtg: +this.countryOtg
         });
-        await this.getData();
       } catch (e) {
         console.error(e)
       }
