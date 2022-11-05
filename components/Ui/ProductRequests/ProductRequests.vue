@@ -22,7 +22,7 @@
               <div class="product-requests__list">
                 <b-spinner v-if="isLoad" class="product-requests__loader" />
                 <ProductCard
-                  v-for="{title,img,updatedAt,price,weight,author,phone,address,_id,active = false} in items"
+                  v-for="{showModal = false,title,img,updatedAt,price,weight,author,phone,address,_id,description,active = false} in items"
                   v-else-if="!isLoad && items.length"
                   :key="_id"
                   :active="active"
@@ -38,13 +38,43 @@
                   :address="address"
                 >
                   <footer  class="product-requests__list-footer mt-2">
-                    <button type="button" class="custom-btn round-square product-requests__list-footer__btn-complete w-100 mb-2" @click="complete(_id)">
-                      <b-icon icon="check2" class="product-requests__list-footer__btn-complete__icon" />
-                      <span>{{$t('buttons.complete')}}</span>
+<!--                    <button type="button" class="custom-btn round-square product-requests__list-footer__btn-complete w-100 mb-2" @click="complete(_id)">-->
+<!--                      <b-icon icon="check2" class="product-requests__list-footer__btn-complete__icon" />-->
+<!--                      <span>{{$t('buttons.complete')}}</span>-->
+<!--                    </button>-->
+<!--                    <button v-if="!active && enableExtend" type="button" class="custom-btn light round-square product-requests__list-footer__btn w-100  mb-2" @click="extend(_id)">{{$t('buttons.extend')}}</button>-->
+<!--                    <button type="button" class="custom-btn light product-requests__list-footer__btn w-100" @click="deleteItem(_id)">{{$t('buttons.delete')}}</button>-->
+                    <button
+                      type="button"
+                      class="custom-btn light round-circle"
+                      @click="btnDescriptionMethod({_id})"
+                    >{{btnDescriptionText}}</button>
+                    <button
+                      type="button"
+                      class="product-requests__btn-wishlist active"
+                      @click="deleteItem({_id})"
+                    >
+                      <b-icon  icon="heart-fill" />
                     </button>
-                    <button v-if="!active && enableExtend" type="button" class="custom-btn light round-square product-requests__list-footer__btn w-100  mb-2" @click="extend(_id)">{{$t('buttons.extend')}}</button>
-                    <button type="button" class="custom-btn light product-requests__list-footer__btn w-100" @click="deleteItem(_id)">{{$t('buttons.delete')}}</button>
                   </footer>
+                  <div v-show="showModal" class="product-requests__modal-description">
+                    <BContainer fluid>
+                      <BRow>
+                        <BCol cols="12" >
+                          <header class="product-requests__modal-description__header">
+                            <button type="button" class="product-requests__modal-description__close" @click="hideDescriptionModal(_id)">
+                              <b-icon  icon="chevron-left" />
+                            </button>
+                            <div class="product-requests__modal-description__title">{{modalDescriptionTitle}}</div>
+                          </header>
+                          <div class="product-requests__modal-description__body">
+                            <div class="product-requests__modal-description__subtitle">{{modalDescriptionSubTitle}}</div>
+                            <div class="product-requests__modal-description__text" v-html="description" />
+                          </div>
+                        </BCol>
+                      </BRow>
+                    </BContainer>
+                  </div>
                 </ProductCard>
                 <h3 v-else class="w-100 text-center position-absolute">{{pageType === 'sell' ? notFoundSellText: notFoundBuyText}}</h3>
               </div>
@@ -132,7 +162,27 @@ export default {
       type: String,
       required: false,
       default: ''
-    }
+    },
+    btnDescriptionText: {
+      required: true,
+      type: String,
+      default: 'Right button'
+    },
+    btnDescriptionMethod: {
+      required: true,
+      type: Function,
+      default: () => {}
+    },
+    modalDescriptionTitle: {
+      required: false,
+      type: String,
+      default: ''
+    },
+    modalDescriptionSubTitle: {
+      required: false,
+      type: String,
+      default: ''
+    },
   },
   data: () => ({
     pageType: 'sell',
@@ -153,6 +203,12 @@ export default {
     '$route.query': '$fetch',
   },
   methods: {
+    hideDescriptionModal(_id){
+      const findIndex = this.items.findIndex(item => item._id === _id);
+      if(findIndex !== -1){
+        this.items[findIndex].showModal = false
+      }
+    },
     async chooseTab(type = 'sell'){
       this.pageType = type;
       await this.fetchData();

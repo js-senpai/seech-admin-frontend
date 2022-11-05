@@ -11,7 +11,11 @@
     :not-found-buy-text="$t('errors.notFound.products')"
     :get-data="getData"
     :complete-action="complete"
-    :delete-action="deleteItem"
+    :delete-action="deleteTicket"
+    :btn-description-text="$t('buy.buttons.right')"
+    :btn-description-method="getDescription"
+    :modal-description-title="$t('buy.descriptionModal.title')"
+    :modal-description-sub-title="$t('buy.descriptionModal.subtitle')"
   />
 </template>
 <script>
@@ -39,11 +43,18 @@ export default {
        completeTicket: 'basket/completeTicket',
        getTotalTickets: 'basket/getTotalBasket'
     }),
+    getDescription({_id}){
+      const findIndex = this.items.findIndex(item => item._id === _id);
+      if(findIndex !== -1){
+        this.items[findIndex].showModal = !this.items[findIndex].showModal
+      }
+    },
     async getData({type = 'sell'}) {
       const { data: { items = [] } } = await this.$axios.get(`${this.$config.backendUrl}/basket/${type}`);
       const getRegions = this.$i18n.t(`regions`);
       this.items = items.map(({region,state,otg,weight,weightType,...data}) => ({
         ...data,
+        showModal: false,
         weight: `${weight} ${this.$i18n.t(`units.${weightType}`)}`,
         address: `${getRegions[region]?.name || '-'} ${this.$i18n.t(`units.state`)}, ${getRegions[region]?.states[state]?.otg[otg] || '-'} ${this.$i18n.t(`units.otg`)}`
       }));
