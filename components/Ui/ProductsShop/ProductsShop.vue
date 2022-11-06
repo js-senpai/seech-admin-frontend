@@ -4,24 +4,12 @@
       <BRow>
         <BCol cols="12" >
          <div class="products-shop__card bg-white">
-           <header class="mb-4 d-md-flex justify-content-between flex-wrap align-items-center products-shop__card-header">
-             <h2 class="products-shop__title mb-2 mb-md-0">{{title}}</h2>
-             <div class="d-flex position-relative align-items-center statistic-table__btn-container">
-               <button  class="custom-btn light round-circle products-shop__add-btn mr-1"  type="button" @click="showAddModal = !showAddModal">
-                 <font-awesome-icon :icon="['fas', 'plus']" class="mr-2"   />
-                 <span>{{$t('buttons.add')}}</span>
-               </button>
-               <CreateRequestModal
-                 class="products-shop__request-modal"
-                 :show-modal.sync="showAddModal"
-                 :enable-photo="enablePhoto"
-                 :enable-price="enablePrice"
-                 :reset-modal="hideAddModal"
-                 :apply-modal="applyAddModal"
-               />
-             </div>
+           <header :class="`mb-4 d-md-flex ${title ? 'justify-content-md-between': ''} justify-content-center flex-wrap align-items-center products-shop__card-header`">
+             <h2 v-if="title" class="product-shop__title mb-2 mb-md-0">{{title}}</h2>
+             <slot name="header" />
            </header>
            <StatisticFilterBlock
+             v-if="enableFilter"
              class="mb-4"
              :apply-filters="applyFilters"
              :reset-filters="resetFilters"
@@ -47,7 +35,7 @@
              <div class="products-shop__list">
                <b-spinner v-if="isLoad" class="products-shop__loader" />
                <ProductCard
-                 v-for="{description,inBasket = false,title,img,updatedAt,price,weight,author,phone,address,_id,ownTicket = false,showModal = false} in items"
+                 v-for="{active = false,description,inBasket = false,title,img,updatedAt,price,weight,author,phone,address,_id,ownTicket = false,showModal = false} in items"
                  v-else-if="!isLoad && items.length"
                  :key="_id"
                  :enable-img="enablePhoto"
@@ -61,47 +49,9 @@
                  :phone="phone"
                  :address="address"
                >
-                 <footer v-if="!ownTicket" class="products-shop__list-footer mt-2">
-                   <button
-                     type="button"
-                     class="custom-btn light round-circle"
-                     @click="btnDescriptionMethod({_id})"
-                   >{{btnDescriptionText}}</button>
-                   <button
-                     v-if="inBasket"
-                     type="button"
-                     class="products-shop__btn-wishlist active"
-                     @click="btnDeleteFromBasketMethod({_id})"
-                   >
-                     <b-icon  icon="heart-fill" />
-                   </button>
-                   <button
-                     v-else
-                     type="button"
-                     class="products-shop__btn-wishlist"
-                     @click="btnBasketMethod({_id})"
-                   ><b-icon  icon="heart" /></button>
-                 </footer>
-                 <div v-show="showModal" class="products-shop__modal-description">
-                   <BContainer fluid>
-                     <BRow>
-                       <BCol cols="12" >
-                         <header class="products-shop__modal-description__header">
-                           <button type="button" class="products-shop__modal-description__close" @click="hideDescriptionModal(_id)">
-                             <b-icon  icon="chevron-left" />
-                           </button>
-                           <div class="products-shop__modal-description__title">{{modalDescriptionTitle}}</div>
-                         </header>
-                         <div class="products-shop__modal-description__body">
-                           <div class="products-shop__modal-description__subtitle">{{modalDescriptionSubTitle}}</div>
-                           <div class="products-shop__modal-description__text" v-html="description" />
-                         </div>
-                       </BCol>
-                     </BRow>
-                   </BContainer>
-                 </div>
+                 <slot name="cardFooter" :active="active" :in-basket="inBasket" :own-ticket="ownTicket" :description="description" :_id="_id" :show-modal="showModal" />
                </ProductCard>
-               <h3 v-else class="w-100 text-center position-absolute">{{$t('errors.notFound.products')}}</h3>
+               <h3 v-else class="w-100 text-center position-absolute">{{notFoundText || $t('errors.notFound.products')}}</h3>
              </div>
            </div>
            <div v-if="items.length > 1" class="d-flex justify-content-end align-content-center">
@@ -125,47 +75,12 @@ export default {
     ProductCard: () => import('@/components/Ui/ProductCard/ProductCard')
   },
   props: {
-    modalDescriptionTitle: {
-      required: false,
-      type: String,
-      default: ''
-    },
-    modalDescriptionSubTitle: {
-      required: false,
-      type: String,
-      default: ''
-    },
-    btnBasketMethod: {
-      required: true,
-      type: Function,
-      default: () => {}
-    },
-    btnDeleteFromBasketMethod: {
-      required: true,
-      type: Function,
-      default: () => {}
-    },
-    btnDescriptionText: {
-      required: true,
-      type: String,
-      default: 'Right button'
-    },
-    btnDescriptionMethod: {
-      required: true,
-      type: Function,
-      default: () => {}
-    },
     data: {
       required: true,
       type: Array,
       default: () => []
     },
     enablePhoto: {
-      required: false,
-      type: Boolean,
-      default: false
-    },
-    enablePrice: {
       required: false,
       type: Boolean,
       default: false
@@ -179,11 +94,6 @@ export default {
       required: true,
       type: Function,
       default: () => {}
-    },
-    title: {
-      required: true,
-      type: String,
-      default: ''
     },
     disableDates: {
       required: false,
@@ -200,14 +110,23 @@ export default {
       type: Boolean,
       default: false
     },
-    addNewTicket: {
-      required: true,
-      type: Function,
-      default: () => {}
+    enableFilter: {
+      required: false,
+      type: Boolean,
+      default: true
+    },
+    title:{
+      required: false,
+      type: String,
+      default: ''
+    },
+    notFoundText: {
+      required: false,
+      type: String,
+      default: ''
     }
   },
   data: () => ({
-    showAddModal: false,
     types: [],
     subtypes: [],
     regions: [],
@@ -292,12 +211,6 @@ export default {
     '$route.query': '$fetch',
   },
   methods: {
-    hideDescriptionModal(_id){
-      const findIndex = this.items.findIndex(item => item._id === _id);
-      if(findIndex !== -1){
-        this.items[findIndex].showModal = false
-      }
-    },
     async getData({query = {},serverFetch = true}) {
       this.isLoad = true;
       try {
@@ -329,12 +242,6 @@ export default {
     async applyFilters() {
       await this.$router.push({ path: this.redirectPath, query: this.getQueries});
     },
-    hideAddModal(){
-      this.showAddModal = false;
-    },
-    applyAddModal(data){
-      this.addNewTicket(data)
-    }
   }
 }
 </script>

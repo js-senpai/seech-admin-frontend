@@ -66,8 +66,8 @@
             />
           </b-form-group>
         </BCol>
-        <BCol md="2" class="d-flex align-items-center">
-          <b-button class="mt-3" variant="success" :disabled="isDisabled" @click="update()">{{$t('buttons.accept')}}</b-button>
+        <BCol md="2" class="d-flex align-items-center justify-content-center justify-content-md-between">
+          <b-button  class="custom-btn dark   round-circle mt-3" variant="success" :disabled="isDisabled" @click="update()">{{$t('buttons.accept')}}</b-button>
         </BCol>
       </BRow>
     </BContainer>

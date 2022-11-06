@@ -3,17 +3,67 @@
     :data.sync="items"
     redirect-path="/buy"
     :get-api-data="getData"
+    :enable-photo="true"
     :title="$t('buy.title')"
-    :btn-basket-text="$t('buy.buttons.left')"
-    :btn-description-text="$t('buy.buttons.right')"
-    :show-img="true"
-    :btn-delete-from-basket-method="removeFromCart"
-    :btn-basket-method="addToCart"
-    :btn-description-method="getDescription"
-    :modal-description-title="$t('buy.descriptionModal.title')"
-    :modal-description-sub-title="$t('buy.descriptionModal.subtitle')"
-    :add-new-ticket="addNewTicket"
-  />
+  >
+    <template #header>
+      <div class="d-flex position-relative align-items-center statistic-table__btn-container">
+        <button  class="custom-btn light round-circle products-shop__add-btn mr-1"  type="button" @click="showAddModal = !showAddModal">
+          <font-awesome-icon :icon="['fas', 'plus']" class="mr-2"   />
+          <span>{{$t('buttons.add')}}</span>
+        </button>
+        <CreateRequestModal
+          class="products-shop__request-modal"
+          :show-modal.sync="showAddModal"
+          :enable-photo="true"
+          :enable-price="false"
+          :reset-modal="hideAddModal"
+          :apply-modal="applyAddModal"
+        />
+      </div>
+    </template>
+    <template #cardFooter="{ownTicket = false,_id,inBasket = false,showModal = false,description = ''}">
+      <footer v-if="!ownTicket" class="products-shop__list-footer mt-2">
+        <button
+          type="button"
+          class="custom-btn light round-circle"
+          @click="getDescription({_id})"
+        >{{$t('buy.buttons.right')}}</button>
+        <button
+          v-if="inBasket"
+          type="button"
+          class="products-shop__btn-wishlist active"
+          @click="removeFromCart({_id})"
+        >
+          <b-icon  icon="heart-fill" />
+        </button>
+        <button
+          v-else
+          type="button"
+          class="products-shop__btn-wishlist"
+          @click="addToCart({_id})"
+        ><b-icon  icon="heart" /></button>
+      </footer>
+      <div v-show="showModal" class="products-shop__modal-description">
+        <BContainer fluid>
+          <BRow>
+            <BCol cols="12" >
+              <header class="products-shop__modal-description__header">
+                <button type="button" class="products-shop__modal-description__close" @click="hideDescriptionModal(_id)">
+                  <b-icon  icon="chevron-left" />
+                </button>
+                <div class="products-shop__modal-description__title">{{$t('buy.descriptionModal.title')}}</div>
+              </header>
+              <div class="products-shop__modal-description__body">
+                <div class="products-shop__modal-description__subtitle">{{$t('buy.descriptionModal.subtitle')}}</div>
+                <div class="products-shop__modal-description__text" v-html="description" />
+              </div>
+            </BCol>
+          </BRow>
+        </BContainer>
+      </div>
+    </template>
+  </ProductsShop>
 </template>
 <script>
 import {mapActions} from "vuex";
@@ -26,6 +76,7 @@ export default {
   middleware: 'isAuthenticated',
   data: () => ({
     items: [],
+    showAddModal: false
   }),
   computed: {
     user(){
@@ -38,6 +89,12 @@ export default {
       getTotal: 'basket/getTotalBasket',
       removeFromBasket: 'basket/removeFromCart'
     }),
+    hideDescriptionModal(_id){
+      const findIndex = this.items.findIndex(item => item._id === _id);
+      if(findIndex !== -1){
+        this.items[findIndex].showModal = false
+      }
+    },
     getDescription({_id}){
       const findIndex = this.items.findIndex(item => item._id === _id);
       if(findIndex !== -1){
@@ -112,6 +169,12 @@ export default {
         console.error(e);
       }
     },
+    hideAddModal(){
+      this.showAddModal = false;
+    },
+    applyAddModal(data){
+      this.addNewTicket(data)
+    }
   }
 }
 </script>

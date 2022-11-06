@@ -1,35 +1,60 @@
 <template>
-  <ProductRequests
-    :sell-button="$t('myRequests.tabs.sell')"
-    :total-sell="totalSell"
-    :buy-button="$t('myRequests.tabs.buy')"
-    :total-buy="totalBuy"
-    :items="items"
-    :enable-extend="true"
-    :not-found-sell-text="$t('myRequests.notFound.sell')"
-    :not-found-buy-text="$t('myRequests.notFound.buy')"
-    :get-data="getData"
-    :complete-action="complete"
-    :delete-action="deleteItem"
-    :extend-action="extend"
-  />
+  <ProductsShop
+    :data.sync="items"
+    redirect-path="/my-requests"
+    :get-api-data="getData"
+    :enable-photo="true"
+    :enable-filter="false"
+    :not-found-text="notFoundText"
+  >
+    <template #header>
+      <button  :class="`custom-btn ${pageType === 'sell' ? 'dark': 'light'}  round-circle product-shop__btn-tab  mr-2`" type="button"   @click="chooseTab('sell')">
+        <span>{{$t('myRequests.tabs.sell')}}</span>
+        <span class="product-requests__btn-tab__total">{{totalSell}}</span>
+      </button>
+      <button  :class="`custom-btn ${pageType === 'buy' ? 'dark': 'light'} round-circle product-shop__btn-tab`" type="button" @click="chooseTab('buy')">
+        <span>{{$t('myRequests.tabs.buy')}}</span>
+        <span class="product-requests__btn-tab__total">{{totalBuy}}</span>
+      </button>
+    </template>
+    <template #cardFooter="{_id,active}">
+      <footer  class="products-shop__list-footer-with-icons mt-2">
+        <button type="button" class="text-success products-shop__list-footer-with-icons__btn" @click="complete(_id)">
+          <b-icon icon="check2" class="products-shop__list-footer-with-icons__btn-complete__icon" />
+        </button>
+        <button :disabled="active" type="button" class="products-shop__list-footer-with-icons__btn" @click="extend(_id)">
+          <b-icon icon="clock-history" class="products-shop__list-footer-with-icons__btn-complete__icon" />
+        </button>
+        <button type="button" class="text-danger products-shop__list-footer-with-icons__btn" @click="deleteItem(_id)">
+          <b-icon icon="trash" class="products-shop__list-footer-with-icons__btn-complete__icon" />
+        </button>
+      </footer>
+    </template>
+  </ProductsShop>
 </template>
 <script>
 export default {
   components: {
-    ProductRequests: () => import( "../../components/Ui/ProductRequests/ProductRequests"),
+    ProductsShop: () => import("@/components/Ui/ProductsShop/ProductsShop")
   },
   layout: 'auth',
   middleware: 'isAuthenticated',
   data: () => ({
+    pageType: 'sell',
     totalBuy: 0,
     totalSell: 0,
     items: [],
   }),
+  async fetch(){
+    await this.getData({type: this.pageType})
+  },
   computed: {
     rows(){
       return this.items.length
     },
+    notFoundText(){
+      return this.$i18n.t(`myRequests.notFound.${this.pageType}`)
+    }
   },
   methods: {
     async getData({type = 'sell'}) {
@@ -44,23 +69,30 @@ export default {
         this.totalSell = totalSell;
         this.totalBuy = totalBuy;
     },
-    async complete({id}){
+    async chooseTab(type = 'sell'){
+      this.pageType = type;
+      await this.getData({type: this.pageType});
+    },
+    async complete(id){
       try {
           await this.$axios.put(`${this.$config.backendUrl}/my-requests/complete/${id}`);
+          await this.getData({type: this.pageType});
       } catch (e) {
         console.error(e)
       }
     },
-    async extend({id}){
+    async extend(id){
       try {
         await this.$axios.put(`${this.$config.backendUrl}/my-requests/extend/${id}`);
+        await this.getData({type: this.pageType});
       } catch (e) {
         console.error(e)
       }
     },
-    async deleteItem({id}){
+    async deleteItem(id){
       try {
         await this.$axios.delete(`${this.$config.backendUrl}/my-requests/${id}`);
+        await this.getData({type: this.pageType});
       } catch (e) {
         console.error(e)
       }

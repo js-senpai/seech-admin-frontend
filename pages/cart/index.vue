@@ -1,37 +1,73 @@
 <template>
-  <ProductRequests
+  <ProductsShop
+    :data.sync="items"
+    redirect-path="/cart"
+    :get-api-data="getData"
+    :enable-photo="true"
+    :enable-filter="false"
     :title="$t('cart.title')"
-    :sell-button="$t('cart.tabs.sell')"
-    :total-sell="totalSell"
-    :buy-button="$t('cart.tabs.buy')"
-    :total-buy="totalBuy"
-    :items="items"
-    :enable-extend="false"
-    :not-found-sell-text="$t('errors.notFound.products')"
-    :not-found-buy-text="$t('errors.notFound.products')"
-    :get-data="getData"
-    :complete-action="complete"
-    :delete-action="deleteTicket"
-    :btn-description-text="$t('buy.buttons.right')"
-    :btn-description-method="getDescription"
-    :modal-description-title="$t('buy.descriptionModal.title')"
-    :modal-description-sub-title="$t('buy.descriptionModal.subtitle')"
-  />
+  >
+    <template #header>
+      <button  :class="`custom-btn ${pageType === 'sell' ? 'dark': 'light'}  round-circle product-shop__btn-tab ml-md-auto mr-2`" type="button"   @click="chooseTab('sell')">
+        <span>{{$t('myRequests.tabs.sell')}}</span>
+        <span class="product-requests__btn-tab__total">{{totalSell}}</span>
+      </button>
+      <button  :class="`custom-btn ${pageType === 'buy' ? 'dark': 'light'} round-circle product-shop__btn-tab`" type="button" @click="chooseTab('buy')">
+        <span>{{$t('myRequests.tabs.buy')}}</span>
+        <span class="product-requests__btn-tab__total">{{totalBuy}}</span>
+      </button>
+    </template>
+    <template #cardFooter="{_id,showModal,description}">
+      <footer  class="products-shop__list-footer-with-icons mt-2">
+        <button type="button" class="text-success products-shop__list-footer-with-icons__btn" @click="complete(_id)">
+          <b-icon icon="check2" class="products-shop__list-footer-with-icons__btn-complete__icon" />
+        </button>
+        <button  type="button" class="products-shop__list-footer-with-icons__btn" @click="getDescription(_id)">
+          <b-icon icon="chat-text" class="products-shop__list-footer-with-icons__btn-complete__icon" />
+        </button>
+        <button type="button" class="text-danger products-shop__list-footer-with-icons__btn" @click="deleteItem(_id)">
+          <b-icon icon="trash" class="products-shop__list-footer-with-icons__btn-complete__icon" />
+        </button>
+      </footer>
+      <div v-show="showModal" class="products-shop__modal-description">
+        <BContainer fluid>
+          <BRow>
+            <BCol cols="12" >
+              <header class="products-shop__modal-description__header">
+                <button type="button" class="products-shop__modal-description__close" @click="hideDescriptionModal(_id)">
+                  <b-icon  icon="chevron-left" />
+                </button>
+                <div class="products-shop__modal-description__title">{{$t('buy.descriptionModal.title')}}</div>
+              </header>
+              <div class="products-shop__modal-description__body">
+                <div class="products-shop__modal-description__subtitle">{{$t('buy.descriptionModal.subtitle')}}</div>
+                <div class="products-shop__modal-description__text" v-html="description" />
+              </div>
+            </BCol>
+          </BRow>
+        </BContainer>
+      </div>
+    </template>
+  </ProductsShop>
 </template>
 <script>
 import {mapActions} from "vuex";
 
 export default {
   components: {
-    ProductRequests: () => import( "../../components/Ui/ProductRequests/ProductRequests"),
+    ProductsShop: () => import("@/components/Ui/ProductsShop/ProductsShop"),
   },
   layout: 'auth',
   middleware: 'isAuthenticated',
   data: () => ({
+    pageType: 'sell',
     totalBuy: 0,
     totalSell: 0,
     items: [],
   }),
+  async fetch(){
+    await this.getData({type: this.pageType})
+  },
   computed: {
     rows(){
       return this.items.length
@@ -43,10 +79,16 @@ export default {
        completeTicket: 'basket/completeTicket',
        getTotalTickets: 'basket/getTotalBasket'
     }),
-    getDescription({_id}){
+    getDescription(_id){
       const findIndex = this.items.findIndex(item => item._id === _id);
       if(findIndex !== -1){
         this.items[findIndex].showModal = !this.items[findIndex].showModal
+      }
+    },
+    hideDescriptionModal(_id){
+      const findIndex = this.items.findIndex(item => item._id === _id);
+      if(findIndex !== -1){
+        this.items[findIndex].showModal = false
       }
     },
     async getData({type = 'sell'}) {
@@ -62,18 +104,20 @@ export default {
       this.totalSell = totalSell;
       this.totalBuy = totalBuy;
     },
-    async complete({id}){
+    async complete(id){
       try {
         await this.completeTicket({_id: id});
         await this.getTotalTickets();
+        await this.getData({type: this.pageType});
       } catch (e) {
         console.error(e)
       }
     },
-    async deleteItem({id}){
+    async deleteItem(id){
       try {
         await this.deleteTicket({_id: id});
         await this.getTotalTickets();
+        await this.getData({type: this.pageType});
       } catch (e) {
         console.error(e)
       }

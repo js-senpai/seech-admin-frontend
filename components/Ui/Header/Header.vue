@@ -29,7 +29,6 @@
               <span class="header__user-settings__name">{{user.name}}</span>
               <font-awesome-icon :icon="['fas','chevron-down']" class="header__user-settings__icon" />
             </template>
-            <b-dropdown-item href="/account">{{$t('account.title')}}</b-dropdown-item>
             <b-dropdown-item href="#" @click="logout()">{{$t('buttons.logout')}}</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
@@ -87,6 +86,10 @@ export default {
         isCart: true,
         classNames: 'd-none d-md-block'
       },
+      {
+        name: this.$i18n.t('account.title'),
+        url: '/account'
+      }
     ]
   },
   fetchOnServer: true,
