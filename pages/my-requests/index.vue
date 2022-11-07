@@ -20,13 +20,13 @@
     <template #cardFooter="{_id,active}">
       <footer  class="products-shop__list-footer-with-icons mt-2">
         <button type="button" class="text-success products-shop__list-footer-with-icons__btn" @click="complete(_id)">
-          <b-icon icon="check2" class="products-shop__list-footer-with-icons__btn-complete__icon" />
+          <b-icon icon="check2" class="products-shop__list-footer-with-icons__btn-icon" />
         </button>
         <button :disabled="active" type="button" class="products-shop__list-footer-with-icons__btn" @click="extend(_id)">
-          <b-img-lazy src="~/assets/img/myRequests/extend.svg" class="products-shop__list-footer-with-icons__btn-complete__icon" />
+          <b-img-lazy src="~/assets/img/myRequests/extend.svg" class="products-shop__list-footer-with-icons__btn-icon" />
         </button>
         <button type="button" class="text-danger products-shop__list-footer-with-icons__btn" @click="deleteItem(_id)">
-          <b-icon icon="trash" class="products-shop__list-footer-with-icons__btn-complete__icon" />
+          <b-icon icon="trash" class="products-shop__list-footer-with-icons__btn-icon" />
         </button>
       </footer>
     </template>
