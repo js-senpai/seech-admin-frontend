@@ -79,6 +79,14 @@ export default {
           await this.getData({type: this.pageType});
       } catch (e) {
         console.error(e)
+      } finally {
+        this.$bvToast.toast(' ', {
+          title: this.$i18n.t('myRequests.notifications.complete.title'),
+          variant: 'success',
+          solid: true,
+          autoHideDelay: 1500,
+          toaster: 'b-toaster-bottom-right'
+        })
       }
     },
     async extend(id){
@@ -87,6 +95,14 @@ export default {
         await this.getData({type: this.pageType});
       } catch (e) {
         console.error(e)
+      } finally {
+        this.$bvToast.toast(' ', {
+          title: this.$i18n.t('myRequests.notifications.extend.title'),
+          variant: 'success',
+          solid: true,
+          autoHideDelay: 1500,
+          toaster: 'b-toaster-bottom-right'
+        })
       }
     },
     async deleteItem(id){
@@ -95,6 +111,14 @@ export default {
         await this.getData({type: this.pageType});
       } catch (e) {
         console.error(e)
+      } finally {
+        this.$bvToast.toast(' ', {
+          title: this.$i18n.t('myRequests.notifications.delete.title'),
+          variant: 'success',
+          solid: true,
+          autoHideDelay: 1500,
+          toaster: 'b-toaster-bottom-right'
+        })
       }
     }
   }
