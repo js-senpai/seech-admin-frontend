@@ -129,6 +129,14 @@ export default {
         });
       } catch (e) {
         console.error(e)
+      } finally {
+        this.$bvToast.toast(' ', {
+          title: this.$i18n.t('account.notifications.success.title'),
+          variant: 'success',
+          solid: true,
+          autoHideDelay: 1500,
+          toaster: 'b-toaster-bottom-right'
+        })
       }
     }
   }

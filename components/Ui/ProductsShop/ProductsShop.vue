@@ -35,9 +35,10 @@
              <div class="products-shop__list">
                <b-spinner v-if="isLoad" class="products-shop__loader" />
                <ProductCard
-                 v-for="{active = false,description,inBasket = false,title,img,updatedAt,price,weight,author,phone,address,_id,ownTicket = false,showModal = false} in items"
+                 v-for="{active,description,inBasket = false,title,img,updatedAt,price,weight,author,phone,address,_id,ownTicket = false,showModal = false} in items"
                  v-else-if="!isLoad && items.length"
                  :key="_id"
+                 :active="active"
                  :enable-img="enablePhoto"
                  class="products-shop__list-item"
                  :title="title"

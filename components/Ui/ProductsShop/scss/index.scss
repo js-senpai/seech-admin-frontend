@@ -13,6 +13,24 @@
       //&:hover,&.active {
       //    color: var(--red-color);
       //}
+      &-tab{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        &__total{
+          margin-left: 8px;
+          background: #CC2929;
+          border-radius: 10px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          font-size: 12px;
+          line-height: 15px;
+          font-weight: 750;
+          padding: 2px 5px;
+          color: #fff;
+        }
+      }
     }
   }
   &__request-modal{
