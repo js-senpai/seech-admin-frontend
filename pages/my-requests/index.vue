@@ -23,7 +23,7 @@
           <b-icon icon="check2" class="products-shop__list-footer-with-icons__btn-complete__icon" />
         </button>
         <button :disabled="active" type="button" class="products-shop__list-footer-with-icons__btn" @click="extend(_id)">
-          <b-icon icon="clock-history" class="products-shop__list-footer-with-icons__btn-complete__icon" />
+          <b-img-lazy src="~/assets/img/myRequests/extend.svg" class="products-shop__list-footer-with-icons__btn-complete__icon" />
         </button>
         <button type="button" class="text-danger products-shop__list-footer-with-icons__btn" @click="deleteItem(_id)">
           <b-icon icon="trash" class="products-shop__list-footer-with-icons__btn-complete__icon" />

@@ -60,7 +60,8 @@
     line-height: 30px;
     color: var(--main-color);
     margin-bottom: 0;
-    width: 100%;
+    grid-column-start: 1;
+    grid-column-end: 3;
   }
   &__filter-btn,&__add-btn,&__title,&__filter-btn-container,&__btn-container{
     width: 100%;
@@ -165,7 +166,8 @@
     &__title{
       font-size: 36px;
       line-height: 49px;
-      width: auto;
+      grid-column-start: auto;
+      grid-column-end: auto;
     }
     &__card{
       padding: 40px 0px;
