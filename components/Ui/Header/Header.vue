@@ -11,12 +11,10 @@
         </BasketContainer>
       </NuxtLink>
 
-      <b-navbar-toggle target="nav-collapse" class="header__toggle" @click="visible = !visible">
-        <template #default="{ expanded }">
-          <b-icon v-if="expanded" icon="x"></b-icon>
-          <b-icon v-else icon="justify"></b-icon>
-        </template>
-      </b-navbar-toggle>
+      <b-button class="header__toggle" @click="visible = !visible">
+        <b-icon v-if="visible" icon="x"></b-icon>
+        <b-icon v-else icon="justify"></b-icon>
+      </b-button>
 
       <b-collapse v-model="visible" is-nav>
         <Navigation :menu="menu" />
