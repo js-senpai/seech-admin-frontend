@@ -11,14 +11,14 @@
         </BasketContainer>
       </NuxtLink>
 
-      <b-navbar-toggle target="nav-collapse" class="header__toggle">
+      <b-navbar-toggle target="nav-collapse" class="header__toggle" @click="visible = !visible">
         <template #default="{ expanded }">
           <b-icon v-if="expanded" icon="x"></b-icon>
           <b-icon v-else icon="justify"></b-icon>
         </template>
       </b-navbar-toggle>
 
-      <b-collapse id="nav-collapse" is-nav>
+      <b-collapse v-model="visible" is-nav>
         <Navigation :menu="menu" />
         <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto header__user-settings">
@@ -43,7 +43,8 @@ export default {
     BasketContainer: () => import("@/components/Containers/BasketContainer/BasketContainer")
   },
   data: () => ({
-    menu: []
+    menu: [],
+    visible: false
   }),
   fetch() {
     this.menu = ['admin','moderator'].includes(this.user.type) ? [

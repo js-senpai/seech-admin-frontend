@@ -8,11 +8,11 @@
     :not-found-text="notFoundText"
   >
     <template #header>
-      <button  :class="`custom-btn ${pageType === 'sell' ? 'dark': 'light'}  round-circle product-shop__btn-tab  mr-2`" type="button"   @click="chooseTab('sell')">
+      <button  :class="`custom-btn ${pageType === 'sell' ? 'dark': 'light'}  round-circle products-shop__btn-tab  mr-2`" type="button"   @click="chooseTab('sell')">
         <span>{{$t('myRequests.tabs.sell')}}</span>
         <span class="products-shop__btn-tab__total">{{totalSell}}</span>
       </button>
-      <button  :class="`custom-btn ${pageType === 'buy' ? 'dark': 'light'} round-circle product-shop__btn-tab`" type="button" @click="chooseTab('buy')">
+      <button  :class="`custom-btn ${pageType === 'buy' ? 'dark': 'light'} round-circle products-shop__btn-tab`" type="button" @click="chooseTab('buy')">
         <span>{{$t('myRequests.tabs.buy')}}</span>
         <span class="products-shop__btn-tab__total">{{totalBuy}}</span>
       </button>
@@ -22,7 +22,7 @@
         <button type="button" class="text-success products-shop__list-footer-with-icons__btn" @click="complete(_id)">
           <b-icon icon="check2" class="products-shop__list-footer-with-icons__btn-icon" />
         </button>
-        <button v-if="!active" type="button" class="products-shop__list-footer-with-icons__btn" @click="extend(_id)">
+        <button v-show="!active" type="button" class="products-shop__list-footer-with-icons__btn" @click="extend(_id)">
           <b-img-lazy src="~/assets/img/myRequests/extend.svg" class="products-shop__list-footer-with-icons__btn-icon" />
         </button>
         <button type="button" class="text-danger products-shop__list-footer-with-icons__btn" @click="deleteItem(_id)">

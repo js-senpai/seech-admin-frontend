@@ -5,7 +5,7 @@
         <BCol cols="12" >
          <div class="products-shop__card bg-white">
            <header :class="`mb-4 d-md-flex ${title ? 'justify-content-md-between': ''} justify-content-center flex-wrap align-items-center products-shop__card-header`">
-             <h2 v-if="title" class="product-shop__title mb-2 mb-md-0">{{title}}</h2>
+             <h2 v-if="title" class="products-shop__title mb-2 mb-md-0">{{title}}</h2>
              <slot name="header" />
            </header>
            <StatisticFilterBlock

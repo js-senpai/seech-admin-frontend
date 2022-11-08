@@ -8,11 +8,11 @@
     :title="$t('cart.title')"
   >
     <template #header>
-      <button  :class="`custom-btn ${pageType === 'sell' ? 'dark': 'light'}  round-circle product-shop__btn-tab ml-md-auto mr-2`" type="button"   @click="chooseTab('sell')">
+      <button  :class="`custom-btn ${pageType === 'sell' ? 'dark': 'light'}  round-circle products-shop__btn-tab ml-md-auto mr-2`" type="button"   @click="chooseTab('sell')">
         <span>{{$t('cart.tabs.sell')}}</span>
         <span class="products-shop__btn-tab__total">{{totalSell}}</span>
       </button>
-      <button  :class="`custom-btn ${pageType === 'buy' ? 'dark': 'light'} round-circle product-shop__btn-tab`" type="button" @click="chooseTab('buy')">
+      <button  :class="`custom-btn ${pageType === 'buy' ? 'dark': 'light'} round-circle products-shop__btn-tab`" type="button" @click="chooseTab('buy')">
         <span>{{$t('cart.tabs.buy')}}</span>
         <span class="products-shop__btn-tab__total">{{totalBuy}}</span>
       </button>
