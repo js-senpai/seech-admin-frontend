@@ -70,6 +70,7 @@ import {mapActions} from "vuex";
 
 export default {
   components: {
+    CreateRequestModal: () => import("@/components/Ui/CreateRequestModal/CreateRequestModal"),
     ProductsShop: () => import("@/components/Ui/ProductsShop/ProductsShop")
   },
   layout: 'auth',
