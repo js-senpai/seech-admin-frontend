@@ -5,7 +5,7 @@
         <b-img-lazy src="~/assets/img/header/logo.svg" />
       </b-navbar-brand>
 
-      <NuxtLink to="/cart" class="d-md-none custom-btn round-circle btn-light header__cart" @click="visible = false">
+      <NuxtLink to="/cart" class="d-md-none custom-btn round-circle btn-light header__cart">
         <BasketContainer>
           <span>{{$t('cart.title')}}</span>
         </BasketContainer>
@@ -91,12 +91,15 @@ export default {
       }
     ]
   },
-  fetchOnServer: true,
   computed: {
     user(){
       return this.$auth.user
     }
   },
+  mounted() {
+    this.visible = false
+  },
+  fetchOnServer: true,
   methods: {
     async logout(){
       try {
