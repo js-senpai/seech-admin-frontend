@@ -79,6 +79,10 @@ export default {
        completeTicket: 'basket/completeTicket',
        getTotalTickets: 'basket/getTotalBasket'
     }),
+    async chooseTab(type = 'sell'){
+      this.pageType = type;
+      await this.getData({type: this.pageType});
+    },
     getDescription(_id){
       const findIndex = this.items.findIndex(item => item._id === _id);
       if(findIndex !== -1){
