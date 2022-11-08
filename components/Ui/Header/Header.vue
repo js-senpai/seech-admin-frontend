@@ -11,7 +11,7 @@
         </BasketContainer>
       </NuxtLink>
 
-      <b-button class="header__toggle" @click="visible = !visible">
+      <b-button class="d-md-none header__toggle" @click="visible = !visible">
         <b-icon v-if="visible" icon="x"></b-icon>
         <b-icon v-else icon="justify"></b-icon>
       </b-button>
