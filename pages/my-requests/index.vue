@@ -22,7 +22,7 @@
         <button type="button" class="text-success products-shop__list-footer-with-icons__btn" @click="complete(_id)">
           <b-icon icon="check2" class="products-shop__list-footer-with-icons__btn-icon" />
         </button>
-        <button v-if="active" type="button" class="products-shop__list-footer-with-icons__btn" @click="extend(_id)">
+        <button v-if="!active" type="button" class="products-shop__list-footer-with-icons__btn" @click="extend(_id)">
           <b-img-lazy src="~/assets/img/myRequests/extend.svg" class="products-shop__list-footer-with-icons__btn-icon" />
         </button>
         <button type="button" class="text-danger products-shop__list-footer-with-icons__btn" @click="deleteItem(_id)">
