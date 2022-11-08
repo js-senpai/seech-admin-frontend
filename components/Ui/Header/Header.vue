@@ -96,8 +96,10 @@ export default {
       return this.$auth.user
     }
   },
-  mounted() {
-    this.visible = false
+  watch:{
+    $route (){
+      this.visible = false
+    }
   },
   fetchOnServer: true,
   methods: {
